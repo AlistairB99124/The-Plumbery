@@ -1,0 +1,57 @@
+﻿@using Plumbery.UI.MVC.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Log in";
+}
+@section Styles{    
+<link href="~/Content/css/icheck/blue.css" rel="stylesheet" />
+    }
+<div class="login-box">
+    <div class="login-logo">
+        <a href="../../index2.html">THE<b>PLUMBERY</b></a>
+    </div>
+    <!-- /.login-logo -->
+    <div class="login-box-body">
+        <p class="login-box-msg">Sign in to start your session</p>
+
+        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" })) {
+            @Html.AntiForgeryToken()
+            <div class="form-group has-feedback">
+                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @placeholder = "UserName" })
+                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password" })
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            </div>
+            <div class="row">
+                <div class="col-xs-8">
+                    <div class="checkbox">
+                            @Html.CheckBoxFor(m => m.RememberMe)
+                        @Html.LabelFor(m=>m.RememberMe)
+                    </div>
+                </div>
+                <!-- /.col -->
+                <div class="col-xs-4">
+                    <button type="submit" class="btn btn-primary btn-block btn-flat">Log In</button>
+                </div>
+                <!-- /.col -->
+            </div>
+        }
+        <div class="social-auth-links text-center">
+            <p>- OR -</p>           
+            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+        </div>
+        <!-- /.social-auth-links -->
+
+        <a href="#">I forgot my password</a><br>
+        @Html.ActionLink("Register a new membership","Register","Account")
+        
+    </div>
+    <!-- /.login-box-body -->
+</div>
+<!-- /.login-box -->
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Content/js/plugins/icheck/icheck.js"></script>
+}

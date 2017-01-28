@@ -1,0 +1,119 @@
+﻿@using Plumbery.Domain.Entities
+@{
+    ViewBag.Title = "Search";
+    List<Inventory> inventory = ViewBag.Inventories as List<Inventory>;
+    List<Plumber> plumbers = ViewBag.Plumbers as List<Plumber>;
+    List<Supervisor> supervisors = ViewBag.Supervisors as List<Supervisor>;
+    List<Site> sites = ViewBag.Sites as List<Site>;
+    List<Warehouse> warehouses = ViewBag.Warehouses as List<Warehouse>;
+    List<TimeSheet> timesheets = ViewBag.TimeSheets as List<TimeSheet>;
+}
+@if (timesheets.Count != 0) {
+    <div class="box">
+        <div class="box-header">
+            Time Sheets Results (@timesheets.Count Results)
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+            <table id="ListTable" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Code</th>
+                        <th>Date</th>
+                        <th>Plumber</th>
+                        <th>Site</th>
+                        <th>Specific Location</th>
+                        <th>DetailedLocation</th>
+                        <th>Status</th>
+                        <th>Description</th>
+                        <th>Plumber's Time</th>
+                        <th>Assistant Time</th>
+                        <th>Original Quote</th>
+                        <th>Quote No</th>
+                        <th>SI Number</th>
+                        <th>Materials</th>
+                        <th>Comments</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in timesheets) {
+                        SelectList materials = new SelectList(item.Materials, "StockCode", "StockCode");
+                        SelectList comments = new SelectList(item.Comments, "Description", "Description");
+                        <tr>
+                            <td>@if (item.Id != 0) { <text>@item.Id</text> }</td>
+                            <td>@if (item.Code != null) {<text>@item.Code</text>}</td>
+                            <td>@if (item.DateCreated != null) {<text>@item.DateCreated.ToString("dd.MM.yyyy")</text>}</td>
+                            <td>@if (@item.Plumber != null) {<text>@item.Plumber.User.FullName</text>}</td>
+                            <td>@if (item.Site != null) {<text>@item.Site.Abbr</text>}</td>
+                            <td>@if (item.SpecificLocation != null) {<text>@item.SpecificLocation</text>}</td>
+                            <td>@if (item.DetailedPoint != null) {<text>@item.DetailedPoint</text>}</td>
+                            <td>@item.SheetStatus</td>
+                            <td>@if (item.Description != null) {<text>@item.Description</text>}</td>
+                            <td>@item.PlumberTime</td>
+                            <td>@item.AssistantTime</td>
+                            <td>@item.OriginalQuote</td>
+                            <td>@if (item.QuoteNo != null) {<text>@item.QuoteNo</text>}</td>
+                            <td>@if (item.SINumber != null) {<text>@item.SINumber</text>}</td>
+                            <td>@Html.DropDownList("Materials" + item.Id, materials, new { @class = "form-control" })</td>
+                            <td>@Html.DropDownList("Comments" + item.Id, comments, new { @class = "form-control" })</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+@if (inventory.Count != 0) {
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">Inventory Results (@inventory.Count Results)</h3>}
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+            <table id="ListTable" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Stock Code</th>
+                        <th>Stock Description</th>
+                        <th>Warehouse</th>
+                        <th>Date Added</th>
+                        <th>Date Modified</th>
+                        <th>Modified BY</th>
+                        <th>Quantity</th>
+                        <th>Cost</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model) {
+                        <tr>
+                            <td>@item.Id</td>
+                            <td>@item.Material.StockCode</td>
+                            <td>@item.Material.StockDescription</td>
+                            <td>@item.Warehouse.Name</td>
+                            <td>@item.DateAdded.ToString("dd, MMM yyyy")</td>
+                            <td>@item.DateModified.ToString("dd, MMM yyyy")</td>
+                            <td>@item.ModifiedBy</td>
+                            <td>@item.Quantity</td>
+                            <td>@item.Material.Cost</td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+@if (warehouses.Count != 0) {
+
+}
+ @if (sites.Count != 0) {
+
+ }
+  @if (plumbers.Count != 0) {
+
+  }
+   @if (supervisors.Count != 0) {
+
+   }

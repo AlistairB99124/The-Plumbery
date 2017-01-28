@@ -1,0 +1,313 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Plumbery.Domain</name>
+    </assembly>
+    <members>
+        <member name="T:Plumbery.Domain.Entities.User">
+            <summary>
+            User class to store user properties inherits IdentityUser
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.User.DateRegistered">
+            <summary>
+            The Date the User Registered for general information purposes
+            </summary>
+        </member>
+        <member name="M:Plumbery.Domain.Interfaces.Domain.IUserService.Register(Microsoft.AspNet.Identity.UserManager{Plumbery.Domain.Entities.User,System.String},Plumbery.Domain.Entities.User,System.String)">
+            <summary>
+            Register User to Identity Database
+            </summary>
+            <param name="userManager">User Manager to Handle Registration</param>
+            <param name="user">User to add to database</param>
+            <param name="password">User's password</param>
+            <returns></returns>
+        </member>
+        <member name="M:Plumbery.Domain.Interfaces.Domain.IUserService.Login(Microsoft.AspNet.Identity.Owin.SignInManager{Plumbery.Domain.Entities.User,System.String},System.String,System.String,System.Boolean)">
+            <summary>
+            Login User
+            </summary>
+            <param name="signinManager">Signin Manager to handle login</param>
+            <param name="email">Email of user</param>
+            <param name="password">Password of user</param>
+            <param name="rememberMe">Boolean if the user wants to be remembered</param>
+            <returns></returns>
+        </member>
+        <member name="M:Plumbery.Domain.Interfaces.Domain.IUserService.VerifyCode(Microsoft.AspNet.Identity.Owin.SignInManager{Plumbery.Domain.Entities.User,System.String},System.String,System.String,System.Boolean,System.Boolean)">
+            <summary>
+            Verify that code sent to User is valid
+            </summary>
+            <param name="signinManager">Signin Manager to handle verification</param>
+            <param name="provider">Provider of the code</param>
+            <param name="code">The code</param>
+            <param name="rememberMe">Boolean if user wants to be remembered</param>
+            <param name="rememberBrowser">Boolean if browser should be remembered</param>
+            <returns></returns>
+        </member>
+        <member name="M:Plumbery.Domain.Interfaces.Domain.IUserService.ConfirmEmail(Microsoft.AspNet.Identity.UserManager{Plumbery.Domain.Entities.User,System.String},System.String,System.String)">
+            <summary>
+            Confirm email of User
+            </summary>
+            <param name="userManager">User Manager to handle confirmation</param>
+            <param name="userId">String user Id of the User</param>
+            <param name="code">User code sent in Email</param>
+            <returns></returns>
+        </member>
+        <member name="M:Plumbery.Domain.Interfaces.Domain.IUserService.Logoff(Microsoft.Owin.Security.IAuthenticationManager)">
+            <summary>
+            Log off user from the Application
+            </summary>
+            <param name="AuthenticationManager">Application Manager to handle Sign out</param>
+        </member>
+        <member name="M:Plumbery.Domain.Interfaces.Domain.IUserService.GetUser(System.String)">
+            <summary>
+            Get user based on their Email
+            </summary>
+            <param name="Email">Email of user</param>
+            <returns>User</returns>
+        </member>
+        <member name="M:Plumbery.Domain.Interfaces.Domain.IUserService.GetUserById(System.String)">
+            <summary>
+            Get User by their GUID
+            </summary>
+            <param name="ID">GUID</param>
+            <returns>User</returns>
+        </member>
+        <member name="T:Plumbery.Domain.Interfaces.Infrastructure.IRepositoryManager">
+            <summary>
+            Interface to handle management of repository
+            </summary>
+        </member>
+        <member name="M:Plumbery.Domain.Interfaces.Infrastructure.IRepositoryManager.Finalise">
+            <summary>
+            Method to dispose of Context instance
+            </summary>
+        </member>
+        <member name="T:Plumbery.Domain.Interfaces.Infrastructure.IUnitOfWork">
+            <summary>
+            Interface to perform actions when dataase is modified
+            </summary>
+        </member>
+        <member name="T:Plumbery.Domain.Interfaces.Repositories.IBaseRepository`1">
+            <summary>
+            Base interface handling CRUD functionailty
+            </summary>
+            <typeparam name="TEntity">Entity to be Handled</typeparam>
+        </member>
+        <member name="M:Plumbery.Domain.Interfaces.Repositories.IBaseRepository`1.GetAll">
+            <summary>
+            Get generic list of all of type TEntity
+            </summary>
+            <returns>List of TEntity</returns>
+        </member>
+        <member name="M:Plumbery.Domain.Interfaces.Repositories.IBaseRepository`1.Get(System.Int32)">
+            <summary>
+            Get TEntity by Id
+            </summary>
+            <param name="Id">Id to look up</param>
+            <returns>TEntity</returns>
+        </member>
+        <member name="M:Plumbery.Domain.Interfaces.Repositories.IBaseRepository`1.Add(`0)">
+            <summary>
+            Add TEntity to database
+            </summary>
+            <param name="obj">TEntity to add</param>
+        </member>
+        <member name="M:Plumbery.Domain.Interfaces.Repositories.IBaseRepository`1.Edit(`0)">
+            <summary>
+            Edit TEntity in database
+            </summary>
+            <param name="obj">TEntity to Edit</param>
+        </member>
+        <member name="M:Plumbery.Domain.Interfaces.Repositories.IBaseRepository`1.Remove(`0)">
+            <summary>
+            Remove TEntity from database
+            </summary>
+            <param name="obj">TEntity to remove</param>
+        </member>
+        <member name="M:Plumbery.Domain.Interfaces.Repositories.IBaseRepository`1.Remove(System.Int32)">
+            <summary>
+            Remove TEntity by Id from database
+            </summary>
+            <param name="Id">Id of TEntity to Remove</param>
+        </member>
+        <member name="T:Plumbery.Domain.Interfaces.Repositories.IUserRepository">
+            <summary>
+            Interface for User functionailty
+            </summary>
+        </member>
+        <member name="M:Plumbery.Domain.Interfaces.Repositories.IUserRepository.Register(Microsoft.AspNet.Identity.UserManager{Plumbery.Domain.Entities.User,System.String},Plumbery.Domain.Entities.User,System.String)">
+            <summary>
+            Register User to Identity Database
+            </summary>
+            <param name="userManager">User Manager to Handle Registration</param>
+            <param name="user">User to add to database</param>
+            <param name="password">User's password</param>
+            <returns>Identity Result</returns>
+        </member>
+        <member name="M:Plumbery.Domain.Interfaces.Repositories.IUserRepository.Login(Microsoft.AspNet.Identity.Owin.SignInManager{Plumbery.Domain.Entities.User,System.String},System.String,System.String,System.Boolean)">
+            <summary>
+            Login User
+            </summary>
+            <param name="signinManager">Signin Manager to handle login</param>
+            <param name="email">Email of user</param>
+            <param name="password">Password of user</param>
+            <param name="rememberMe">Boolean if the user wants to be remembered</param>
+            <returns>SignIn Status</returns>
+        </member>
+        <member name="M:Plumbery.Domain.Interfaces.Repositories.IUserRepository.VerifyCode(Microsoft.AspNet.Identity.Owin.SignInManager{Plumbery.Domain.Entities.User,System.String},System.String,System.String,System.Boolean,System.Boolean)">
+            <summary>
+            Verify that code sent to User is valid
+            </summary>
+            <param name="signinManager">Signin Manager to handle verification</param>
+            <param name="provider">Provider of the code</param>
+            <param name="code">The code</param>
+            <param name="rememberMe">Boolean if user wants to be remembered</param>
+            <param name="rememberBrowser">Boolean if browser should be remembered</param>
+            <returns>SignIn Status</returns>
+        </member>
+        <member name="M:Plumbery.Domain.Interfaces.Repositories.IUserRepository.ConfirmEmail(Microsoft.AspNet.Identity.UserManager{Plumbery.Domain.Entities.User,System.String},System.String,System.String)">
+            <summary>
+            Confirm email of User
+            </summary>
+            <param name="userManager">User Manager to handle confirmation</param>
+            <param name="userId">String user Id of the User</param>
+            <param name="code">User code sent in Email</param>
+            <returns>Identity Result</returns>
+        </member>
+        <member name="M:Plumbery.Domain.Interfaces.Repositories.IUserRepository.Logoff(Microsoft.Owin.Security.IAuthenticationManager)">
+            <summary>
+            Log off user from the Application
+            </summary>
+            <param name="AuthenticationManager">Application Manager to handle Sign out</param>
+        </member>
+        <member name="M:Plumbery.Domain.Interfaces.Repositories.IUserRepository.GetUser(System.String)">
+            <summary>
+            Get user based on their Email
+            </summary>
+            <param name="Email">Email of user</param>
+            <returns>User</returns>
+        </member>
+        <member name="M:Plumbery.Domain.Interfaces.Repositories.IUserRepository.GetUserById(System.String)">
+            <summary>
+            Get User by their GUID
+            </summary>
+            <param name="ID">GUID</param>
+            <returns>User</returns>
+        </member>
+        <member name="M:Plumbery.Domain.Services.HomeService.#ctor(Plumbery.Domain.Interfaces.Repositories.IHomeRepository)">
+            <summary>
+            Constructor to initialise TimeSheet Repository
+            </summary>
+            <param name="TimeSheetRepository"></param>
+        </member>
+        <member name="M:Plumbery.Domain.Services.InventoryService.#ctor(Plumbery.Domain.Interfaces.Repositories.IInventoryRepository)">
+            <summary>
+            Constructor to initialise TimeSheet Repository
+            </summary>
+            <param name="TimeSheetRepository"></param>
+        </member>
+        <member name="M:Plumbery.Domain.Services.PlumberService.#ctor(Plumbery.Domain.Interfaces.Repositories.IPlumberRepository)">
+            <summary>
+            Constructor to initialise TimeSheet Repository
+            </summary>
+            <param name="TimeSheetRepository"></param>
+        </member>
+        <member name="T:Plumbery.Domain.Services.ServiceBase">
+            <summary>
+            Class to handle start and end process of interaction with database 
+            </summary>
+        </member>
+        <member name="M:Plumbery.Domain.Services.ServiceBase.StartTransaction">
+            <summary>
+            Initialise database for changes to be made
+            </summary>
+        </member>
+        <member name="M:Plumbery.Domain.Services.ServiceBase.PersistTransaction">
+            <summary>
+            Save changes made to databse
+            </summary>
+        </member>
+        <member name="M:Plumbery.Domain.Services.SupervisorService.#ctor(Plumbery.Domain.Interfaces.Repositories.ISupervisorRepository)">
+            <summary>
+            Constructor to initialise User Repository
+            </summary>
+            <param name="userRepository"></param>
+        </member>
+        <member name="M:Plumbery.Domain.Services.TimeSheetService.#ctor(Plumbery.Domain.Interfaces.Repositories.ITimeSheetRepository)">
+            <summary>
+            Constructor to initialise TimeSheet Repository
+            </summary>
+            <param name="TimeSheetRepository"></param>
+        </member>
+        <member name="T:Plumbery.Domain.Services.UserService">
+            <summary>
+            Service class to handle User interaction functionality
+            </summary>
+        </member>
+        <member name="M:Plumbery.Domain.Services.UserService.#ctor(Plumbery.Domain.Interfaces.Repositories.IUserRepository)">
+            <summary>
+            Constructor to initialise User Repository
+            </summary>
+            <param name="userRepository"></param>
+        </member>
+        <member name="M:Plumbery.Domain.Services.UserService.ConfirmEmail(Microsoft.AspNet.Identity.UserManager{Plumbery.Domain.Entities.User,System.String},System.String,System.String)">
+            <summary>
+            Confirm email of User
+            </summary>
+            <param name="userManager">User Manager to handle confirmation</param>
+            <param name="userId">String user Id of the User</param>
+            <param name="code">User code sent in Email</param>
+            <returns>Identity Result</returns>
+        </member>
+        <member name="M:Plumbery.Domain.Services.UserService.GetUser(System.String)">
+            <summary>
+            Get user based on their Email
+            </summary>
+            <param name="Email">Email of user</param>
+            <returns>User</returns>
+        </member>
+        <member name="M:Plumbery.Domain.Services.UserService.GetUserById(System.String)">
+            <summary>
+            Get User by their GUID
+            </summary>
+            <param name="ID">GUID</param>
+            <returns>User</returns>
+        </member>
+        <member name="M:Plumbery.Domain.Services.UserService.Login(Microsoft.AspNet.Identity.Owin.SignInManager{Plumbery.Domain.Entities.User,System.String},System.String,System.String,System.Boolean)">
+            <summary>
+            Login User
+            </summary>
+            <param name="signinManager">Signin Manager to handle login</param>
+            <param name="email">Email of user</param>
+            <param name="password">Password of user</param>
+            <param name="rememberMe">Boolean if the user wants to be remembered</param>
+            <returns>SignIn Status</returns>
+        </member>
+        <member name="M:Plumbery.Domain.Services.UserService.Logoff(Microsoft.Owin.Security.IAuthenticationManager)">
+            <summary>
+            Log off user from the Application
+            </summary>
+            <param name="AuthenticationManager">Application Manager to handle Sign out</param>
+        </member>
+        <member name="M:Plumbery.Domain.Services.UserService.Register(Microsoft.AspNet.Identity.UserManager{Plumbery.Domain.Entities.User,System.String},Plumbery.Domain.Entities.User,System.String)">
+            <summary>
+            Register User to Identity Database
+            </summary>
+            <param name="userManager">User Manager to Handle Registration</param>
+            <param name="user">User to add to database</param>
+            <param name="password">User's password</param>
+        </member>
+        <member name="M:Plumbery.Domain.Services.UserService.VerifyCode(Microsoft.AspNet.Identity.Owin.SignInManager{Plumbery.Domain.Entities.User,System.String},System.String,System.String,System.Boolean,System.Boolean)">
+            <summary>
+            Verify that code sent to User is valid
+            </summary>
+            <param name="signinManager">Signin Manager to handle verification</param>
+            <param name="provider">Provider of the code</param>
+            <param name="code">The code</param>
+            <param name="rememberMe">Boolean if user wants to be remembered</param>
+            <param name="rememberBrowser">Boolean if browser should be remembered</param>
+            <returns>SignIn Status</returns>
+        </member>
+    </members>
+</doc>

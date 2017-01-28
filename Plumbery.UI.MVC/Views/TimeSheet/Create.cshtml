@@ -1,0 +1,152 @@
+﻿@model Plumbery.UI.MVC.Models.TimeSheetModel
+@using Plumbery.Domain.Entities
+@{
+    ViewBag.Title = "Daily Time Sheet";
+    ViewBag.Description = DateTime.Now.ToString("dd, MMM yyyy");
+    SelectList plumberList = ViewBag.PlumberList;
+    SelectList siteList = ViewBag.SiteList;
+}
+@section Styles{
+    
+<link href="~/Content/css/Plugins/boostrap-slider/bootstrap-slider.css" rel="stylesheet" />
+    }
+<!-- general form elements -->
+<div class="myforms-box">
+    <!-- /.box-header -->
+    <!-- form start -->
+    @using (Html.BeginForm("Create","TimeSheet",FormMethod.Post,new { @class="form-horizontal", role="form" })) {
+        @Html.AntiForgeryToken()
+        <div class="myforms-box-body">
+            <div class="form-group">
+                @Html.LabelFor(m => m.PlumberId,new { @class= "control-label" })
+                    @Html.DropDownListFor(m=>m.PlumberId, plumberList, new { @class="form-control select2", @style="width:100%" } ) 
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.SiteId, new { @class = "control-label" })
+                    @Html.DropDownListFor(m => m.SiteId, siteList, new { @class = "form-control select2", @style = "width:100%" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.SpecificLocation, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.SpecificLocation, new { @class="form-control"})
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.DetailedPoint, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.DetailedPoint, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label for="SheetStatus">Completion Status</label>
+                <div style="margin-left:25px">
+                    <input type="text" value="" name="statusSlider" style="width:90%;margin-left:25px" class="slider form-control center-block" data-slider-min="0" data-slider-max="3" data-slider-step="1" data-slider-value="0" data-slider-orientation="horizontal" data-slider-selection="before" data-slider-tooltip="hide" data-slider-id="red" data-slider-ticks="[0, 1, 2, 3]" data-slider-ticks-labels='["Chasing","1st Fix","2nd Fix","Final Fix"]'>
+                </div>                   
+            </div>
+            <div class="form-group">
+                <label for="StatusComplete">Is Fix Complete?</label>
+                @Html.CheckBoxFor(m=>m.StatusComplete)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Description, new { @class = "control-label" })
+                    @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
+            </div>
+            <div class="form-group">                
+                <table class="table" style="width:100%">
+                    <tr>
+                        <th colspan="2">
+                            @Html.Label("Time Spent (Plumber)", new { @class = "control-label" })
+                        </th>
+                    </tr>
+                    <tr style="width:100%">
+                        <td width="50%">
+                            <select name="PlumberHours" id="PlumberHours" class="form-control select2" style="width:100%">
+                                <option selected value="0">0h</option>
+                                <option value="1">1h</option>
+                                <option value="2">2h</option>
+                                <option value="3">3h</option>
+                                <option value="4">4h</option>
+                                <option value="5">5h</option>
+                                <option value="6">6h</option>
+                                <option value="7">7h</option>
+                                <option value="8">8h</option>
+                            </select>
+                        </td>
+                        <td width="50%">
+                            <select name="PlumberMins" id="PlumberMins" class="form-control select2" style="width:100%">
+                                <option selected value="0">0min</option>
+                                <option value="10">10min</option>
+                                <option value="20">20min</option>
+                                <option value="30">30min</option>
+                                <option value="40">40min</option>
+                                <option value="50">50min</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>                
+            </div>
+            <div class="form-group">
+               
+                <table class="table" style="width:100%">
+                    <tr>
+                        <th colspan="2">
+                            @Html.LabelFor(m => m.AssistantHours, new { @class = "control-label" })
+                        </th>
+                    </tr>
+                    <tr style="width:100%">
+                        <td width="50%">
+                            <select name="AssistantHours" id="AssistantHours" class="form-control select2" style="width:100%">
+                                <option selected value="0">0h</option>
+                                <option value="1">1h</option>
+                                <option value="2">2h</option>
+                                <option value="3">3h</option>
+                                <option value="4">4h</option>
+                                <option value="5">5h</option>
+                                <option value="6">6h</option>
+                                <option value="7">7h</option>
+                                <option value="8">8h</option>
+                            </select>
+                        </td>
+                        <td width="50%">
+                            <select name="AssistantMins" id="AssistantMins" class="form-control select2" style="width:100%">
+                                <option selected value="0">0min</option>
+                                <option value="10">10min</option>
+                                <option value="20">20min</option>
+                                <option value="30">30min</option>
+                                <option value="40">40min</option>
+                                <option value="50">50min</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.OriginalQuote, new { @class = "control-label" })
+                    @Html.CheckBoxFor(m => m.OriginalQuote)
+            </div>
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+            <div class="col-xs-6">
+                <button type="reset" class="btn btn-flat btn-primary btn-block">Clear</button>
+            </div>
+            <div class="col-xs-6">
+                <button type="submit" class="btn btn-flat btn-primary btn-block">Next</button>
+            </div>           
+        </div>
+    }
+</div>
+<!-- /.box -->
+
+@section Scripts{
+<script src="~/Content/js/plugins/icheck/icheck.js"></script>
+    
+<script src="~/Content/js/plugins/bootstrap-slider/bootstrap-slider.js"></script>
+    <script type="text/javascript">
+        //iCheck for checkbox and radio inputs
+        $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+            checkboxClass: 'icheckbox_minimal-blue',
+            radioClass: 'iradio_minimal-blue'
+        });
+        $(function () {
+            /* BOOTSTRAP SLIDER */
+            $('.slider').slider();
+        });
+    </script>
+}

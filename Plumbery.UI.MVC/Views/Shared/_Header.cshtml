@@ -1,0 +1,153 @@
+﻿@using Microsoft.AspNet.Identity
+@using Plumbery.Domain.Entities
+@using Plumbery.Infrastructure.Data.Context
+@{ 
+    var db = new ContextBank();
+    User user = null;
+    Plumber plumber = null;
+    List<Inventory> depletedInventory = null;
+    List<Inventory> lowInventory = null;
+    if (User.Identity.IsAuthenticated) {
+        user = db.Users.Find(User.Identity.GetUserId());
+        plumber = db.Plumbers.Where(x => x.UserId == user.Id).FirstOrDefault();
+        if (plumber != null) {
+            lowInventory = db.Inventories.Where(x => x.Quantity <= 5 && x.Quantity > 0 && x.WarehouseId == plumber.WarehouseId).ToList();
+                depletedInventory = db.Inventories.Where(x => x.Quantity <= 0 && x.WarehouseId == plumber.WarehouseId).ToList();
+        } else {
+            lowInventory = db.Inventories.Where(x => x.Quantity <= 5 && x.Quantity > 0).ToList();
+            depletedInventory = db.Inventories.Where(x => x.Quantity <= 0).ToList();
+        }
+    }
+}
+@using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" })) {
+<header class="main-header">
+    @* BEGIN Logo *@
+    <a href="@Url.Action("Index", "Home")" class="logo">
+        <!-- mini logo for sidebar mini 50x50 pixels -->
+        <span class="logo-mini"><b>P</b></span>
+        <!-- logo for regular state and mobile devices -->
+        <span class="logo-lg">THE<b>PLUMBERY</b></span>
+    </a>
+    @Html.AntiForgeryToken()
+    @* END Logo *@
+    @* BEGIN Header *@
+    <nav class="navbar navbar-static-top" role="navigation">
+        <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+            <span class="sr-only">Toggle navigation</span>
+        </a>
+        <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+                @* BEGIN Warning *@
+               @if (lowInventory == null || depletedInventory == null) {
+               
+               } else {
+                <li class="dropdown tasks-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-flag-o"></i>
+                        <span class="label label-danger">@(lowInventory.Count + depletedInventory.Count)</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="header">You have @(lowInventory.Count + depletedInventory.Count) low inventory items</li>
+                        <li>
+                            <ul class="menu">
+                                <li>
+                                    <a href="#" onclick="location.href='@Url.Action("LowInventory","Inventory",null)'">
+                                        <h3>
+                                            Low Inventory
+                                            <small class="pull-right">@lowInventory.Count</small>
+                                        </h3>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" onclick="location.href='@Url.Action("DepletedInventory","Inventory",null)'">
+                                        <h3>
+                                            Depleted Inventory
+                                            <small class="pull-right">@depletedInventory.Count</small>
+                                        </h3>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="footer">
+                            <a href="#">View all Inventory</a>
+                        </li>
+                    </ul>
+                </li>
+                @* END Tasks *@
+               }
+               
+                @* BEGIN User Account Menu *@
+                @{ 
+                    Supervisor supervisor = null;
+                    }
+                @if (Request.IsAuthenticated) {
+                    user = db.Users.Find(User.Identity.GetUserId());
+                    plumber = db.Plumbers.Where(x => x.UserId == user.Id).FirstOrDefault();
+                    supervisor = db.Supervisors.Where(x => x.UserId == user.Id).FirstOrDefault();
+                    <li class="dropdown user user-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-user user-image"></i>
+                            <span class="hidden-xs">@user.FirstName</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="user-header">
+                                <span class="fa fa-5x fa-user" style="color:#FFFFFF;"></span>
+                                @if (supervisor == null) {
+                                    <p>
+                                        @user.FullName - Plumber
+                                        <small>Member since @user.DateRegistered.ToString("MMM, yyyy")</small>
+                                    </p>
+                                } else {
+                                    <p>
+                                        @user.FullName - Supervisor
+                                        <small>Member since @user.DateRegistered.ToString("MMM, yyyy")</small>
+                                    </p>
+                                }
+
+                            </li>
+                            <li class="user-footer">
+                                @*<div class="pull-left">
+                                    @Html.ActionLink("Profile", "Index", "Manage", null, new { @class = "btn btn-default btn-flat" })
+                                </div>*@
+                                <div class="pull-right">
+                                    <a href="javascript:document.getElementById('logoutForm').submit()" class="btn btn-default btn-flat">Log Out</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                } else {
+                    <li class="dropdown user user-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <span class="fa fa-sign-in"></span><span class="hidden-xs"> Sign In</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="user-header">
+                                <span class="fa fa-5x fa-sign-in" style="color:#fff;"></span>
+                                <p>
+                                    Sign up or Sign In To WeFix
+                                </p>
+                            </li>
+                            <li class="user-footer">
+                                <div class="pull-left">
+                                    @Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "btn btn-default btn-flat" })
+                                </div>
+                                <div class="pull-right">
+                                    @Html.ActionLink("Log In", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "btn btn-default btn-flat" })
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                }
+                @if (supervisor != null) {
+                    @* END User Account Menu *@
+                    @* BEGIN Control Sidebar Toggle Button *@
+                    <li>
+                        <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+                    </li>
+                    @* END Control Sidebar Toggle Button *@
+                }              
+            </ul>
+        </div>
+    </nav>
+</header>
+}

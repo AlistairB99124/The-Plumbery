@@ -1,0 +1,151 @@
+﻿@model Plumbery.UI.MVC.Models.CommentAndMaterialModel
+@{
+    ViewBag.Title = "Add Materials";
+    ViewBag.Description = DateTime.Now.ToString("dd, MMM yyyy");
+    string ErrorMessage = ViewBag.Error;
+    ViewBag.TimeSheetCode = ViewBag.TimeSheetCode;
+    string code = ViewBag.TimeSheetCode;
+    var materials = ViewBag.Materials as IEnumerable<Plumbery.Domain.Entities.TimeSheetMaterialItem>;
+    var comments = ViewBag.Comments as IEnumerable<Plumbery.Domain.Entities.TimeSheetCommentItem>;
+    var materialSelect = ViewBag.MaterialList as SelectList;
+}
+<!-- general form elements -->
+<div class="myforms-box">
+    <!-- form start -->
+    <div class="myforms-box-body">
+        @using (Html.BeginForm("AddMaterial", "TimeSheet", FormMethod.Post, new { @class = "form-horizontal" })) {
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+                <label class="success">@ViewBag.Success</label>
+                <label class="danger">@ViewBag.Failure</label>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.MaterialId, new { @class = "col-sm-2 control-label" })
+                <div class="col-sm-10">
+                    @Html.DropDownListFor(m => m.MaterialId, materialSelect, new { @class = "form-control select2", @style = "width:100%;" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Quantity, new { @class = "col-sm-2 control-label" })
+                <div class="col-sm-10">
+                    @Html.TextBoxFor(m => m.Quantity, new { @class = "form-control", @placeholder = "0,00" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.BOM_No, new { @class = "col-sm-2 control-label" })
+                <div class="col-sm-10">
+                    @Html.TextBoxFor(m => m.BOM_No, new { @class = "form-control", @placeholder = "0,00" })
+                </div>
+            </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Supplier, new { @class = "col-sm-2 control-label" })
+                        <div class="col-sm-10">
+                            @Html.TextBoxFor(m => m.Supplier, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.HiddenFor(m => m.TimeSheetCode, new { Value = code })
+                        <button type="submit" id="SaveMaterial" class="btn btn-flat btn-primary">Add Material</button>
+                    </div>
+        }
+        @using (Html.BeginForm("AddComment", "TimeSheet", FormMethod.Post, new { @class = "form-horizontal" })) {
+            <div class="form-group">
+                @Html.LabelFor(m => m.Description, new { @class = "col-sm-2 control-label" })
+                <div class="col-sm-10">
+                    @Html.TextBoxFor(m => m.Description, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Metric, new { @class = "col-sm-2 control-label" })
+                <div class="col-sm-10">
+                    @Html.TextBoxFor(m => m.Metric, new { @class = "form-control" })
+                </div>
+            </div>
+                <div class="form-group">
+                    @Html.HiddenFor(m => m.TimeSheetCode, new { Value = code })
+                    <button type="submit" class="btn btn-flat btn-primary">Add Comment</button>
+                </div>
+        }
+        <hr />
+        <table id="Table" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>BOM No.</th>
+                    <th>Code</th>
+                    <th>Description</th>
+                    <th>Quantity</th>
+                    <th>Supplier</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var material in materials) {
+                    <tr>
+                        <td>@material.BOM_No</td>
+                        <td>@material.Material.StockCode</td>
+                        <td>@material.Material.StockDescription</td>
+                        <td>@material.Quantity</td>
+                        <td>@material.Supplier</td>
+                        <td>
+                            @using (Html.BeginForm("DeleteMaterialItem", "TimeSheet", FormMethod.Post)) {
+                                <input type="hidden" value="@material.Id" name="MaterialId" />
+                                <input type="hidden" value="@material.TimeSheet.Code" name="timesheetCode" />
+                                <button type="submit" class="btn btn-flat btn-danger center-block"><i class="fa fa-times"></i></button>
+                            }
+                    </td>
+                </tr>
+                }
+                @foreach (var comment in comments) {
+                    <tr>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>@comment.Description</td>
+                        <td>@comment.Metric</td>
+                        <td>-</td>
+                        <td>
+                            @using (Html.BeginForm("DeleteCommentItem", "TimeSheet", FormMethod.Post)) {
+                                <input type="hidden" value="@comment.Id" name="CommentId" />
+                                <input type="hidden" value="@comment.TimeSheet.Code" name="timesheetCode" />
+                                <button type="submit" class="btn btn-flat btn-danger center-block"><i class="fa fa-times"></i></button>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- /.box-body -->
+    <div class="box-footer">
+        @using (Html.BeginForm("ClearAll", "TimeSheet", FormMethod.Post, new { @class="col-xs-6" })) {
+            <input type="hidden" name="TimeSheetCode" value="@code" />
+                <button type="submit" class="btn btn-flat btn-primary btn-block" id="ClearBtn">Clear</button>
+        }
+        @using (Html.BeginForm("SendTimeSheet", "TimeSheet", FormMethod.Post, new { @class = "col-xs-6" })) {
+            <input type="hidden" value="@code" name="timesheetCode"/>
+            <button type="submit" class="btn btn-flat btn-primary btn-block">Submit</button>
+        }        
+    </div>
+</div>
+<!-- /.box -->
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Content/js/plugins/Datatables/jquery.dataTables.min.js"></script>
+    <script src="~/Content/js/plugins/Datatables/dataTables.bootstrap.min.js"></script>
+    <script src="~/Content/js/plugins/Datatables/dataTables.Responsive.js"></script>   
+    <script type="text/javascript">
+        $(function () {
+            $("#Table").DataTable({
+                "scrollX": true,
+                "responsive": true,
+                "paging": false,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": false,
+                "info": false,
+                "autoWidth": false
+            });
+        });
+    </script>
+}

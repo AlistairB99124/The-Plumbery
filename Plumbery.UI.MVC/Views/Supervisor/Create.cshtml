@@ -1,0 +1,35 @@
+﻿@model Plumbery.Domain.Entities.Supervisor
+@{
+    ViewBag.Title = "Supervisor";
+    ViewBag.Description = "Add";
+}
+<!-- general form elements -->
+<div class="myforms-box">
+    <div class="myforms-logo">
+        <h3 class="box-title">Fill in information</h3>
+    </div>
+    <!-- /.box-header -->
+    <!-- form start -->
+    @using (Html.BeginForm("Create", "Supervisor", FormMethod.Post, new { @class = "form-horizontal", role = "form" })) {
+        @Html.AntiForgeryToken()
+        <div class="myforms-box-body">
+            <div class="form-group">
+                @Html.LabelFor(m => m.UserId, new { @class = "control-label" })
+                @Html.DropDownListFor(m => m.UserId, ViewBag.Users as SelectList, new { @class = "form-control select2", @style = "width:100%" })
+            </div>
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+            <div class="col-sm-4">
+                <button type="reset" class="btn btn-flat btn-primary btn-block">Clear</button>
+            </div>
+            <div class="col-sm-4">
+                @Html.ActionLink("Back To List", "Index", "Supervisor", new { @class = "btn btn-flat btn-primary btn-block" })
+            </div>
+            <div class="col-sm-4">
+                <button type="submit" class="btn btn-flat btn-primary btn-block">Add</button>
+            </div>
+        </div>
+    }
+</div>
+<!-- /.box -->

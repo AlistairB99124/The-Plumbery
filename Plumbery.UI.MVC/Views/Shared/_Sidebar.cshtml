@@ -1,0 +1,51 @@
+﻿@using Plumbery.UI.MVC.Utilities
+<aside class="main-sidebar">
+    <section class="sidebar">
+        @* BEGIN Search *@
+        @using (Html.BeginForm("Search", "Home", FormMethod.Post, new { @class = "sidebar-form" })) {
+            <div class="input-group">
+                <input type="text" name="q" class="form-control" placeholder="Search...">
+                <span class="input-group-btn">
+                    <button type="submit" name="search" id="search-btn" class="btn btn-flat">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </span>
+            </div>
+        }
+        @* END Search *@
+        @* BEGIN Menu *@
+        <ul class="sidebar-menu">
+            <li class="header">MAIN NAVIGATION</li>
+            <li class="@Html.IsSelected(actions:"Index",controllers:"Home")">
+                <a href="#" onclick="location.href='@Url.Action("Index","Home",null)'"><i class="fa fa-home"></i> <span>Home</span></a>
+            </li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-clock-o"></i> <span>Time Sheets</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li class="@Html.IsSelected(actions:"Create",controllers:"TimeSheet")">@Html.ActionLink("Create", "Create", "TimeSheet")</li>
+                    
+                    <li class="@Html.IsSelected(actions:"Index",controllers:"TimeSheet")">@Html.ActionLink("Histroy", "Index", "TimeSheet")</li>
+                </ul>
+            </li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-share-alt-square"></i> <span>Inventory</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li class="@Html.IsSelected(actions:"Index",controllers:"Inventory")">@Html.ActionLink("List All", "Index", "Inventory")</li>
+                    <li class="@Html.IsSelected(actions:"LowStock",controllers:"Inventory")">@Html.ActionLink("Low Stock", "LowStock", "Inventory")</li>
+                    <li class="@Html.IsSelected(actions:"DepletedStock",controllers:"Inventory")">@Html.ActionLink("Depleted Stock", "DepletedStock", "Inventory")</li>
+                </ul>
+            </li>
+        </ul>
+        @* END Menu *@
+    </section>
+</aside>

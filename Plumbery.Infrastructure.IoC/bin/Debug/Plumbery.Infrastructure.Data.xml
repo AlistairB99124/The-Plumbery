@@ -1,0 +1,200 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Plumbery.Infrastructure.Data</name>
+    </assembly>
+    <members>
+        <member name="T:Plumbery.Infrastructure.Data.Configuration.EFConfiguration">
+            <summary>
+            Class to map entities in database
+            </summary>
+        </member>
+        <member name="T:Plumbery.Infrastructure.Data.Configuration.RepositoryManager">
+            <summary>
+            Class to handle initialisation of Context
+            </summary>
+        </member>
+        <member name="P:Plumbery.Infrastructure.Data.Configuration.RepositoryManager.Context">
+            <summary>
+            Get Context
+            </summary>
+        </member>
+        <member name="M:Plumbery.Infrastructure.Data.Configuration.RepositoryManager.Finalise">
+            <summary>
+            Dispose Context
+            </summary>
+        </member>
+        <member name="T:Plumbery.Infrastructure.Data.Configuration.UnitOfWork">
+            <summary>
+            Class to handle initialisation of context and save changes to database
+            </summary>
+        </member>
+        <member name="F:Plumbery.Infrastructure.Data.Configuration.UnitOfWork._context">
+            <summary>
+            Instance of Context
+            </summary>
+        </member>
+        <member name="M:Plumbery.Infrastructure.Data.Configuration.UnitOfWork.Initialise">
+            <summary>
+            Initialise context
+            </summary>
+        </member>
+        <member name="M:Plumbery.Infrastructure.Data.Configuration.UnitOfWork.SaveChanges">
+            <summary>
+            Save changes to database
+            </summary>
+        </member>
+        <member name="T:Plumbery.Infrastructure.Data.Context.ContextBank">
+            <summary>
+            Primary Identity Context
+            </summary>
+        </member>
+        <member name="M:Plumbery.Infrastructure.Data.Context.ContextBank.#ctor">
+            <summary>
+            Constructor pointing to database configuration
+            </summary>
+        </member>
+        <member name="M:Plumbery.Infrastructure.Data.Context.ContextBank.Create">
+            <summary>
+            Create new instance of Context
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Plumbery.Infrastructure.Data.Context.ContextBank.Dispose(System.Boolean)">
+            <summary>
+            Dispose context
+            </summary>
+            <param name="disposing">Boolean disposing</param>
+        </member>
+        <member name="M:Plumbery.Infrastructure.Data.Context.ContextBank.OnModelCreating(System.Data.Entity.DbModelBuilder)">
+            <summary>
+            Create the model
+            </summary>
+            <param name="modelBuilder"></param>
+        </member>
+        <member name="T:Plumbery.Infrastructure.Data.Initialiser.DatabaseInitialiser">
+            <summary>
+            Class to populate database with test data
+            </summary>
+        </member>
+        <member name="T:Plumbery.Infrastructure.Data.Repositories.BaseRepository`1">
+            <summary>
+            Base class handling CRUD functionality
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+        </member>
+        <member name="F:Plumbery.Infrastructure.Data.Repositories.BaseRepository`1._context">
+            <summary>
+            Protected instance of the context
+            </summary>
+        </member>
+        <member name="M:Plumbery.Infrastructure.Data.Repositories.BaseRepository`1.#ctor">
+            <summary>
+            Constructor to initialise Context
+            </summary>
+        </member>
+        <member name="M:Plumbery.Infrastructure.Data.Repositories.BaseRepository`1.Add(`0)">
+            <summary>
+            Add Object
+            </summary>
+            <param name="obj"></param>
+        </member>
+        <member name="M:Plumbery.Infrastructure.Data.Repositories.BaseRepository`1.Edit(`0)">
+            <summary>
+            Edit TEntity in database
+            </summary>
+            <param name="obj">TEntity to Edit</param>
+        </member>
+        <member name="M:Plumbery.Infrastructure.Data.Repositories.BaseRepository`1.Get(System.Int32)">
+            <summary>
+            Get TEntity by Id
+            </summary>
+            <param name="Id">Id to look up</param>
+            <remarks>WARNING! Cannot Get User by (int)ID. There is a separate method for that</remarks>
+            <returns>TEntity</returns>
+        </member>
+        <member name="M:Plumbery.Infrastructure.Data.Repositories.BaseRepository`1.GetAll">
+            <summary>
+            Get generic list of all of type TEntity
+            </summary>
+            <returns>List of TEntity</returns>
+        </member>
+        <member name="M:Plumbery.Infrastructure.Data.Repositories.BaseRepository`1.Remove(System.Int32)">
+            <summary>
+            Remove TEntity by Id from database
+            </summary>
+            <remarks>WARNING! Cannot use this method for User. Separate method required</remarks>
+            <param name="Id">Id of TEntity to Remove</param>
+        </member>
+        <member name="M:Plumbery.Infrastructure.Data.Repositories.BaseRepository`1.Remove(`0)">
+            <summary>
+            Remove TEntity from database
+            </summary>
+            <param name="obj">TEntity to remove</param>
+        </member>
+        <member name="T:Plumbery.Infrastructure.Data.Repositories.UserRepository">
+            <summary>
+            Class for User functionailty
+            </summary>
+        </member>
+        <member name="M:Plumbery.Infrastructure.Data.Repositories.UserRepository.ConfirmEmail(Microsoft.AspNet.Identity.UserManager{Plumbery.Domain.Entities.User,System.String},System.String,System.String)">
+            <summary>
+            Confirm email of User
+            </summary>
+            <param name="userManager">User Manager to handle confirmation</param>
+            <param name="userId">String user Id of the User</param>
+            <param name="code">User code sent in Email</param>
+            <returns>Identity Result</returns>
+        </member>
+        <member name="M:Plumbery.Infrastructure.Data.Repositories.UserRepository.GetUser(System.String)">
+            <summary>
+            Get user based on their Email
+            </summary>
+            <param name="Email">Email of user</param>
+            <returns>User</returns>
+        </member>
+        <member name="M:Plumbery.Infrastructure.Data.Repositories.UserRepository.GetUserById(System.String)">
+            <summary>
+            Get User by their GUID
+            </summary>
+            <param name="ID">GUID</param>
+            <returns>User</returns>
+        </member>
+        <member name="M:Plumbery.Infrastructure.Data.Repositories.UserRepository.Login(Microsoft.AspNet.Identity.Owin.SignInManager{Plumbery.Domain.Entities.User,System.String},System.String,System.String,System.Boolean)">
+            <summary>
+            Login User
+            </summary>
+            <param name="signinManager">Signin Manager to handle login</param>
+            <param name="email">Email of user</param>
+            <param name="password">Password of user</param>
+            <param name="rememberMe">Boolean if the user wants to be remembered</param>
+            <returns>SignIn Status</returns>
+        </member>
+        <member name="M:Plumbery.Infrastructure.Data.Repositories.UserRepository.Logoff(Microsoft.Owin.Security.IAuthenticationManager)">
+            <summary>
+            Log off user from the Application
+            </summary>
+            <param name="AuthenticationManager">Application Manager to handle Sign out</param>
+        </member>
+        <member name="M:Plumbery.Infrastructure.Data.Repositories.UserRepository.Register(Microsoft.AspNet.Identity.UserManager{Plumbery.Domain.Entities.User,System.String},Plumbery.Domain.Entities.User,System.String)">
+            <summary>
+            Register User to Identity Database
+            </summary>
+            <param name="userManager">User Manager to Handle Registration</param>
+            <param name="user">User to add to database</param>
+            <param name="password">User's password</param>
+            <returns>Identity Result</returns>
+        </member>
+        <member name="M:Plumbery.Infrastructure.Data.Repositories.UserRepository.VerifyCode(Microsoft.AspNet.Identity.Owin.SignInManager{Plumbery.Domain.Entities.User,System.String},System.String,System.String,System.Boolean,System.Boolean)">
+            <summary>
+            Verify that code sent to User is valid
+            </summary>
+            <param name="signinManager">Signin Manager to handle verification</param>
+            <param name="provider">Provider of the code</param>
+            <param name="code">The code</param>
+            <param name="rememberMe">Boolean if user wants to be remembered</param>
+            <param name="rememberBrowser">Boolean if browser should be remembered</param>
+            <returns>SignIn Status</returns>
+        </member>
+    </members>
+</doc>
