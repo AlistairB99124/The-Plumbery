@@ -7,6 +7,7 @@
 .select2-container--default .select2-selection--single .select2-selection__arrow{
     display:none;
 }
+
 .form-control{
     border-bottom:solid 1px #2B3747;
     border-top:none;
@@ -31,19 +32,19 @@
 @media (min-width: 768px) {
   .myforms-box {
     width: 90%;
-    margin: 4% auto;
+    margin: 0% auto;
   }
 }
 @media (min-width: 992px) {
   .myforms-box {
     width: 500px;
-    margin: 4% auto;
+    margin: 0% auto;
   }
 }
 @media (min-width: 1200px) {
   .myforms-box {
     width: 500px;
-    margin: 4% auto;
+    margin: 0% auto;
   }
 }
 .myforms-box-body {

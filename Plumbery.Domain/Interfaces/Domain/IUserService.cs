@@ -70,6 +70,8 @@ namespace Plumbery.Domain.Interfaces.Domain {
         void AddSupervisor(Supervisor supervisor);
         void AddPlumber(Plumber plumber);
         IEnumerable<Warehouse> GetWarehouses();
+
+        IEnumerable<User> GetAllUsers();
         
     }
 }

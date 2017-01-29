@@ -109,6 +109,16 @@ namespace Plumbery.Domain.Services {
             }
         }
 
+        public void DeleteSheet(int id) {
+            try {
+                StartTransaction();
+                _sheetRepository.DeleteSheet(id);
+                PersistTransaction();
+            } catch (Exception ex) {
+                throw new ApplicationException(ex.Message);
+            }
+        }
+
         public void EditCommentItem(TimeSheetCommentItem comment) {
             try {
                 StartTransaction();

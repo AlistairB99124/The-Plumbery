@@ -35,6 +35,14 @@ namespace Plumbery.Infrastructure.Data.Repositories {
 
         public void DeleteMaterialItems(List<TimeSheetMaterialItem> items) => _context.TimeSheetMaterialItems.RemoveRange(items);
 
+        public void DeleteSheet(int Id) {
+            var comments = _context.TimeSheetCommentItems.Where(x => x.TimeSheetId == Id);
+            var materials = _context.TimeSheetMaterialItems.Where(x => x.TimeSheetId == Id);
+            _context.TimeSheetCommentItems.RemoveRange(comments);
+            _context.TimeSheetMaterialItems.RemoveRange(materials);
+            Remove(Id);
+        }
+
         public void EditCommentItem(TimeSheetCommentItem comment) => _context.Entry(comment).State = System.Data.Entity.EntityState.Modified;
 
         public void EditMaterialItem(TimeSheetMaterialItem material) => _context.Entry(material).State = System.Data.Entity.EntityState.Modified;

@@ -44,9 +44,12 @@
       </mvcSiteMapNode>
     </mvcSiteMapNode>     
     <mvcSiteMapNode title="Account" clickable="false" controller="Account" action="Register">
-      <mvcSiteMapNode title="Register" controller="Account" action="Register"/>
+      <mvcSiteMapNode title="Register" controller="Account" action="Register">
+        <mvcSiteMapNode title="External" controller="Account" action="ExternalLoginConfirmation"/>
+      </mvcSiteMapNode>
       <mvcSiteMapNode title="Login" controller="Account" action="Login"/>
       <mvcSiteMapNode title="Management" controller="Manage" action="Index"/>
+    <mvcSiteMapNode title="Users" controller="Account" action="Index"/>
     </mvcSiteMapNode>
   </mvcSiteMapNode>
 </mvcSiteMap>

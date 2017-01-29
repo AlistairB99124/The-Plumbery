@@ -27,5 +27,6 @@ namespace Plumbery.Domain.Interfaces.Repositories {
         IEnumerable<Material> ListMaterials(Plumber plumber);
 
         void DeductFromInventory(List<TimeSheetMaterialItem> items);
+        void DeleteSheet(int Id);
     }
 }

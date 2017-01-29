@@ -67,6 +67,10 @@ namespace Plumbery.UI.MVC.Controllers {
 
         #region ActionResults
 
+        public ActionResult Index() {
+            return View(_userService.GetAllUsers());
+        }
+
         //
         // GET: /Account/Login
         [AllowAnonymous]
@@ -350,7 +354,7 @@ namespace Plumbery.UI.MVC.Controllers {
                     // If the user does not have an account, then prompt the user to create an account
                     ViewBag.ReturnUrl = returnUrl;
                     ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
-                    return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { UserName = loginInfo.Email });
+                    return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
             }
         }
 
@@ -370,7 +374,7 @@ namespace Plumbery.UI.MVC.Controllers {
                 if (info == null) {
                     return View("ExternalLoginFailure");
                 }
-                var user = new User { UserName = model.UserName, DateRegistered = DateTime.Now };
+                var user = new User { UserName = model.UserName,Email=model.Email, FirstName=model.FirstName, LastName=model.LastName, DateRegistered = DateTime.Now };
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded) {
                     result = await UserManager.AddLoginAsync(user.Id, info.Login);

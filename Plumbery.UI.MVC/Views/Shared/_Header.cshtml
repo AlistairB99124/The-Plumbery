@@ -5,17 +5,26 @@
     var db = new ContextBank();
     User user = null;
     Plumber plumber = null;
+    Supervisor supervisor = null;
     List<Inventory> depletedInventory = null;
     List<Inventory> lowInventory = null;
+    List<User> unassignedUsers = null;
     if (User.Identity.IsAuthenticated) {
         user = db.Users.Find(User.Identity.GetUserId());
         plumber = db.Plumbers.Where(x => x.UserId == user.Id).FirstOrDefault();
+        supervisor = db.Supervisors.Where(x => x.UserId == user.Id).FirstOrDefault();
         if (plumber != null) {
             lowInventory = db.Inventories.Where(x => x.Quantity <= 5 && x.Quantity > 0 && x.WarehouseId == plumber.WarehouseId).ToList();
-                depletedInventory = db.Inventories.Where(x => x.Quantity <= 0 && x.WarehouseId == plumber.WarehouseId).ToList();
+            depletedInventory = db.Inventories.Where(x => x.Quantity <= 0 && x.WarehouseId == plumber.WarehouseId).ToList();
         } else {
             lowInventory = db.Inventories.Where(x => x.Quantity <= 5 && x.Quantity > 0).ToList();
             depletedInventory = db.Inventories.Where(x => x.Quantity <= 0).ToList();
+            var users = new List<User>();
+            var plumbers = db.Plumbers.ToList();
+            var supervisors = db.Supervisors.ToList();
+            plumbers.ForEach(x=>users.Add(db.Users.Find(x.UserId)));
+            supervisors.ForEach(x => users.Add(db.Users.Find(x.UserId)));
+            unassignedUsers = db.Users.ToList().Except(users).ToList();
         }
     }
 }
@@ -37,6 +46,42 @@
         </a>
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
+                @if (supervisor != null) {
+                    <li class="dropdown tasks-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-users"></i>
+                            <span class="label label-danger">@unassignedUsers.Count</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="header">You have @unassignedUsers.Count unassigned users</li>
+                            <li>
+                                <ul class="menu">
+                                    @foreach(var u in unassignedUsers) {
+                                        <li>
+                                            <a href='@Url.Action("Create","Plumber",new { id = u.Id })'>
+                                                <h3>
+                                                    Assign @u.FirstName as a Plumber
+                                                    <small><i class="fa fa-user pull-right"></i></small>
+                                                </h3>
+                                            </a>                                            
+                                        </li>
+                                        <li>
+                                            <a href='@Url.Action("Create","Supervisor",new { id=u.Id })'>
+                                                <h3>
+                                                    Assign @u.FirstName as a Supervisor
+                                                    <small><i class="fa fa-user-secret pull-right"></i></small>
+                                                </h3>
+                                            </a>   
+                                        </li>
+                                    }
+                                </ul>
+                            </li>
+                            <li class="footer">
+                                @Html.ActionLink("View All Users", "Index", "Account")
+                            </li>
+                        </ul>
+                    </li>
+                }              
                 @* BEGIN Warning *@
                @if (lowInventory == null || depletedInventory == null) {
                
@@ -51,7 +96,7 @@
                         <li>
                             <ul class="menu">
                                 <li>
-                                    <a href="#" onclick="location.href='@Url.Action("LowInventory","Inventory",null)'">
+                                    <a href="#" onclick="location.href='@Url.Action("LowStock","Inventory",null)'">
                                         <h3>
                                             Low Inventory
                                             <small class="pull-right">@lowInventory.Count</small>
@@ -59,7 +104,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" onclick="location.href='@Url.Action("DepletedInventory","Inventory",null)'">
+                                    <a href="#" onclick="location.href='@Url.Action("DepletedStock","Inventory",null)'">
                                         <h3>
                                             Depleted Inventory
                                             <small class="pull-right">@depletedInventory.Count</small>
@@ -69,7 +114,7 @@
                             </ul>
                         </li>
                         <li class="footer">
-                            <a href="#">View all Inventory</a>
+                            @Html.ActionLink("View All Inventory","Index","Inventory")
                         </li>
                     </ul>
                 </li>
@@ -77,13 +122,7 @@
                }
                
                 @* BEGIN User Account Menu *@
-                @{ 
-                    Supervisor supervisor = null;
-                    }
                 @if (Request.IsAuthenticated) {
-                    user = db.Users.Find(User.Identity.GetUserId());
-                    plumber = db.Plumbers.Where(x => x.UserId == user.Id).FirstOrDefault();
-                    supervisor = db.Supervisors.Where(x => x.UserId == user.Id).FirstOrDefault();
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-user user-image"></i>

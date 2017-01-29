@@ -9,19 +9,16 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
-namespace Plumbery.UI.MVC.Controllers
-{
+namespace Plumbery.UI.MVC.Controllers {
     [Authorize]
-    public class PlumberController : Controller
-    {
+    public class PlumberController : Controller {
         private IPlumberService _plumberService;
 
         public PlumberController(IPlumberService plumberService) {
             _plumberService = plumberService;
         }
         // GET: Plumber
-        public ActionResult Index()
-        {
+        public ActionResult Index() {
             Supervisor supervisor = _plumberService.GetSupervisor(User.Identity.GetUserId());
             if (supervisor == null) {
                 return RedirectToAction("Login", "Account", null);
@@ -30,14 +27,23 @@ namespace Plumbery.UI.MVC.Controllers
             return View(plumbers);
         }
 
-        public ActionResult Create() {
+        public ActionResult Create(string id) {
+
             Supervisor supervisor = _plumberService.GetSupervisor(User.Identity.GetUserId());
             if (supervisor == null) {
                 return RedirectToAction("Login", "Account", null);
             }
-            ViewBag.Users = new SelectList(_plumberService.GetUsers(), "Id", "FullName");
-            ViewBag.Warehouses = new SelectList(_plumberService.GetWarehouses(), "Id", "Name");
-            return View();
+
+            if (id == null) {
+                ViewBag.Users = new SelectList(_plumberService.GetUsers(), "Id", "FullName");
+                ViewBag.Warehouses = new SelectList(_plumberService.GetWarehouses(), "Id", "Name");
+                return View();
+            } else {
+                ViewBag.Users = new SelectList(_plumberService.GetUsers(), "Id", "FullName", id);
+                ViewBag.Warehouses = new SelectList(_plumberService.GetWarehouses(), "Id", "Name");
+                return View();
+            }
+
         }
 
         [HttpPost]
@@ -72,7 +78,7 @@ namespace Plumbery.UI.MVC.Controllers
             if (plumber == null) {
                 return HttpNotFound();
             }
-            ViewBag.Users = new SelectList(_plumberService.GetUsers(), "Id", "FullName",plumber.UserId);
+            ViewBag.Users = new SelectList(_plumberService.GetUsers(), "Id", "FullName", plumber.UserId);
             return View(plumber);
         }
 
@@ -87,7 +93,7 @@ namespace Plumbery.UI.MVC.Controllers
                 _plumberService.EditPlumber(plumber);
                 return RedirectToAction("Index");
             }
-            ViewBag.Users = new SelectList(_plumberService.GetUsers(), "Id", "FullName",plumber.UserId);
+            ViewBag.Users = new SelectList(_plumberService.GetUsers(), "Id", "FullName", plumber.UserId);
             return RedirectToAction("Index");
         }
 

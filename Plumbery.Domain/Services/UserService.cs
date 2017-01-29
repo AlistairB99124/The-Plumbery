@@ -153,6 +153,14 @@ namespace Plumbery.Domain.Services {
             }
         }
 
+        public IEnumerable<User> GetAllUsers() {
+            try {
+                return _userRepository.GetAll();
+            }catch(Exception x) {
+                throw new ApplicationException(x.Message);
+            }
+        }
+
         #endregion
 
     }

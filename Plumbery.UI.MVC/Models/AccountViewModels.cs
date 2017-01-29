@@ -6,6 +6,8 @@ namespace Plumbery.UI.MVC.Models
     public class ExternalLoginConfirmationViewModel
     {
         [Required]
+        public string Email { get; set; }
+        [Required]
         public string UserName { get; set; }
         [Required]
         [Display(Name = "First Name")]

@@ -53,6 +53,10 @@
       <HintPath>..\packages\CommonServiceLocator.SimpleInjectorAdapter.2.8.2\lib\portable-net4+sl4+wp8+win8+wpa81\CommonServiceLocator.SimpleInjectorAdapter.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Dropbox.Api, Version=0.1.6229.33336, Culture=neutral, PublicKeyToken=310f0e82fbb45d01, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dropbox.Api.4.1.3\lib\net45\Dropbox.Api.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
@@ -360,7 +364,6 @@
     <Content Include="Content\js\plugins\select2\select2.min.js" />
     <Content Include="Content\js\plugins\slimscroll\jquery.slimscroll.js" />
     <Content Include="Content\js\plugins\slimscroll\jquery.slimscroll.min.js" />
-    <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\css\bootstrap.css.map" />
     <Content Include="Content\css\bootstrap.min.css.map" />
@@ -373,8 +376,8 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="readme.txt" />
     <Content Include="Content\css\Plugins\Datatables\Datatables.Bootstrap.css" />
+    <Content Include="favicon.ico" />
     <Content Include="Mvc.sitemap" />
     <None Include="MvcSiteMapSchema.xsd">
       <SubType>Designer</SubType>
@@ -459,6 +462,7 @@
     <Content Include="Views\Shared\BootstrapSiteMapPathHelperModel.cshtml" />
     <Content Include="Views\Inventory\ControlIndex.cshtml" />
     <Content Include="Views\Home\Search.cshtml" />
+    <Content Include="Views\Account\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -467,7 +471,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Plumbery.Domain\Plumbery.Domain.csproj">

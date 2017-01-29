@@ -13,6 +13,14 @@ using MigraDoc.DocumentObjectModel;
 using Plumbery.UI.MVC.Utilities;
 using System.Diagnostics;
 
+using Dropbox.Api;
+using Dropbox.Api.Team;
+using Dropbox.Api.Users;
+using System.Threading.Tasks;
+using System.IO;
+using Dropbox.Api.Files;
+using System.Text;
+
 namespace Plumbery.UI.MVC.Controllers {
     [Authorize]
     public class TimeSheetController : Controller {
@@ -30,7 +38,12 @@ namespace Plumbery.UI.MVC.Controllers {
             // Get Plumber logged in
             var plumber = _timeSheetService.GetPlumber(User.Identity.GetUserId());
             // Specify SlectLists for dropdown boxes
-            SelectList plumberList = new SelectList(plumbers, "Id", "FullName", plumber.UserId);
+            SelectList plumberList = null;
+            if (plumber != null) {
+                plumberList = new SelectList(plumbers, "Id", "FullName", plumber.UserId);
+            } else {
+                plumberList = new SelectList(plumbers, "Id", "FullName");
+            }
             SelectList siteList = new SelectList(sites, "Id", "Name");
             // Store in view bags
             ViewBag.PlumberList = plumberList;
@@ -181,6 +194,13 @@ namespace Plumbery.UI.MVC.Controllers {
         }
 
         [HttpPost]
+        public ActionResult DeleteSheet(FormCollection collection) {
+            int id = Convert.ToInt32(collection.Get("SheetId"));
+            _timeSheetService.DeleteSheet(id);
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
         public ActionResult ClearAll(FormCollection collection) {
             string code = collection.Get("TimeSheetCode");
             TimeSheet sheet = _timeSheetService.GetTimeSheet(code);
@@ -193,7 +213,7 @@ namespace Plumbery.UI.MVC.Controllers {
         }
 
         [HttpPost]
-        public ActionResult SendTimeSheet(FormCollection collection) {
+        public async Task<ActionResult> SendTimeSheet(FormCollection collection) {
             string code = collection.Get("timesheetCode");
             TimeSheet timeSheet = _timeSheetService.GetTimeSheet(code);
             var materialItems = _timeSheetService.ListMaterialItems(timeSheet.Id).ToList();
@@ -231,8 +251,16 @@ namespace Plumbery.UI.MVC.Controllers {
             filename = "~/Content/documents/timesheets/" + timeSheet.Code + ".pdf";
 #endif
             pdfRenderer.Save(Server.MapPath(filename));
+
+
             // ...and start a viewer.
-            Process.Start(Server.MapPath(filename));
+            //Process.Start(Server.MapPath(filename));
+
+            // Drop Box
+            DropboxClient dbx = new DropboxClient("QQm9MqbFkuIAAAAAAAAQqTl01HSny0wZg7sJ4IDy5wRGZIJkfFXXSKgNsZV5pXrs");
+            byte[] content = System.IO.File.ReadAllBytes(Server.MapPath(filename));
+            await Upload(dbx, "/Apps/The Plumbery/Daily Time Sheets",timeSheet.Code + ".pdf", content);
+
             return RedirectToAction("Create", "TimeSheet", null);
         }
 
@@ -246,6 +274,18 @@ namespace Plumbery.UI.MVC.Controllers {
             }
 
             return View(timesheets);
+        }
+
+        public async Task<string> Upload(DropboxClient dbx, string folder, string file, byte[] content) {
+            using (MemoryStream ms = new MemoryStream(content)) {
+                var updated = await dbx.Files.UploadAsync(
+                    folder + "/" + file,
+                    WriteMode.Overwrite.Instance,
+                    body: ms);
+                var arg1 = new Dropbox.Api.Sharing.CreateSharedLinkWithSettingsArg(folder + "/" + file);
+                var share = await dbx.Sharing.CreateSharedLinkWithSettingsAsync(arg1);
+                return share.Url;
+            }
         }
     }
 }

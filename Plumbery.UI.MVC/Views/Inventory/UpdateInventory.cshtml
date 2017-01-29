@@ -1,15 +1,7 @@
-﻿
+﻿@using Plumbery.Domain.Entities
 @{
-    ViewBag.Title = "Index";
-
-
-#line default
-#line hidden
-
-#line 4 "P:\Plumbery\Plumbery.UI.MVC\Views\Inventory\Index.cshtml"
-
-    ViewBag.Title = "List";
-    Supervisor super = ViewBag.Supervisor;
+    ViewBag.Title = "Inventory";
+    ViewBag.Description = "Update Inventory";
 }
 <div class="box myforms-box">
     <div class="box-body myforms-box-body">
@@ -26,47 +18,17 @@
                     </div>
                 </div>
                 <div class="form-group has-feedback">
-                    @Html.DropDownList("PlumberList",select,new { @class="form-control select2", @style="width:100%;" })
+                    @Html.DropDownList("PlumberList", ViewBag.PlumberSelect as SelectList, new { @class="form-control select2", @style="width:100%;" })
                 </div>
                 <div class="form-group has-feedback">
                     <input type="submit" value="Load" class="btn btn-flat btn-primary" />
                 </div>
         }          
-    </div>
-    <div class="box-comment">
-        @if (plumber != null) {
-            <label class="label-success">@plumber.User.FullName + "'s Inventory"</label>                                    }else {
-
-#line default
-#line hidden
-
-#line 8 "P:\Plumbery\Plumbery.UI.MVC\Views\Inventory\Index.cshtml"
-        }
-
-#line default
-#line hidden
-
-#line 9 "P:\Plumbery\Plumbery.UI.MVC\Views\Inventory\Index.cshtml"
-        foreach (var item in Model) {
-
-
-#line default
-#line hidden
-
-#line 10 "P:\Plumbery\Plumbery.UI.MVC\Views\Inventory\Index.cshtml"
-            __o = item.Id;
-
-
-#line default
-#line hidden
-
-#line 11 "P:\Plumbery\Plumbery.UI.MVC\Views\Inventory\Index.cshtml"
-            __o = item.Material.StockCode;
-
-
-#line default{#line 12           <label class="label-info">@item.Material.StockDescription</label>
-        ehouse.Name        }
-    </div>
+    </div>  
+    <div class="myforms-box-msg">
+        <label class="label-success">@ViewBag.Modified</label>
+        <label class="label-warning">@ViewBag.Added</label>
+    </div> 
 </div>
 @section Scripts{
     <script type="text/javascript">

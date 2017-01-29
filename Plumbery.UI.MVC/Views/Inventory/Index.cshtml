@@ -6,6 +6,17 @@
     Supervisor super = ViewBag.Supervisor;
     Plumber plumber = ViewBag.Plumber;
 }
+@section Styles{
+    <style>
+        #ListTable_filter label {
+            float: right;
+        }
+
+        #ListTable_paginate {
+            float: right;
+        }
+    </style>
+}
 <div class="box">
     <div class="box-header">
         @if (plumber != null) {<h3 class="box-title">@(plumber.User.FullName + "'s Inventory")</h3> } else { <h3 class="box-title">All Inventory</h3>}

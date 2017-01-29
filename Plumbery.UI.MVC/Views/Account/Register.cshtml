@@ -1,4 +1,5 @@
-﻿@model Plumbery.UI.MVC.Models.RegisterViewModel
+﻿@using Plumbery.UI.MVC.Models
+@model RegisterViewModel
 @{
     ViewBag.Title = "Register";
     SelectList warehouseList = ViewBag.WarehouseList;
@@ -38,24 +39,14 @@
                     @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @placeholder = "Confirm Password" })
                     <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
                 </div>
-                <div class="form-group has-feedback">
-                    @Html.DropDownListFor(m=>m.Id, warehouseList, new { @class="form-control select2" })
-                    <span class="glyphicon glyphicon-home form-control-feedback"></span>
-                </div>
                 <div class="row">
-                    <div class="col-xs-8">
-                        <div class="checkbox icheck">
-                            <label>
-                                @Html.CheckBoxFor(m=>m.IsSupervisor) Is User a Supervisor?
-                            </label>
-                        </div>
-                    </div>
                     <!-- /.col -->
                     <div class="col-xs-4">
-                        <button type="submit" class="btn btn-primary btn-flat btn-block">Register</button>
+                        <button type="submit" class="btn btn-primary pull-right btn-flat">Register</button>
                     </div>
                     <!-- /.col -->
                 </div>
+
             }
 
         <div class="social-auth-links text-center">

@@ -28,5 +28,6 @@ namespace Plumbery.Domain.Interfaces.Domain {
         void DeleteCommentItems(List<TimeSheetCommentItem> items);
         void DeductFromInventory(List<TimeSheetMaterialItem> items);
         IEnumerable<TimeSheet> GetAll();
+        void DeleteSheet(int id);
     }
 }

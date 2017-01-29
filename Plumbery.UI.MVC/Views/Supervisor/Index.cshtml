@@ -1,8 +1,18 @@
-﻿
+﻿@model IEnumerable<Plumbery.Domain.Entities.Supervisor>
 @{
     ViewBag.Title = "Supervisor";
     ViewBag.Description = "List";
 }
+@section Styles{
+    <style>
+        #ListTable_filter label{
+            float:right;
+        }
+        #ListTable_paginate{
+            float:right;
+        }
+    </style>
+    }
 <div class="box">
     <div class="box-header">
         Table of supervisors
@@ -16,7 +26,6 @@
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Date Registered</th>
-                    <th>Warehouse</th>
                     <th></th>
                     <th></th>
                     <th></th>
@@ -29,7 +38,6 @@
                         <td>@item.User.FirstName</td>
                         <td>@item.User.LastName</td>
                         <td>@item.User.DateRegistered.ToString("dd.MM.yyyy")</td>
-                        <td>@item.Warehouse.Name</td>
                         <td>
                             @using (Html.BeginForm("Create", "Supervisor", FormMethod.Get)) {
                                 <input type="hidden" value="@item.Id" name="supervisorId" id="supervisorId" />

@@ -26,16 +26,22 @@ namespace Plumbery.UI.MVC.Controllers
             if (currentSupervisor == null) {
                 return RedirectToAction("Login", "Account", null);
             }
-            List<Supervisor> supervisors = _supervisorService.GetAll().ToList();
+            var supervisors = _supervisorService.GetAll();
             return View(supervisors);
         }
-        public ActionResult Create() {
+        public ActionResult Create(string id) {
             Supervisor currentSupervisor = _supervisorService.GetSupervisor(User.Identity.GetUserId());
             if (currentSupervisor == null) {
                 return RedirectToAction("Login", "Account", null);
             }
-            ViewBag.Users = new SelectList(_supervisorService.GetUsers(), "Id", "FullName");
-            return View();
+            if (id == null) {
+                ViewBag.Users = new SelectList(_supervisorService.GetUsers(), "Id", "FullName");
+                return View();
+            }else {
+                ViewBag.Users = new SelectList(_supervisorService.GetUsers(), "Id", "FullName",id);
+                return View();
+            }
+               
         }
         [HttpPost]
         [ValidateAntiForgeryToken]

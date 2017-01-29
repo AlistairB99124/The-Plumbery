@@ -69,7 +69,11 @@ namespace Plumbery.Domain.Services {
         }
 
         public List<Inventory> GetAll() {
-            throw new NotImplementedException();
+            try {
+                return _inventoryRepository.GetAll().ToList();
+            } catch (Exception ex) {
+                throw new ApplicationException(ex.Message);
+            }
         }
 
         public IEnumerable<Inventory> GetDepletedStock() {

@@ -11,6 +11,6 @@ namespace Plumbery.Domain.Entities {
         [Display(Name="User")]
         public string UserId { get; set; }
 
-        public User User { get; set; }
+        public virtual User User { get; set; }
     }
 }
