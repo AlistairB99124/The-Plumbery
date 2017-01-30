@@ -6,11 +6,23 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Plumbery.Domain.Entities {
+    /// <summary>
+    /// 
+    /// </summary>
     public partial class Supervisor {
+        /// <summary>
+        /// 
+        /// </summary>
         public int Id { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
         [Display(Name="User")]
         public string UserId { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public virtual User User { get; set; }
     }
 }

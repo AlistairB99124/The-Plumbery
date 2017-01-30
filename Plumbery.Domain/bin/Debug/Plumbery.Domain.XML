@@ -4,14 +4,480 @@
         <name>Plumbery.Domain</name>
     </assembly>
     <members>
+        <member name="T:Plumbery.Domain.Entities.Inventory">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.Inventory.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.Inventory.WarehouseId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.Inventory.MaterialId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.Inventory.Quantity">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.Inventory.DateAdded">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.Inventory.DateModified">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.Inventory.ModifiedBy">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.Inventory.Material">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.Inventory.Warehouse">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Plumbery.Domain.Entities.Location">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Plumbery.Domain.Entities.Location.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.Location.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.Location.Address1">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.Location.Address2">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.Location.City">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.Location.Province">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.Location.Country">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.Location.Postal_Code">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.Location.Sites">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Plumbery.Domain.Entities.Material">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Plumbery.Domain.Entities.Material.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.Material.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.Material.StockCode">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.Material.StockDescription">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.Material.Cost">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.Material.Items">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Plumbery.Domain.Entities.Plumber">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.Plumber.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.Plumber.WarehouseId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.Plumber.UserId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.Plumber.User">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.Plumber.Warehouse">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Plumbery.Domain.Entities.Quote">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.Quote.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.Quote.BillNo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Plumbery.Domain.Entities.Site.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.Site.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.Site.Name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.Site.Abbr">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.Site.LocationId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.Site.Location">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.Site.TimeSheets">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Plumbery.Domain.Entities.Supervisor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.Supervisor.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.Supervisor.UserId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.Supervisor.User">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Plumbery.Domain.Entities.TimeSheet.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.TimeSheet.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.TimeSheet.Code">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.TimeSheet.DateCreated">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.TimeSheet.SpecificLocation">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.TimeSheet.DetailedPoint">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.TimeSheet.StatusComplete">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.TimeSheet.Description">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.TimeSheet.PlumberTime">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.TimeSheet.AssistantTime">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.TimeSheet.OriginalQuote">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.TimeSheet.QuoteNo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.TimeSheet.SINumber">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.TimeSheet.PlumberId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.TimeSheet.SiteId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.TimeSheet.Plumber">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.TimeSheet.Site">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.TimeSheet.Materials">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.TimeSheet.Comments">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Plumbery.Domain.Entities.Status">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Plumbery.Domain.Entities.TimeSheetCommentItem">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.TimeSheetCommentItem.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.TimeSheetCommentItem.Description">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.TimeSheetCommentItem.Metric">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.TimeSheetCommentItem.TimeSheetId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.TimeSheetCommentItem.TimeSheet">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Plumbery.Domain.Entities.TimeSheetMaterialItem">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.TimeSheetMaterialItem.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.TimeSheetMaterialItem.BOM_No">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.TimeSheetMaterialItem.MaterialId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.TimeSheetMaterialItem.Quantity">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.TimeSheetMaterialItem.TimeSheetId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.TimeSheetMaterialItem.Supplier">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.TimeSheetMaterialItem.StockCode">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.TimeSheetMaterialItem.TimeSheet">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.TimeSheetMaterialItem.Material">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Plumbery.Domain.Entities.TimeSheetMaterialItem.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Plumbery.Domain.Entities.TimeSheetMaterialItem.GetMaterialNumber">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:Plumbery.Domain.Entities.User">
             <summary>
             User class to store user properties inherits IdentityUser
             </summary>
         </member>
+        <member name="P:Plumbery.Domain.Entities.User.FirstName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.User.LastName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.User.FullName">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:Plumbery.Domain.Entities.User.DateRegistered">
             <summary>
             The Date the User Registered for general information purposes
+            </summary>
+        </member>
+        <member name="T:Plumbery.Domain.Entities.Warehouse">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Plumbery.Domain.Entities.Warehouse.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.Warehouse.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.Warehouse.Name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.Domain.Entities.Warehouse.Inventory">
+            <summary>
+            
             </summary>
         </member>
         <member name="M:Plumbery.Domain.Interfaces.Domain.IUserService.Register(Microsoft.AspNet.Identity.UserManager{Plumbery.Domain.Entities.User,System.String},Plumbery.Domain.Entities.User,System.String)">
@@ -130,6 +596,220 @@
             Remove TEntity by Id from database
             </summary>
             <param name="Id">Id of TEntity to Remove</param>
+        </member>
+        <member name="T:Plumbery.Domain.Interfaces.Repositories.IInventoryRepository">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Plumbery.Domain.Interfaces.Repositories.IInventoryRepository.GetInventoryByCode(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="code"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plumbery.Domain.Interfaces.Repositories.IInventoryRepository.GetUser(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plumbery.Domain.Interfaces.Repositories.IInventoryRepository.AddMaterial(Plumbery.Domain.Entities.Material)">
+            <summary>
+            
+            </summary>
+            <param name="material"></param>
+        </member>
+        <member name="M:Plumbery.Domain.Interfaces.Repositories.IInventoryRepository.GetPlumber(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="UserId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plumbery.Domain.Interfaces.Repositories.IInventoryRepository.GetPlumber(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plumbery.Domain.Interfaces.Repositories.IInventoryRepository.ImportToDatabase(Plumbery.Domain.Entities.Plumber,Plumbery.Domain.Entities.User,System.String,System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="p"></param>
+            <param name="user"></param>
+            <param name="filePath"></param>
+            <param name="extension"></param>
+            <param name="firstRowHeader"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plumbery.Domain.Interfaces.Repositories.IInventoryRepository.GetPlumberUsers">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Plumbery.Domain.Interfaces.Repositories.IInventoryRepository.GetLowInventory">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Plumbery.Domain.Interfaces.Repositories.IInventoryRepository.GetDepletedStock">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Plumbery.Domain.Interfaces.Repositories.IInventoryRepository.GetInventoryByWarehouse(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="warehouseId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plumbery.Domain.Interfaces.Repositories.IInventoryRepository.GetSupervisor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="UserId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Plumbery.Domain.Interfaces.Repositories.ITimeSheetRepository">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Plumbery.Domain.Interfaces.Repositories.ITimeSheetRepository.AddMaterialItem(Plumbery.Domain.Entities.TimeSheetMaterialItem)">
+            <summary>
+            
+            </summary>
+            <param name="material"></param>
+        </member>
+        <member name="M:Plumbery.Domain.Interfaces.Repositories.ITimeSheetRepository.EditMaterialItem(Plumbery.Domain.Entities.TimeSheetMaterialItem)">
+            <summary>
+            
+            </summary>
+            <param name="material"></param>
+        </member>
+        <member name="M:Plumbery.Domain.Interfaces.Repositories.ITimeSheetRepository.DeleteMaterialItem(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="Id"></param>
+        </member>
+        <member name="M:Plumbery.Domain.Interfaces.Repositories.ITimeSheetRepository.DeleteMaterialItems(System.Collections.Generic.List{Plumbery.Domain.Entities.TimeSheetMaterialItem})">
+            <summary>
+            
+            </summary>
+            <param name="items"></param>
+        </member>
+        <member name="M:Plumbery.Domain.Interfaces.Repositories.ITimeSheetRepository.ListMaterialItems(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="TimeSheetId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plumbery.Domain.Interfaces.Repositories.ITimeSheetRepository.AddCommentItem(Plumbery.Domain.Entities.TimeSheetCommentItem)">
+            <summary>
+            
+            </summary>
+            <param name="comment"></param>
+        </member>
+        <member name="M:Plumbery.Domain.Interfaces.Repositories.ITimeSheetRepository.EditCommentItem(Plumbery.Domain.Entities.TimeSheetCommentItem)">
+            <summary>
+            
+            </summary>
+            <param name="comment"></param>
+        </member>
+        <member name="M:Plumbery.Domain.Interfaces.Repositories.ITimeSheetRepository.DeleteCommentItem(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="Id"></param>
+        </member>
+        <member name="M:Plumbery.Domain.Interfaces.Repositories.ITimeSheetRepository.DeleteCommentItems(System.Collections.Generic.List{Plumbery.Domain.Entities.TimeSheetCommentItem})">
+            <summary>
+            
+            </summary>
+            <param name="items"></param>
+        </member>
+        <member name="M:Plumbery.Domain.Interfaces.Repositories.ITimeSheetRepository.ListCommentItems(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="TimeSheetId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plumbery.Domain.Interfaces.Repositories.ITimeSheetRepository.ListPlumbers">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Plumbery.Domain.Interfaces.Repositories.ITimeSheetRepository.ListSites">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Plumbery.Domain.Interfaces.Repositories.ITimeSheetRepository.GetPlumber(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="UserId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plumbery.Domain.Interfaces.Repositories.ITimeSheetRepository.GetPlumber(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plumbery.Domain.Interfaces.Repositories.ITimeSheetRepository.GetSite(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plumbery.Domain.Interfaces.Repositories.ITimeSheetRepository.GetTimeSheet(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="Code"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plumbery.Domain.Interfaces.Repositories.ITimeSheetRepository.GetPlumberUsers">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Plumbery.Domain.Interfaces.Repositories.ITimeSheetRepository.ListMaterials(Plumbery.Domain.Entities.Plumber)">
+            <summary>
+            
+            </summary>
+            <param name="plumber"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plumbery.Domain.Interfaces.Repositories.ITimeSheetRepository.DeductFromInventory(System.Collections.Generic.List{Plumbery.Domain.Entities.TimeSheetMaterialItem})">
+            <summary>
+            
+            </summary>
+            <param name="items"></param>
+        </member>
+        <member name="M:Plumbery.Domain.Interfaces.Repositories.ITimeSheetRepository.DeleteSheet(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="Id"></param>
         </member>
         <member name="T:Plumbery.Domain.Interfaces.Repositories.IUserRepository">
             <summary>
@@ -308,6 +988,44 @@
             <param name="rememberMe">Boolean if user wants to be remembered</param>
             <param name="rememberBrowser">Boolean if browser should be remembered</param>
             <returns>SignIn Status</returns>
+        </member>
+        <member name="M:Plumbery.Domain.Services.UserService.AddSupervisor(Plumbery.Domain.Entities.Supervisor)">
+            <summary>
+            Add supervisor to database
+            </summary>
+            <param name="supervisor">Supervisor to be added</param>
+        </member>
+        <member name="M:Plumbery.Domain.Services.UserService.AddPlumber(Plumbery.Domain.Entities.Plumber)">
+            <summary>
+            Adds plumber to the database
+            </summary>
+            <param name="plumber">Plumber to add</param>
+        </member>
+        <member name="M:Plumbery.Domain.Services.UserService.GetWarehouses">
+            <summary>
+            Get all warehouses
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Plumbery.Domain.Services.UserService.GetAllUsers">
+            <summary>
+            Get all users to display in list
+            </summary>
+            <returns>List of Users</returns>
+        </member>
+        <member name="M:Plumbery.Domain.Services.UserService.GetUserRole(System.String)">
+            <summary>
+            Return Role of user (ie Supervisor or Plumber)
+            </summary>
+            <param name="userId">User's ID</param>
+            <returns>string Role</returns>
+        </member>
+        <member name="M:Plumbery.Domain.Services.UserService.GetInventory(System.String)">
+            <summary>
+            Get Inventory to populate user profile page
+            </summary>
+            <param name="userId">User's ID</param>
+            <returns>IEnumerable Inventory</returns>
         </member>
     </members>
 </doc>

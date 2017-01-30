@@ -49,7 +49,6 @@ P:\Plumbery\Plumbery.Infrastructure.Data\bin\Debug\System.Web.Razor.xml
 P:\Plumbery\Plumbery.Infrastructure.Data\bin\Debug\System.Web.WebPages.xml
 P:\Plumbery\Plumbery.Infrastructure.Data\bin\Debug\System.Web.WebPages.Deployment.xml
 P:\Plumbery\Plumbery.Infrastructure.Data\bin\Debug\System.Web.WebPages.Razor.xml
-P:\The-Plumbery\Plumbery.Infrastructure.Data\bin\Debug\Plumbery.Infrastructure.Data.dll.config
 P:\The-Plumbery\Plumbery.Infrastructure.Data\bin\Debug\Plumbery.Infrastructure.Data.XML
 P:\The-Plumbery\Plumbery.Infrastructure.Data\bin\Debug\Plumbery.Infrastructure.Data.dll
 P:\The-Plumbery\Plumbery.Infrastructure.Data\bin\Debug\Plumbery.Infrastructure.Data.pdb
@@ -100,3 +99,12 @@ P:\The-Plumbery\Plumbery.Infrastructure.Data\bin\Debug\System.Web.WebPages.Razor
 P:\The-Plumbery\Plumbery.Infrastructure.Data\obj\Debug\Plumbery.Infrastructure.Data.csprojResolveAssemblyReference.cache
 P:\The-Plumbery\Plumbery.Infrastructure.Data\obj\Debug\Plumbery.Infrastructure.Data.dll
 P:\The-Plumbery\Plumbery.Infrastructure.Data\obj\Debug\Plumbery.Infrastructure.Data.pdb
+P:\The-Plumbery\Plumbery.Infrastructure.Data\bin\Debug\Plumbery.Infrastructure.Data.dll.config
+P:\The-Plumbery\Plumbery.Infrastructure.Data\bin\Debug\RestSharp.dll
+P:\The-Plumbery\Plumbery.Infrastructure.Data\bin\Debug\SendGrid.CSharp.HTTP.Client.dll
+P:\The-Plumbery\Plumbery.Infrastructure.Data\bin\Debug\System.Net.Http.Formatting.dll
+P:\The-Plumbery\Plumbery.Infrastructure.Data\bin\Debug\Twilio.Api.dll
+P:\The-Plumbery\Plumbery.Infrastructure.Data\bin\Debug\RestSharp.xml
+P:\The-Plumbery\Plumbery.Infrastructure.Data\bin\Debug\System.Net.Http.Formatting.xml
+P:\The-Plumbery\Plumbery.Infrastructure.Data\bin\Debug\Twilio.Api.pdb
+P:\The-Plumbery\Plumbery.Infrastructure.Data\bin\Debug\Twilio.Api.xml

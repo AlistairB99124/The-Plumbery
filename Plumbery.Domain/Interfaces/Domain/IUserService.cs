@@ -34,6 +34,8 @@ namespace Plumbery.Domain.Interfaces.Domain {
         /// <param name="rememberBrowser">Boolean if browser should be remembered</param>
         /// <returns></returns>
         Task<SignInStatus> VerifyCode(SignInManager<User, string> signinManager, string provider, string code, bool rememberMe, bool rememberBrowser);
+        string GetUserRole(string userId);
+
         /// <summary>
         /// Confirm email of User
         /// </summary>
@@ -42,6 +44,7 @@ namespace Plumbery.Domain.Interfaces.Domain {
         /// <param name="code">User code sent in Email</param>
         /// <returns></returns>
         Task<IdentityResult> ConfirmEmail(UserManager<User, string> userManager, string userId, string code);
+        IEnumerable<Inventory> GetInventory(string userId);
         void ForgotPassword();
         void ForgotPasswordConfirmation();
         void ResetPassword();

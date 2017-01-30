@@ -33,7 +33,6 @@ P:\Plumbery\Plumbery.Domain\obj\Debug\Plumbery.Domain.csprojResolveAssemblyRefer
 P:\Plumbery\Plumbery.Domain\obj\Debug\Plumbery.Domain.dll
 P:\Plumbery\Plumbery.Domain\obj\Debug\Plumbery.Domain.pdb
 P:\Plumbery\Plumbery.Domain\bin\Debug\Plumbery.Domain.XML
-P:\The-Plumbery\Plumbery.Domain\bin\Debug\Plumbery.Domain.dll.config
 P:\The-Plumbery\Plumbery.Domain\bin\Debug\Plumbery.Domain.XML
 P:\The-Plumbery\Plumbery.Domain\bin\Debug\Plumbery.Domain.dll
 P:\The-Plumbery\Plumbery.Domain\bin\Debug\Plumbery.Domain.pdb
@@ -67,3 +66,4 @@ P:\The-Plumbery\Plumbery.Domain\bin\Debug\Newtonsoft.Json.xml
 P:\The-Plumbery\Plumbery.Domain\bin\Debug\SimpleInjector.xml
 P:\The-Plumbery\Plumbery.Domain\obj\Debug\Plumbery.Domain.dll
 P:\The-Plumbery\Plumbery.Domain\obj\Debug\Plumbery.Domain.pdb
+P:\The-Plumbery\Plumbery.Domain\obj\Debug\Plumbery.Domain.csprojResolveAssemblyReference.cache

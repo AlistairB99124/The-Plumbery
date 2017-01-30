@@ -250,3 +250,9 @@ P:\The-Plumbery\Plumbery.UI.MVC\obj\Debug\Plumbery.UI.MVC.dll
 P:\The-Plumbery\Plumbery.UI.MVC\obj\Debug\Plumbery.UI.MVC.pdb
 P:\The-Plumbery\Plumbery.UI.MVC\bin\Dropbox.Api.dll
 P:\The-Plumbery\Plumbery.UI.MVC\bin\Dropbox.Api.xml
+P:\The-Plumbery\Plumbery.UI.MVC\bin\Plumbery.UI.MVC.XML
+P:\The-Plumbery\Plumbery.UI.MVC\bin\RestSharp.dll
+P:\The-Plumbery\Plumbery.UI.MVC\bin\Twilio.Api.dll
+P:\The-Plumbery\Plumbery.UI.MVC\bin\RestSharp.xml
+P:\The-Plumbery\Plumbery.UI.MVC\bin\Twilio.Api.pdb
+P:\The-Plumbery\Plumbery.UI.MVC\bin\Twilio.Api.xml

@@ -1,118 +1,27 @@
-﻿@model Plumbery.UI.MVC.Models.CommentAndMaterialModel
+﻿@using Plumbery.UI.MVC.Models
+@using Plumbery.Domain.Entities
 @{
     ViewBag.Title = "Add Materials";
     ViewBag.Description = DateTime.Now.ToString("dd, MMM yyyy");
     string ErrorMessage = ViewBag.Error;
     ViewBag.TimeSheetCode = ViewBag.TimeSheetCode;
     string code = ViewBag.TimeSheetCode;
-    var materials = ViewBag.Materials as IEnumerable<Plumbery.Domain.Entities.TimeSheetMaterialItem>;
-    var comments = ViewBag.Comments as IEnumerable<Plumbery.Domain.Entities.TimeSheetCommentItem>;
-    var materialSelect = ViewBag.MaterialList as SelectList;
+    var materials = ViewBag.Materials as List<TimeSheetMaterialItem>;
+    var comments = ViewBag.Comments as List<TimeSheetCommentItem>;
 }
 <!-- general form elements -->
 <div class="myforms-box">
     <!-- form start -->
     <div class="myforms-box-body">
-        @using (Html.BeginForm("AddMaterial", "TimeSheet", FormMethod.Post, new { @class = "form-horizontal" })) {
-            @Html.AntiForgeryToken()
-            <div class="form-group">
-                <label class="success">@ViewBag.Success</label>
-                <label class="danger">@ViewBag.Failure</label>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.MaterialId, new { @class = "col-sm-2 control-label" })
-                <div class="col-sm-10">
-                    @Html.DropDownListFor(m => m.MaterialId, materialSelect, new { @class = "form-control select2", @style = "width:100%;" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Quantity, new { @class = "col-sm-2 control-label" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Quantity, new { @class = "form-control", @placeholder = "0,00" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.BOM_No, new { @class = "col-sm-2 control-label" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.BOM_No, new { @class = "form-control", @placeholder = "0,00" })
-                </div>
-            </div>
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.Supplier, new { @class = "col-sm-2 control-label" })
-                        <div class="col-sm-10">
-                            @Html.TextBoxFor(m => m.Supplier, new { @class = "form-control" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        @Html.HiddenFor(m => m.TimeSheetCode, new { Value = code })
-                        <button type="submit" id="SaveMaterial" class="btn btn-flat btn-primary">Add Material</button>
-                    </div>
-        }
-        @using (Html.BeginForm("AddComment", "TimeSheet", FormMethod.Post, new { @class = "form-horizontal" })) {
-            <div class="form-group">
-                @Html.LabelFor(m => m.Description, new { @class = "col-sm-2 control-label" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Description, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Metric, new { @class = "col-sm-2 control-label" })
-                <div class="col-sm-10">
-                    @Html.TextBoxFor(m => m.Metric, new { @class = "form-control" })
-                </div>
-            </div>
-                <div class="form-group">
-                    @Html.HiddenFor(m => m.TimeSheetCode, new { Value = code })
-                    <button type="submit" class="btn btn-flat btn-primary">Add Comment</button>
-                </div>
-        }
+        <div class="form-group">
+            <label class="success">@ViewBag.Success</label>
+            <label class="danger">@ViewBag.Failure</label>
+        </div>     
+       @Html.Partial("AddMaterial",new MaterialItemModel { TimeSheetCode=code })
+       @Html.Partial("AddComment", new CommentItemModel { TimeSheetCode = code })
         <hr />
-        <table id="Table" class="table table-bordered table-striped">
-            <thead>
-                <tr>
-                    <th>BOM No.</th>
-                    <th>Code</th>
-                    <th>Description</th>
-                    <th>Quantity</th>
-                    <th>Supplier</th>
-                    <th>Delete</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var material in materials) {
-                    <tr>
-                        <td>@material.BOM_No</td>
-                        <td>@material.Material.StockCode</td>
-                        <td>@material.Material.StockDescription</td>
-                        <td>@material.Quantity</td>
-                        <td>@material.Supplier</td>
-                        <td>
-                            @using (Html.BeginForm("DeleteMaterialItem", "TimeSheet", FormMethod.Post)) {
-                                <input type="hidden" value="@material.Id" name="MaterialId" />
-                                <input type="hidden" value="@material.TimeSheet.Code" name="timesheetCode" />
-                                <button type="submit" class="btn btn-flat btn-danger center-block"><i class="fa fa-times"></i></button>
-                            }
-                    </td>
-                </tr>
-                }
-                @foreach (var comment in comments) {
-                    <tr>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>@comment.Description</td>
-                        <td>@comment.Metric</td>
-                        <td>-</td>
-                        <td>
-                            @using (Html.BeginForm("DeleteCommentItem", "TimeSheet", FormMethod.Post)) {
-                                <input type="hidden" value="@comment.Id" name="CommentId" />
-                                <input type="hidden" value="@comment.TimeSheet.Code" name="timesheetCode" />
-                                <button type="submit" class="btn btn-flat btn-danger center-block"><i class="fa fa-times"></i></button>
-                            }
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+        @Html.Partial("ListItems",new ListItemsModel {  MaterialItems= materials, CommentItems = comments})
+        
     </div>
 
     <!-- /.box-body -->
@@ -146,6 +55,101 @@
                 "info": false,
                 "autoWidth": false
             });
+        });
+
+        //function will be called on button click having id btnsave
+        $("#SaveComment").click(function () {
+            $("#commentLoader").removeClass('hidden');
+            $.ajax({
+                xhr: function () {
+                    var xhr = new window.XMLHttpRequest();
+
+                    // Upload progress
+                    xhr.upload.addEventListener("progress", function (evt) {
+                        if (evt.lengthComputable) {
+                            var percentComplete = evt.loaded / evt.total;
+                            //Do something with upload progress
+                            $("#commentLoader").removeClass('hidden');
+                            console.log(percentComplete);
+                        }
+                    }, false);
+
+                    // Download progress
+                    xhr.addEventListener("progress", function (evt) {
+                        if (evt.lengthComputable) {
+                            var percentComplete = evt.loaded / evt.total;
+                            // Do something with download progress
+                            $("#commentLoader").removeClass('hidden');
+                            console.log(percentComplete);
+                        }
+                    }, false);
+
+                    return xhr;
+                },
+                type: "POST", //HTTP POST Method
+                url: '@Url.Action("AddComment", "TimeSheet", null)', // Controller/View
+                data: { //Passing data
+                    TimeSheetCode: $("#TimeSheetCode").val(),
+                    Description: $("#Description").val(),
+                    Metric: $("#Metric").val()//Reading text box values using Jquery
+                },
+                success: function (data) {
+                    window.location.href = '../TimeSheet/Items?code=@code';
+                    $("#commentLoader").addClass('hidden');
+                },
+                error: function () {
+                    $("#commentLoader").addClass('hidden');
+                    alert("Error");
+                }
+            });
+
+        });
+
+        //function will be called on button click having id btnsave
+        $("#SaveMaterial").click(function () {            
+            $.ajax({
+                xhr: function () {
+                    var xhr = new window.XMLHttpRequest();
+                    // Upload progress
+                    xhr.upload.addEventListener("progress", function (evt) {
+                        if (evt.lengthComputable) {
+                            var percentComplete = evt.loaded / evt.total;
+                            //Do something with upload progress
+                            $("#materialLoader").removeClass('hidden');
+                            console.log(percentComplete);
+                        }
+                    }, false);
+
+                    // Download progress
+                    xhr.addEventListener("progress", function (evt) {
+                        if (evt.lengthComputable) {
+                            var percentComplete = evt.loaded / evt.total;
+                            // Do something with download progress
+                            $("#materialLoader").removeClass('hidden');
+                            console.log(percentComplete);
+                        }
+                    }, false);
+
+                    return xhr;
+                },
+                type: "POST", //HTTP POST Method
+                url: '@Url.Action("AddMaterial", "TimeSheet", null)', // Controller/View
+                data: { //Passing data
+                    MaterialId: $("#MaterialId").val(), //Reading text box values using Jquery
+                    Supplier: $("#Supplier").val(),
+                    Quantity: $("#Quantity").val(),
+                    BOM_No: $("#BOM_No").val(),
+                    TimeSheetCode: $("#TimeSheetCode").val()
+                },
+                success: function (data) {
+                    window.location.href = '../TimeSheet/Items?code=@code';
+                    $("#materialLoader").addClass('hidden');
+                },
+                error: function () {
+                    alert("error")
+                }
+            });
+
         });
     </script>
 }

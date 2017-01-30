@@ -1,87 +1,96 @@
 ﻿@model Plumbery.UI.MVC.Models.IndexViewModel
 @{
-    ViewBag.Title = "Manage";
+    ViewBag.Title = "Profile";
+    ViewBag.Description = "";
 }
+@section Styles{
+    <style>
+        .Post-Content{
+            max-height:450px;
+            overflow-y:scroll;
+        }
+    </style>
+    }
+<div class="row">
+    <div class="col-md-3">
 
-<h2>@ViewBag.Title.</h2>
+        <!-- Profile Image -->
+        <div class="box box-primary">
+            <div class="box-body box-profile text-center">
+                <i class="fa fa-4x fa-user"></i>
 
-<p class="text-success">@ViewBag.StatusMessage</p>
-<div>
-    <h4>Change your account settings</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>Password:</dt>
-        <dd>
-            [
-            @if (Model.HasPassword)
-            {
-                @Html.ActionLink("Change your password", "ChangePassword")
-            }
-            else
-            {
-                @Html.ActionLink("Create", "SetPassword")
-            }
-            ]
-        </dd>
-        <dt>External Logins:</dt>
-        <dd>
-            @Model.Logins.Count [
-            @Html.ActionLink("Manage", "ManageLogins") ]
-        </dd>
-        @*
-            Phone Numbers can used as a second factor of verification in a two-factor authentication system.
-             
-             See <a href="http://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
-                for details on setting up this ASP.NET application to support two-factor authentication using SMS.
-             
-             Uncomment the following block after you have set up two-factor authentication
-        *@
-        @*  
-            <dt>Phone Number:</dt>
-            <dd>
-                @(Model.PhoneNumber ?? "None")
-                @if (Model.PhoneNumber != null)
-                {
-                    <br />
-                    <text>[&nbsp;&nbsp;@Html.ActionLink("Change", "AddPhoneNumber")&nbsp;&nbsp;]</text>
-                    using (Html.BeginForm("RemovePhoneNumber", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        <text>[<input type="submit" value="Remove" class="btn-link" />]</text>
-                    }
-                }
-                else
-                {
-                    <text>[&nbsp;&nbsp;@Html.ActionLink("Add", "AddPhoneNumber")
-                }
-            </dd>
-        *@
-        <dt>Two-Factor Authentication:</dt>
-        <dd>
-            <p>
-                There are no two-factor authentication providers configured. See <a href="http://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
-                for details on setting up this ASP.NET application to support two-factor authentication.
-            </p>
-            @*@if (Model.TwoFactor)
-                {
-                    using (Html.BeginForm("DisableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        <text>Enabled
-                        <input type="submit" value="Disable" class="btn btn-link" />
-                        </text>
-                    }
-                }
-                else
-                {
-                    using (Html.BeginForm("EnableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        <text>Disabled
-                        <input type="submit" value="Enable" class="btn btn-link" />
-                        </text>
-                    }
-                }*@
-        </dd>
-    </dl>
+                <h3 class="profile-username text-center">@Model.User.FullName</h3>
+
+                <p class="text-muted text-center">@Model.Role</p>
+
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+    </div>
+    <!-- /.col -->
+    <div class="col-md-9">
+        <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#activity" data-toggle="tab">Inventory</a></li>
+                <li><a href="#settings" data-toggle="tab">Settings</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="active tab-pane" id="activity">
+                    <div class="Post-Content">
+                        @foreach (var item in Model.Inventory) {
+                        <!-- Post -->
+                            <div class="post">
+                                <div class="user-block">
+                                    <i class="fa fa-2x fa-gear"></i>
+                                    <span class="username">
+                                        <a href="#">@item.Material.StockCode</a>
+                                        <a href="#" class="pull-right btn-box-tool"><i class="fa fa-times"></i></a>
+                                    </span>
+                                    <span class="description">Last Modified - @item.DateModified.ToString("h:mm tt ddd MMM yyyy")</span>
+                                </div>
+                                <!-- /.user-block -->
+                                <p>
+                                    @item.Material.StockDescription
+                                </p>
+                                <ul class="list-inline">
+                                    <li>
+                                        <b>Warehouse</b> @item.Warehouse.Name
+                                    </li>
+                                    <li>
+                                        <b>Quantity</b> @item.Quantity
+                                    </li>
+                                </ul>
+                            </div>
+                    <!-- /.post -->
+                        }
+                    </div>                   
+                </div>
+                <!-- /.tab-pane -->
+                <div class="tab-pane" id="settings">
+                    <form class="form-horizontal">
+                        <p class="text-success">@ViewBag.StatusMessage</p>
+                        <h4>Change your account settings</h4>
+                        <div class="form-group">
+                            <label for="changePassword" class="col-sm-2 control-label">Password</label>
+                            <div class="col-sm-10">
+                                @Html.ActionLink("Change your password", "ChangePassword",null,new { @class="btn btn-flat btn-primary",@id="changePassword" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail" class="col-sm-2 control-label">External Logins:</label>
+                            <div class="col-sm-10">
+                                @Model.Logins.Count @Html.ActionLink("Manage", "ManageLogins",null, new { @class="btn btn-flat btn-primary" })
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.tab-pane -->
+            </div>
+            <!-- /.tab-content -->
+        </div>
+        <!-- /.nav-tabs-custom -->
+    </div>
+    <!-- /.col -->
 </div>
+<!-- /.row -->

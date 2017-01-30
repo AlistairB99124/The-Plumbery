@@ -1,0 +1,359 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Plumbery.UI.MVC</name>
+    </assembly>
+    <members>
+        <member name="T:Plumbery.UI.MVC.App_Start.SimpleInjectorInitialiser">
+            <summary>
+            Class to initialise simple injector
+            </summary>
+        </member>
+        <member name="M:Plumbery.UI.MVC.App_Start.SimpleInjectorInitialiser.Initialise">
+            <summary>
+            Initialise Simple Injector
+            </summary>
+        </member>
+        <member name="M:Plumbery.UI.MVC.App_Start.SimpleInjectorInitialiser.InitialiseContainer(SimpleInjector.Container)">
+            <summary>
+            Run Registration Process in IoC Project
+            </summary>
+            <param name="container">Simple Injector Container</param>
+        </member>
+        <member name="T:Plumbery.UI.MVC.Startup">
+            <summary>
+            Configure OAuth
+            </summary>
+        </member>
+        <member name="M:Plumbery.UI.MVC.Startup.ConfigureAuth(Owin.IAppBuilder)">
+            <summary>
+            For more information on configuring authentication, please visit http://go.microsoft.com/fwlink/?LinkId=301864
+            </summary>
+            <param name="app"></param>
+        </member>
+        <member name="T:Plumbery.UI.MVC.Controllers.AccountController">
+            <summary>
+            Account controller handling Membership logics
+            </summary>
+        </member>
+        <member name="M:Plumbery.UI.MVC.Controllers.AccountController.#ctor(Plumbery.Domain.Interfaces.Domain.IUserService)">
+            <summary>
+            COnstructor that registers User Service
+            </summary>
+            <param name="userService"></param>
+        </member>
+        <member name="P:Plumbery.UI.MVC.Controllers.AccountController.SignInManager">
+            <summary>
+            Sign in manager for logging user
+            </summary>
+        </member>
+        <member name="P:Plumbery.UI.MVC.Controllers.AccountController.UserManager">
+            <summary>
+            USer Manager to handle User interaction
+            </summary>
+        </member>
+        <member name="M:Plumbery.UI.MVC.Controllers.AccountController.Index">
+            <summary>
+            Get list of all users
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Plumbery.UI.MVC.Controllers.AccountController.Login(System.String)">
+            <summary>
+            GET login page
+            </summary>
+            <param name="returnUrl"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plumbery.UI.MVC.Controllers.AccountController.Login(Plumbery.UI.MVC.Models.LoginViewModel,System.String)">
+            <summary>
+            POST Login user
+            </summary>
+            <param name="model"></param>
+            <param name="returnUrl">Return URL after action</param>
+            <returns></returns>
+        </member>
+        <member name="M:Plumbery.UI.MVC.Controllers.AccountController.VerifyCode(System.String,System.String,System.Boolean)">
+            <summary>
+            Verify the code
+            </summary>
+            <param name="provider"></param>
+            <param name="returnUrl"></param>
+            <param name="rememberMe"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plumbery.UI.MVC.Controllers.AccountController.VerifyCode(Plumbery.UI.MVC.Models.VerifyCodeViewModel)">
+            <summary>
+            POST Verification code
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plumbery.UI.MVC.Controllers.AccountController.Register">
+            <summary>
+            GET Registration page
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Plumbery.UI.MVC.Controllers.AccountController.Register(Plumbery.UI.MVC.Models.RegisterViewModel)">
+            <summary>
+            POST Register a new user
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plumbery.UI.MVC.Controllers.AccountController.ConfirmEmail(System.String,System.String)">
+            <summary>
+            Confirm the user and code
+            </summary>
+            <param name="userId"></param>
+            <param name="code"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plumbery.UI.MVC.Controllers.AccountController.ForgotPassword">
+            <summary>
+            GET forgotten password view
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Plumbery.UI.MVC.Controllers.AccountController.ForgotPassword(Plumbery.UI.MVC.Models.ForgotPasswordViewModel)">
+            <summary>
+            Send Password reset request to given email
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plumbery.UI.MVC.Controllers.AccountController.ForgotPasswordConfirmation">
+            <summary>
+            GET forgot password confirmation
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Plumbery.UI.MVC.Controllers.AccountController.ResetPassword(System.String)">
+            <summary>
+            GET Reset password view
+            </summary>
+            <param name="code"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plumbery.UI.MVC.Controllers.AccountController.ResetPassword(Plumbery.UI.MVC.Models.ResetPasswordViewModel)">
+            <summary>
+            POST 
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plumbery.UI.MVC.Controllers.AccountController.ResetPasswordConfirmation">
+            <summary>
+            GET Reset password confirmation view
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Plumbery.UI.MVC.Controllers.AccountController.ExternalLogin(System.String,System.String)">
+            <summary>
+            POST CHeck user login details with external source
+            </summary>
+            <param name="provider"></param>
+            <param name="returnUrl"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plumbery.UI.MVC.Controllers.AccountController.SendCode(System.String,System.Boolean)">
+            <summary>
+            GET Send code form
+            </summary>
+            <param name="returnUrl"></param>
+            <param name="rememberMe"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plumbery.UI.MVC.Controllers.AccountController.SendCode(Plumbery.UI.MVC.Models.SendCodeViewModel)">
+            <summary>
+            POST Email or sms security code to user
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plumbery.UI.MVC.Controllers.AccountController.ExternalLoginCallback(System.String)">
+            <summary>
+            Get External Login Call BAck
+            </summary>
+            <param name="returnUrl">Url to return to after action</param>
+            <returns></returns>
+        </member>
+        <member name="M:Plumbery.UI.MVC.Controllers.AccountController.ExternalLoginConfirmation(Plumbery.UI.MVC.Models.ExternalLoginConfirmationViewModel,System.String)">
+            <summary>
+            POST external confirmation details saved to database
+            </summary>
+            <param name="model">Model holding data</param>
+            <param name="returnUrl">URL to retrurn to after action</param>
+            <returns></returns>
+        </member>
+        <member name="M:Plumbery.UI.MVC.Controllers.AccountController.LogOff">
+            <summary>
+            POST Log off user
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Plumbery.UI.MVC.Controllers.AccountController.ExternalLoginFailure">
+            <summary>
+            GET log in failure view
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Plumbery.UI.MVC.Controllers.AccountController.Dispose(System.Boolean)">
+            <summary>
+            DIspose of private variables
+            </summary>
+            <param name="disposing"></param>
+        </member>
+        <member name="T:Plumbery.UI.MVC.Controllers.TimeSheetController">
+            <summary>
+            COntroller for Time sheet view and functions
+            </summary>
+        </member>
+        <member name="M:Plumbery.UI.MVC.Controllers.TimeSheetController.#ctor(Plumbery.Domain.Interfaces.Domain.ITimeSheetService)">
+            <summary>
+            GET Service dependency in Constructor
+            </summary>
+            <param name="timeSheetService"></param>
+        </member>
+        <member name="M:Plumbery.UI.MVC.Controllers.TimeSheetController.Create">
+            <summary>
+            GET view for Creating a SHeet
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Plumbery.UI.MVC.Controllers.TimeSheetController.Create(Plumbery.UI.MVC.Models.TimeSheetModel,System.Web.Mvc.FormCollection)">
+            <summary>
+            Create the timesheet from the input form
+            </summary>
+            <param name="model">Model representing Time Sheet Data</param>
+            <param name="collection">COllection to get data from select inputs</param>
+            <returns></returns>
+        </member>
+        <member name="M:Plumbery.UI.MVC.Controllers.TimeSheetController.Items(System.String)">
+            <summary>
+            Get form to add items to a given timesheet        /// 
+            </summary>
+            <param name="code">Time sheet code</param>
+            <returns></returns>
+        </member>
+        <member name="M:Plumbery.UI.MVC.Controllers.TimeSheetController.AddMaterial(Plumbery.UI.MVC.Models.MaterialItemModel)">
+            <summary>
+            Add material to time sheet
+            </summary>
+            <param name="model">Model representing Material Data</param>
+            <returns></returns>
+        </member>
+        <member name="M:Plumbery.UI.MVC.Controllers.TimeSheetController.DeleteMaterialItem(System.Web.Mvc.FormCollection)">
+            <summary>
+            Delete Item from Time Sheet
+            </summary>
+            <param name="collection">Collection of inputs from Form</param>
+            <returns></returns>
+        </member>
+        <member name="M:Plumbery.UI.MVC.Controllers.TimeSheetController.DeleteCommentItem(System.Web.Mvc.FormCollection)">
+            <summary>
+            POST delete comment from time sheet
+            </summary>
+            <param name="collection">collection to get ids</param>
+            <returns></returns>
+        </member>
+        <member name="M:Plumbery.UI.MVC.Controllers.TimeSheetController.AddComment(Plumbery.UI.MVC.Models.CommentItemModel)">
+            <summary>
+            POST add comment to time sheet
+            </summary>
+            <param name="model">Model representing comment data</param>
+            <returns></returns>
+        </member>
+        <member name="M:Plumbery.UI.MVC.Controllers.TimeSheetController.DeleteSheet(System.Web.Mvc.FormCollection)">
+            <summary>
+            Delete entire sheet, including link comments and materials
+            </summary>
+            <param name="collection"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plumbery.UI.MVC.Controllers.TimeSheetController.ClearAll(System.Web.Mvc.FormCollection)">
+            <summary>
+            Clear all items from the Time Sheet
+            </summary>
+            <param name="collection"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plumbery.UI.MVC.Controllers.TimeSheetController.SendTimeSheet(System.Web.Mvc.FormCollection)">
+            <summary>
+            Convert Timesheet to PDF and Send to Dropbox or Email
+            </summary>
+            <param name="collection">Collection of inputs from the form to perform this function</param>
+            <returns>Redirect back to Create</returns>
+        </member>
+        <member name="M:Plumbery.UI.MVC.Controllers.TimeSheetController.Index">
+            <summary>
+            Get list of all time sheets
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Plumbery.UI.MVC.Controllers.TimeSheetController.Upload(Dropbox.Api.DropboxClient,System.String,System.String,System.Byte[])">
+            <summary>
+            Upload pdf to Dropbox
+            </summary>
+            <param name="dbx">Drop Box Client</param>
+            <param name="folder">Folder in Drop Box</param>
+            <param name="file">File Name to be saved in folder</param>
+            <param name="content">Content eg pdf byte[] from memory stream</param>
+            <returns></returns>
+        </member>
+        <member name="F:Plumbery.UI.MVC.Utilities.PdfHelper.document">
+            <summary>
+            The MigraDoc document that represents the invoice.
+            </summary>
+        </member>
+        <member name="F:Plumbery.UI.MVC.Utilities.PdfHelper._timeSheet">
+            <summary>
+            Time Sheet Information
+            </summary>
+        </member>
+        <member name="F:Plumbery.UI.MVC.Utilities.PdfHelper.dt">
+            <summary>
+            An XML invoice based on a sample created with Microsoft InfoPath.
+            </summary>
+        </member>
+        <member name="F:Plumbery.UI.MVC.Utilities.PdfHelper.locationFrame">
+            <summary>
+            The root navigator for the XML document.
+            </summary>
+            <summary>
+            The text frame of the MigraDoc document that contains the address.
+            </summary>
+        </member>
+        <member name="F:Plumbery.UI.MVC.Utilities.PdfHelper.table">
+            <summary>
+            The table of the MigraDoc document that contains the invoice items.
+            </summary>
+        </member>
+        <member name="M:Plumbery.UI.MVC.Utilities.PdfHelper.#ctor(Plumbery.Domain.Entities.TimeSheet,System.Data.DataTable)">
+            <summary>
+            Initializes a new instance of the class BillFrom and opens the specified XML document.
+            </summary>
+        </member>
+        <member name="M:Plumbery.UI.MVC.Utilities.PdfHelper.CreateDocument">
+            <summary>
+            Creates the invoice document.
+            </summary>
+        </member>
+        <member name="M:Plumbery.UI.MVC.Utilities.PdfHelper.DefineStyles">
+            <summary>
+            Defines the styles used to format the MigraDoc document.
+            </summary>
+        </member>
+        <member name="M:Plumbery.UI.MVC.Utilities.PdfHelper.CreatePage">
+            <summary>
+            Creates the static parts of the invoice.
+            </summary>
+        </member>
+        <member name="M:Plumbery.UI.MVC.Utilities.PdfHelper.FillContent">
+            <summary>
+            Creates the dynamic parts of the invoice.
+            </summary>
+        </member>
+    </members>
+</doc>

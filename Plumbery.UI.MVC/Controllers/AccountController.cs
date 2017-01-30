@@ -66,21 +66,31 @@ namespace Plumbery.UI.MVC.Controllers {
         #endregion
 
         #region ActionResults
-
+        /// <summary>
+        /// Get list of all users
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index() {
             return View(_userService.GetAllUsers());
         }
 
-        //
-        // GET: /Account/Login
+        /// <summary>
+        /// GET login page
+        /// </summary>
+        /// <param name="returnUrl"></param>
+        /// <returns></returns>
         [AllowAnonymous]
         public ActionResult Login(string returnUrl) {
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
 
-        //
-        // POST: /Account/Login
+        /// <summary>
+        /// POST Login user
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="returnUrl">Return URL after action</param>
+        /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -107,8 +117,13 @@ namespace Plumbery.UI.MVC.Controllers {
             }
         }
 
-        //
-        // GET: /Account/VerifyCode
+        /// <summary>
+        /// Verify the code
+        /// </summary>
+        /// <param name="provider"></param>
+        /// <param name="returnUrl"></param>
+        /// <param name="rememberMe"></param>
+        /// <returns></returns>
         [AllowAnonymous]
         public async Task<ActionResult> VerifyCode(string provider, string returnUrl, bool rememberMe) {
             // Require that the user has already logged in via username/password or external login
@@ -118,8 +133,11 @@ namespace Plumbery.UI.MVC.Controllers {
             return View(new VerifyCodeViewModel { Provider = provider, ReturnUrl = returnUrl, RememberMe = rememberMe });
         }
 
-        //
-        // POST: /Account/VerifyCode
+       /// <summary>
+       /// POST Verification code
+       /// </summary>
+       /// <param name="model"></param>
+       /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -127,10 +145,6 @@ namespace Plumbery.UI.MVC.Controllers {
             if (!ModelState.IsValid) {
                 return View(model);
             }
-            // The following code protects for brute force attacks against the two factor codes. 
-            // If a user enters incorrect codes for a specified amount of time then the user account 
-            // will be locked out for a specified amount of time. 
-            // You can configure the account lockout settings in IdentityConfig
             var result = await _userService.VerifyCode(SignInManager, model.Provider, model.Code, model.RememberMe, model.RememberBrowser);
             switch (result) {
                 case SignInStatus.Success:
@@ -144,19 +158,21 @@ namespace Plumbery.UI.MVC.Controllers {
             }
         }
 
-        //
-        // GET: /Account/Register
+        /// <summary>
+        /// GET Registration page
+        /// </summary>
+        /// <returns></returns>
         [AllowAnonymous]
         public ActionResult Register() {
-            var warehouses = _userService.GetWarehouses().ToList();
-            SelectList warehouseList = new SelectList(warehouses, "Id", "Name", null);
-            
-            ViewBag.WarehouseList = warehouseList;
+            ViewBag.WarehouseList = new SelectList(_userService.GetWarehouses().ToList(), "Id", "Name", null);
             return View();
         }
 
-        //
-        // POST: /Account/Register
+        /// <summary>
+        /// POST Register a new user
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -172,26 +188,12 @@ namespace Plumbery.UI.MVC.Controllers {
                 }
                 var result = await _userService.Register(UserManager, user, model.Password);
                 if (result.Succeeded) {
-                    if (model.IsSupervisor) {
-                        Supervisor super = new Supervisor {
-                            UserId = user.Id
-                        };
-                        _userService.AddSupervisor(super);
-                    } else {
-                        Plumber plumber = new Plumber {
-                            UserId = user.Id,
-                            WarehouseId = Convert.ToInt32(model.Id)
-                        };
-                        _userService.AddPlumber(plumber);
-                    }
                     
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-
-                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    
+                    string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
                     return RedirectToAction("Index", "Home");
                 }
@@ -205,8 +207,12 @@ namespace Plumbery.UI.MVC.Controllers {
             return View(model);
         }
 
-        //
-        // GET: /Account/ConfirmEmail
+        /// <summary>
+        /// Confirm the user and code
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="code"></param>
+        /// <returns></returns>
         [AllowAnonymous]
         public async Task<ActionResult> ConfirmEmail(string userId, string code) {
             if (userId == null || code == null) {
@@ -216,54 +222,65 @@ namespace Plumbery.UI.MVC.Controllers {
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
 
-        //
-        // GET: /Account/ForgotPassword
+        /// <summary>
+        /// GET forgotten password view
+        /// </summary>
+        /// <returns></returns>
         [AllowAnonymous]
         public ActionResult ForgotPassword() {
             return View();
         }
 
-        //
-        // POST: /Account/ForgotPassword
+        /// <summary>
+        /// Send Password reset request to given email
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model) {
             if (ModelState.IsValid) {
-                var user = await UserManager.FindByNameAsync(model.Email);
+                var user = await UserManager.FindByEmailAsync(model.Email);
                 if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id))) {
                     // Don't reveal that the user does not exist or is not confirmed
                     return View("ForgotPasswordConfirmation");
                 }
-
-                // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                // Send an email with this link
-                // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                // await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                // return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                
+                string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
+                await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
             // If we got this far, something failed, redisplay form
             return View(model);
         }
 
-        //
-        // GET: /Account/ForgotPasswordConfirmation
+        /// <summary>
+        /// GET forgot password confirmation
+        /// </summary>
+        /// <returns></returns>
         [AllowAnonymous]
         public ActionResult ForgotPasswordConfirmation() {
             return View();
         }
 
-        //
-        // GET: /Account/ResetPassword
+        /// <summary>
+        /// GET Reset password view
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns></returns>
         [AllowAnonymous]
         public ActionResult ResetPassword(string code) {
             return code == null ? View("Error") : View();
         }
 
-        //
-        // POST: /Account/ResetPassword
+        /// <summary>
+        /// POST 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -271,7 +288,7 @@ namespace Plumbery.UI.MVC.Controllers {
             if (!ModelState.IsValid) {
                 return View(model);
             }
-            var user = await UserManager.FindByNameAsync(model.Email);
+            var user = await UserManager.FindByEmailAsync(model.Email);
             if (user == null) {
                 // Don't reveal that the user does not exist
                 return RedirectToAction("ResetPasswordConfirmation", "Account");
@@ -284,15 +301,21 @@ namespace Plumbery.UI.MVC.Controllers {
             return View();
         }
 
-        //
-        // GET: /Account/ResetPasswordConfirmation
+       /// <summary>
+       /// GET Reset password confirmation view
+       /// </summary>
+       /// <returns></returns>
         [AllowAnonymous]
         public ActionResult ResetPasswordConfirmation() {
             return View();
         }
 
-        //
-        // POST: /Account/ExternalLogin
+        /// <summary>
+        /// POST CHeck user login details with external source
+        /// </summary>
+        /// <param name="provider"></param>
+        /// <param name="returnUrl"></param>
+        /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -301,8 +324,12 @@ namespace Plumbery.UI.MVC.Controllers {
             return new ChallengeResult(provider, Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl }));
         }
 
-        //
-        // GET: /Account/SendCode
+       /// <summary>
+       /// GET Send code form
+       /// </summary>
+       /// <param name="returnUrl"></param>
+       /// <param name="rememberMe"></param>
+       /// <returns></returns>
         [AllowAnonymous]
         public async Task<ActionResult> SendCode(string returnUrl, bool rememberMe) {
             var userId = await SignInManager.GetVerifiedUserIdAsync();
@@ -314,8 +341,11 @@ namespace Plumbery.UI.MVC.Controllers {
             return View(new SendCodeViewModel { Providers = factorOptions, ReturnUrl = returnUrl, RememberMe = rememberMe });
         }
 
-        //
-        // POST: /Account/SendCode
+        /// <summary>
+        /// POST Email or sms security code to user
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -331,8 +361,11 @@ namespace Plumbery.UI.MVC.Controllers {
             return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider, ReturnUrl = model.ReturnUrl, RememberMe = model.RememberMe });
         }
 
-        //
-        // GET: /Account/ExternalLoginCallback
+       /// <summary>
+       /// Get External Login Call BAck
+       /// </summary>
+       /// <param name="returnUrl">Url to return to after action</param>
+       /// <returns></returns>
         [AllowAnonymous]
         public async Task<ActionResult> ExternalLoginCallback(string returnUrl) {
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
@@ -358,8 +391,12 @@ namespace Plumbery.UI.MVC.Controllers {
             }
         }
 
-        //
-        // POST: /Account/ExternalLoginConfirmation
+       /// <summary>
+       /// POST external confirmation details saved to database
+       /// </summary>
+       /// <param name="model">Model holding data</param>
+       /// <param name="returnUrl">URL to retrurn to after action</param>
+       /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -390,8 +427,10 @@ namespace Plumbery.UI.MVC.Controllers {
             return View(model);
         }
 
-        //
-        // POST: /Account/LogOff
+        /// <summary>
+        /// POST Log off user
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LogOff() {
@@ -399,13 +438,18 @@ namespace Plumbery.UI.MVC.Controllers {
             return RedirectToAction("Index", "Home");
         }
 
-        //
-        // GET: /Account/ExternalLoginFailure
+        /// <summary>
+        /// GET log in failure view
+        /// </summary>
+        /// <returns></returns>
         [AllowAnonymous]
         public ActionResult ExternalLoginFailure() {
             return View();
         }
-
+        /// <summary>
+        /// DIspose of private variables
+        /// </summary>
+        /// <param name="disposing"></param>
         protected override void Dispose(bool disposing) {
             if (disposing) {
                 if (_userManager != null) {

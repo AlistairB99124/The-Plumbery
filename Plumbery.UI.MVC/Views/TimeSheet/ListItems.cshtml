@@ -1,0 +1,49 @@
+﻿@using Plumbery.UI.MVC.Models
+@model ListItemsModel
+
+<table id="Table" class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>BOM No.</th>
+            <th>Code</th>
+            <th>Description</th>
+            <th>Quantity</th>
+            <th>Supplier</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var material in Model.MaterialItems) {
+            <tr>
+                <td>@material.BOM_No</td>
+                <td>@material.Material.StockCode</td>
+                <td>@material.Material.StockDescription</td>
+                <td>@material.Quantity</td>
+                <td>@material.Supplier</td>
+                <td>
+                    @using (Html.BeginForm("DeleteMaterialItem", "TimeSheet", FormMethod.Post)) {
+                        <input type="hidden" value="@material.Id" name="MaterialId" />
+                                <input type="hidden" value="@material.TimeSheet.Code" name="timesheetCode" />
+                                <button type="submit" class="btn btn-flat btn-danger center-block"><i class="fa fa-times"></i></button>
+                    }
+                </td>
+            </tr>
+        }
+        @foreach (var comment in Model.CommentItems) {
+            <tr>
+                <td>-</td>
+                <td>-</td>
+                <td>@comment.Description</td>
+                <td>@comment.Metric</td>
+                <td>-</td>
+                <td>
+                    @using (Html.BeginForm("DeleteCommentItem", "TimeSheet", FormMethod.Post)) {
+                        <input type="hidden" value="@comment.Id" name="CommentId" />
+                                <input type="hidden" value="@comment.TimeSheet.Code" name="timesheetCode" />
+                                <button type="submit" class="btn btn-flat btn-danger center-block"><i class="fa fa-times"></i></button>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

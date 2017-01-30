@@ -42,15 +42,24 @@ namespace Plumbery.UI.MVC.Models {
         public int SiteId { get; set; }
     }
 
-    public class CommentAndMaterialModel {
+    public class CommentItemModel {
         public string TimeSheetCode { get; set; }
         public string Description { get; set; }
-        public string Metric { get; set; }
-        [Display(Name ="BOM No")]
+        public string Metric { get; set; }        
+    }
+
+    public class MaterialItemModel {
+        public string TimeSheetCode { get; set; }
+        [Display(Name = "BOM No")]
         public int? BOM_No { get; set; }
-        [Display(Name ="Material")]
+        [Display(Name = "Material")]
         public int MaterialId { get; set; }
         public decimal Quantity { get; set; }
         public string Supplier { get; set; }
+    }
+
+    public class ListItemsModel {
+        public List<TimeSheetMaterialItem> MaterialItems { get; set; }
+        public List<TimeSheetCommentItem> CommentItems { get; set; }
     }
 }

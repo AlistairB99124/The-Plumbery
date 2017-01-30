@@ -9,6 +9,79 @@
             Class to map entities in database
             </summary>
         </member>
+        <member name="T:Plumbery.Infrastructure.Data.Configuration.EmailService">
+            <summary>
+            EMail service for email confirmation and password recovery
+            </summary>
+        </member>
+        <member name="M:Plumbery.Infrastructure.Data.Configuration.EmailService.SendAsync(Microsoft.AspNet.Identity.IdentityMessage)">
+            <summary>
+            Send EMail with configured service
+            </summary>
+            <param name="message">Message to be sent</param>
+            <returns></returns>
+        </member>
+        <member name="T:Plumbery.Infrastructure.Data.Configuration.GMailService">
+            <summary>
+            Gmail service to support EmailService
+            </summary>
+        </member>
+        <member name="P:Plumbery.Infrastructure.Data.Configuration.GMailService.UserName">
+            <summary>
+            Gmail username for email service
+            </summary>
+        </member>
+        <member name="M:Plumbery.Infrastructure.Data.Configuration.GMailService.#ctor">
+            <summary>
+            Configuration for Gmail
+            </summary>
+        </member>
+        <member name="T:Plumbery.Infrastructure.Data.Configuration.UserManager">
+            <summary>
+            User Manager handling user tasks such as login and register
+            </summary>
+        </member>
+        <member name="M:Plumbery.Infrastructure.Data.Configuration.UserManager.#ctor(Microsoft.AspNet.Identity.IUserStore{Plumbery.Domain.Entities.User})">
+            <summary>
+            Initialise userstore in constructor
+            </summary>
+            <param name="store"></param>
+        </member>
+        <member name="M:Plumbery.Infrastructure.Data.Configuration.UserManager.Create(Microsoft.AspNet.Identity.Owin.IdentityFactoryOptions{Plumbery.Infrastructure.Data.Configuration.UserManager},Microsoft.Owin.IOwinContext)">
+            <summary>
+            Create the UserManager
+            </summary>
+            <param name="options"></param>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Plumbery.Infrastructure.Data.Configuration.SignInManager">
+            <summary>
+            SignInManager for user services
+            </summary>
+        </member>
+        <member name="M:Plumbery.Infrastructure.Data.Configuration.SignInManager.#ctor(Plumbery.Infrastructure.Data.Configuration.UserManager,Microsoft.Owin.Security.IAuthenticationManager)">
+            <summary>
+            COnstructor initialising UserManager class and Authentication Manager
+            </summary>
+            <param name="userManager"></param>
+            <param name="authenticationManager"></param>
+        </member>
+        <member name="M:Plumbery.Infrastructure.Data.Configuration.SignInManager.CreateUserIdentityAsync(Plumbery.Domain.Entities.User)">
+            <summary>
+            Create The User
+            </summary>
+            <param name="user"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Plumbery.Infrastructure.Data.Configuration.SignInManager.Create(Microsoft.AspNet.Identity.Owin.IdentityFactoryOptions{Plumbery.Infrastructure.Data.Configuration.SignInManager},Microsoft.Owin.IOwinContext)">
+            <summary>
+            Create the sign in manager
+            </summary>
+            <param name="options"></param>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
         <member name="T:Plumbery.Infrastructure.Data.Configuration.RepositoryManager">
             <summary>
             Class to handle initialisation of Context
@@ -195,6 +268,30 @@
             <param name="rememberMe">Boolean if user wants to be remembered</param>
             <param name="rememberBrowser">Boolean if browser should be remembered</param>
             <returns>SignIn Status</returns>
+        </member>
+        <member name="M:Plumbery.Infrastructure.Data.Repositories.UserRepository.AddSupervisor(Plumbery.Domain.Entities.Supervisor)">
+            <summary>
+            Add supervisor
+            </summary>
+            <param name="supervisor">Supervisor to be added</param>
+            <remarks>This turned out not to be necessary as I disabled
+            the ability of any user to decide if they are a supervisor or not
+            So now</remarks>
+        </member>
+        <member name="M:Plumbery.Infrastructure.Data.Repositories.UserRepository.AddPlumber(Plumbery.Domain.Entities.Plumber)">
+            <summary>
+            Add plumber
+            </summary>
+            <param name="plumber">plumber to add</param>
+            /// <remarks>This turned out not to be necessary as I disabled
+            the ability of any user to decide if they are a supervisor or not
+            So now</remarks>
+        </member>
+        <member name="M:Plumbery.Infrastructure.Data.Repositories.UserRepository.GetWarehouses">
+            <summary>
+            Get all warehouses
+            </summary>
+            <returns></returns>
         </member>
     </members>
 </doc>

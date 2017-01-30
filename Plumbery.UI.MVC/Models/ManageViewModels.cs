@@ -2,6 +2,8 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
+using System;
+using Plumbery.Domain.Entities;
 
 namespace Plumbery.UI.MVC.Models
 {
@@ -9,9 +11,11 @@ namespace Plumbery.UI.MVC.Models
     {
         public bool HasPassword { get; set; }
         public IList<UserLoginInfo> Logins { get; set; }
-        public string PhoneNumber { get; set; }
-        public bool TwoFactor { get; set; }
         public bool BrowserRemembered { get; set; }
+        public User User { get; set; }
+        public string Role { get; set; }
+        public List<Inventory> Inventory { get; set; }
+
     }
 
     public class ManageLoginsViewModel

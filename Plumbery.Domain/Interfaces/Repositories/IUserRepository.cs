@@ -76,6 +76,8 @@ namespace Plumbery.Domain.Interfaces.Repositories {
         void AddSupervisor(Supervisor supervisor);
         void AddPlumber(Plumber plumber);
         IEnumerable<Warehouse> GetWarehouses();
+        IEnumerable<Inventory> GetInventory(string userId);
+        string GetUserRole(string userId);
 
     }
 }

@@ -14,8 +14,17 @@ namespace Plumbery.Domain.Entities {
             // Add custom user claims here
             return userIdentity;
         }
+        /// <summary>
+        /// 
+        /// </summary>
         public string FirstName { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
         public string LastName { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
         public string FullName {
             get {
                 return LastName + ", " + FirstName;

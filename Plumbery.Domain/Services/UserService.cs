@@ -75,7 +75,11 @@ namespace Plumbery.Domain.Services {
         /// <param name="ID">GUID</param>
         /// <returns>User</returns>
         public User GetUserById(string ID) {
-            throw new NotImplementedException();
+            try {
+                return _userRepository.GetUserById(ID);
+            }catch(Exception ex) {
+                throw new ApplicationException(ex.Message);
+            }
         }
         /// <summary>
         /// Login User
@@ -125,7 +129,10 @@ namespace Plumbery.Domain.Services {
         /// <returns>SignIn Status</returns>
         public Task<SignInStatus> VerifyCode(SignInManager<User, string> signinManager, string provider, string code, bool rememberMe, bool rememberBrowser) =>
             _userRepository.VerifyCode(signinManager, provider, code, rememberMe, rememberBrowser);
-
+        /// <summary>
+        /// Add supervisor to database
+        /// </summary>
+        /// <param name="supervisor">Supervisor to be added</param>
         public void AddSupervisor(Supervisor supervisor) {
             try {
                 StartTransaction();
@@ -135,6 +142,10 @@ namespace Plumbery.Domain.Services {
                 throw new ApplicationException(ex.Message);
             }
         }
+        /// <summary>
+        /// Adds plumber to the database
+        /// </summary>
+        /// <param name="plumber">Plumber to add</param>
         public void AddPlumber(Plumber plumber) {
             try {
                 StartTransaction();
@@ -144,7 +155,10 @@ namespace Plumbery.Domain.Services {
                 throw new ApplicationException(ex.Message);
             }
         }
-
+        /// <summary>
+        /// Get all warehouses
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<Warehouse> GetWarehouses() {
             try {
                 return _userRepository.GetWarehouses();
@@ -152,11 +166,38 @@ namespace Plumbery.Domain.Services {
                 throw new ApplicationException(ex.Message);
             }
         }
-
+        /// <summary>
+        /// Get all users to display in list
+        /// </summary>
+        /// <returns>List of Users</returns>
         public IEnumerable<User> GetAllUsers() {
             try {
                 return _userRepository.GetAll();
             }catch(Exception x) {
+                throw new ApplicationException(x.Message);
+            }
+        }
+        /// <summary>
+        /// Return Role of user (ie Supervisor or Plumber)
+        /// </summary>
+        /// <param name="userId">User's ID</param>
+        /// <returns>string Role</returns>
+        public string GetUserRole(string userId) {
+            try {
+                return _userRepository.GetUserRole(userId);
+            } catch (Exception x) {
+                throw new ApplicationException(x.Message);
+            }
+        }
+        /// <summary>
+        /// Get Inventory to populate user profile page
+        /// </summary>
+        /// <param name="userId">User's ID</param>
+        /// <returns>IEnumerable Inventory</returns>
+        public IEnumerable<Inventory> GetInventory(string userId) {
+            try {
+                return _userRepository.GetInventory(userId);
+            } catch (Exception x) {
                 throw new ApplicationException(x.Message);
             }
         }

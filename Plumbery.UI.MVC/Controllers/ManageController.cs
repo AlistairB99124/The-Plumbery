@@ -9,6 +9,8 @@ using Microsoft.Owin.Security;
 using Plumbery.UI.MVC.Models;
 using Plumbery.Infrastructure.Data.Configuration;
 using Plumbery.Domain.Interfaces.Domain;
+using Plumbery.Domain.Entities;
+using System.Collections.Generic;
 
 namespace Plumbery.UI.MVC.Controllers {
     [Authorize]
@@ -53,12 +55,16 @@ namespace Plumbery.UI.MVC.Controllers {
                 : "";
 
             var userId = User.Identity.GetUserId();
+            User user = _userService.GetUserById(userId);
+            string role = _userService.GetUserRole(userId);
+            List<Inventory> inventory = _userService.GetInventory(userId).ToList();
             var model = new IndexViewModel {
                 HasPassword = HasPassword(),
-                PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
-                TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
                 Logins = await UserManager.GetLoginsAsync(userId),
-                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
+                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId),
+                User = user,
+                Inventory = inventory,
+                Role = role
             };
             return View(model);
         }

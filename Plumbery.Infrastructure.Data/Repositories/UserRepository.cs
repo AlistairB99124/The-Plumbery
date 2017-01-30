@@ -106,10 +106,50 @@ namespace Plumbery.Infrastructure.Data.Repositories {
         public async Task<SignInStatus> VerifyCode(SignInManager<User, string> signinManager, string provider, string code, bool rememberMe, bool rememberBrowser) =>
             await signinManager.TwoFactorSignInAsync(provider, code, isPersistent: rememberMe, rememberBrowser: rememberBrowser);
 
-
+        /// <summary>
+        /// Add supervisor
+        /// </summary>
+        /// <param name="supervisor">Supervisor to be added</param>
+        /// <remarks>This turned out not to be necessary as I disabled
+        /// the ability of any user to decide if they are a supervisor or not
+        /// So now</remarks>
         public void AddSupervisor(Supervisor supervisor) => _context.Supervisors.Add(supervisor);
-
+        /// <summary>
+        /// Add plumber
+        /// </summary>
+        /// <param name="plumber">plumber to add</param>
+        /// /// <remarks>This turned out not to be necessary as I disabled
+        /// the ability of any user to decide if they are a supervisor or not
+        /// So now</remarks>
         public void AddPlumber(Plumber plumber) => _context.Plumbers.Add(plumber);
+        /// <summary>
+        /// Get all warehouses
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<Warehouse> GetWarehouses() => _context.Warehouses;
+
+        public IEnumerable<Inventory> GetInventory(string userId) {
+            if (GetUserRole(userId) == "Plumber") {
+                var plumber = _context.Plumbers.Where(x => x.UserId == userId).FirstOrDefault();
+                return _context.Inventories.Where(x => x.WarehouseId == plumber.WarehouseId);
+            } else if(GetUserRole(userId)=="Supervisor") {
+                return _context.Inventories;
+            }else {
+                return new List<Inventory>();
+            }
+        }
+
+        public string GetUserRole(string userId) {
+            var plumber = _context.Plumbers.Where(x => x.UserId == userId).FirstOrDefault();
+            var super = _context.Supervisors.Where(x => x.UserId == userId).FirstOrDefault();
+            if (plumber != null) {
+                return "Plumber";
+            }else if(super!=null) {
+                return "Supervisor";
+            }else {
+                return "Unassigned";
+            }
+        }
+            
     }
 }

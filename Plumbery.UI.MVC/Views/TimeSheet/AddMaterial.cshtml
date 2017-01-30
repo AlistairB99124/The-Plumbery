@@ -1,0 +1,35 @@
+﻿@model Plumbery.UI.MVC.Models.MaterialItemModel
+<div class="form-horizontal">
+    <div class="row">
+        <div class="col-sm-12">
+            <h4>Add Material</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            @Html.LabelFor(m => m.MaterialId, new { @class = "control-label" })
+            @Html.DropDownListFor(m => m.MaterialId, ViewBag.MaterialList as SelectList, new { @class = "form-control select2", @style = "width:100%;" })
+        </div>
+        <div class="col-sm-6">
+            @Html.LabelFor(m => m.Supplier, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Supplier, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            @Html.LabelFor(m => m.BOM_No, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.BOM_No, new { @class = "form-control", @placeholder = "0,00" })
+        </div>
+        <div class="col-sm-6">
+            @Html.LabelFor(m => m.Quantity, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Quantity, new { @class = "form-control", @placeholder = "0,00", value = "" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            @Html.HiddenFor(m => m.TimeSheetCode, new { Value = Model.TimeSheetCode })
+            <div id="materialLoader" class="loader hidden pull-left"></div>
+            <button type="button" id="SaveMaterial" style="margin:5px;width:50%" class="btn btn-flat btn-primary pull-right">Add Material</button>
+        </div>
+    </div>
+</div>
