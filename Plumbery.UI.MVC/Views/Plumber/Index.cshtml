@@ -30,7 +30,6 @@
                     <th>Warehouse</th>
                     <th></th>
                     <th></th>
-                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -42,19 +41,11 @@
                         <td>@item.User.DateRegistered.ToString("dd.MM.yyyy")</td>
                         <td>@item.Warehouse.Name</td>
                         <td>
-                            @using (Html.BeginForm("Create", "Plumber", FormMethod.Get)) {
-                                <input type="hidden" value="@item.Id" name="plumberId" id="plumberId" />
-                                <button type="submit" class="btn btn-flat btn-success"><i class="fa fa-plus"></i></button>
-                            }
-                        </td>
-                        <td>
-                            @using (Html.BeginForm("Edit", "Plumber", FormMethod.Get)) {
-                                <input type="hidden" value="@item.Id" name="plumberId" id="plumberId" />
-                                <button type="submit" class="btn btn-flat btn-warning"><i class="fa fa-pencil"</button>
-                            }
+                            <button type="button" onclick="location.href='@Url.Action("","",new { id=item.Id })'" class="btn btn-flat btn-warning"><i class="fa fa-pencil"</button>
                         </td>
                         <td>
                             @using (Html.BeginForm("Delete","Plumber",FormMethod.Post)) {
+                                @Html.AntiForgeryToken()
                                 <input type="hidden" value="@item.Id" name="plumberId" id="plumberId"/>
                                 <button type="submit" class="btn btn-flat btn-danger"><i class="fa fa-times"></i></button> 
                             }

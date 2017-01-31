@@ -377,7 +377,7 @@ namespace Plumbery.UI.MVC.Utilities {
             paragraph.Format.SpaceBefore = 6;
 
             paragraph = section.AddParagraph();
-            paragraph.Format.SpaceBefore = "13cm";
+            paragraph.Format.SpaceBefore = "12cm";
 
             // Add the print date field
             paragraph = section.AddParagraph();

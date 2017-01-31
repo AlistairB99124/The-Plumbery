@@ -28,7 +28,6 @@
                     <th>Date Registered</th>
                     <th></th>
                     <th></th>
-                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -39,19 +38,11 @@
                         <td>@item.User.LastName</td>
                         <td>@item.User.DateRegistered.ToString("dd.MM.yyyy")</td>
                         <td>
-                            @using (Html.BeginForm("Create", "Supervisor", FormMethod.Get)) {
-                                <input type="hidden" value="@item.Id" name="supervisorId" id="supervisorId" />
-                                <button type="submit" class="btn btn-flat btn-success"><i class="fa fa-plus"></i></button>
-                            }
-                        </td>
-                        <td>
-                            @using (Html.BeginForm("Edit", "Supervisor", FormMethod.Get)) {
-                                <input type="hidden" value="@item.Id" name="supervisorId" id="supervisorId" />
-                                <button type="submit" class="btn btn-flat btn-warning"><i class="fa fa-pencil"</button>
-                            }
+                            <button type="button" onclick="location.href='@Url.Action("Edit","Supervisor",new {Id=item.Id })'" class="btn btn-flat btn-warning"><i class="fa fa-pencil"></i></button>
                         </td>
                         <td>
                             @using (Html.BeginForm("Delete", "Supervisor", FormMethod.Post)) {
+                                @Html.AntiForgeryToken()
                                 <input type="hidden" value="@item.Id" name="supervisorId" id="supervisorId" />
                                 <button type="submit" class="btn btn-flat btn-danger"><i class="fa fa-times"></i></button>
                             }

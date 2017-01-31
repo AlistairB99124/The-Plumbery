@@ -908,6 +908,40 @@
             Save changes made to databse
             </summary>
         </member>
+        <member name="T:Plumbery.Domain.Services.SiteService">
+            <summary>
+            Service for Site functions
+            </summary>
+        </member>
+        <member name="M:Plumbery.Domain.Services.SiteService.#ctor(Plumbery.Domain.Interfaces.Repositories.ISiteRepository)">
+            <summary>
+            Initialise Repository
+            </summary>
+            <param name="siteRepository"></param>
+        </member>
+        <member name="M:Plumbery.Domain.Services.SiteService.Add(Plumbery.Domain.Entities.Site)">
+            <summary>
+            Add site to database
+            </summary>
+            <param name="site">Site to add</param>
+        </member>
+        <member name="M:Plumbery.Domain.Services.SiteService.Delete(Plumbery.Domain.Entities.Site)">
+            <summary>
+            Delete site from database
+            </summary>
+            <param name="site">Site to delete</param>
+        </member>
+        <member name="M:Plumbery.Domain.Services.SiteService.Edit(Plumbery.Domain.Entities.Site)">
+            <summary>
+            Edit site in database
+            </summary>
+            <param name="site">Site to be edited</param>
+        </member>
+        <member name="M:Plumbery.Domain.Services.SiteService.List">
+            <summary>
+            List all sites
+            </summary>
+        </member>
         <member name="M:Plumbery.Domain.Services.SupervisorService.#ctor(Plumbery.Domain.Interfaces.Repositories.ISupervisorRepository)">
             <summary>
             Constructor to initialise User Repository

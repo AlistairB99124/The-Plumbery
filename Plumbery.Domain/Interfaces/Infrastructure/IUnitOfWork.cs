@@ -1,9 +1,12 @@
-﻿namespace Plumbery.Domain.Interfaces.Infrastructure {
+﻿using System.Threading.Tasks;
+
+namespace Plumbery.Domain.Interfaces.Infrastructure {
     /// <summary>
     /// Interface to perform actions when dataase is modified
     /// </summary>
     public interface IUnitOfWork {
         void SaveChanges();
         void Initialise();
+        Task<int> SaveChangesAsync();
     }
 }

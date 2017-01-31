@@ -58,7 +58,7 @@ namespace Plumbery.UI.MVC.Controllers
             ViewBag.Users = new SelectList(_supervisorService.GetUsers(), "Id", "FullName");
             return RedirectToAction("Index");
         }
-        public ActionResult Edit(int? Id) {
+        public ActionResult Edit(int Id) {
             Supervisor currentSupervisor = _supervisorService.GetSupervisor(User.Identity.GetUserId());
             if (currentSupervisor == null) {
                 return RedirectToAction("Login", "Account", null);

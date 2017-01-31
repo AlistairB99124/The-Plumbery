@@ -37,12 +37,12 @@ namespace Plumbery.UI.MVC.Controllers {
         /// GET view for Creating a SHeet
         /// </summary>
         /// <returns></returns>
-        public ActionResult Create() {
+        public async Task<ActionResult> Create() {
             // Get collections
-            var plumbers = _timeSheetService.GetPlumberUsers();
-            var sites = _timeSheetService.ListSites();
+            var plumbers = await _timeSheetService.GetPlumberUsers();
+            var sites = await _timeSheetService.ListSites();
             // Get Plumber logged in
-            var plumber = _timeSheetService.GetPlumber(User.Identity.GetUserId());
+            var plumber = await _timeSheetService.GetPlumber(User.Identity.GetUserId());
             // Specify SlectLists for dropdown boxes
             SelectList plumberList = null;
             if (plumber != null) {
@@ -65,12 +65,16 @@ namespace Plumbery.UI.MVC.Controllers {
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(TimeSheetModel model, FormCollection collection) {
+        public async Task<ActionResult> Create(TimeSheetModel model, FormCollection collection) {
             try {
-                Site site = _timeSheetService.GetSite(model.SiteId);
+                var site = await _timeSheetService.GetSite(model.SiteId);
                 string id = model.PlumberId;
-                Plumber plumber = _timeSheetService.GetPlumber(model.PlumberId);
-                string code = site.Abbr + "-" + plumber.Id + "-" + DateTime.Now.ToString("ddMMyyhhmmss");
+                //Plumber plumber = _timeSheetService.GetPlumber(model.PlumberId);
+                Plumber plumber = await _timeSheetService.GetPlumber(model.PlumberId);
+                var timesheets = await _timeSheetService.GetAll();
+
+                var timesheetToday = timesheets.Where(x => x.PlumberId == plumber.Id).Where(x => x.DateCreated.Date == DateTime.Now.Date).ToList();
+                string code = site.Abbr + "-" + plumber.Id + "-" + timesheetToday.Count+1 + DateTime.Now.ToString("dMyy");
                 string ph = collection.Get("PlumberHours");
                 string pm = collection.Get("PlumberMins");
                 string ah = collection.Get("AssistantHours");
@@ -98,12 +102,15 @@ namespace Plumbery.UI.MVC.Controllers {
                     SINumber = model.SINumber,
                     DateCreated = DateTime.Now
                 };
-                _timeSheetService.AddTimeSheet(sheet);
-                return RedirectToAction("Items",new {code=sheet.Code });
+                var result = await _timeSheetService.AddTimeSheet(sheet);
+                if (result > 0) {
+                    return RedirectToAction("Items", new { code = sheet.Code });
+                }
+                return View(model);
             } catch {
                 // Get collections
-                List<User> plumbers = _timeSheetService.GetPlumberUsers().ToList();
-                var sites = _timeSheetService.ListSites();
+                var plumbers = await _timeSheetService.GetPlumberUsers();
+                var sites = await _timeSheetService.ListSites();
                 //// Get Plumber logged in
                 var currentPlumber = _timeSheetService.GetPlumber(User.Identity.GetUserId());
                 //Specify SlectLists for dropdown boxes
@@ -122,20 +129,20 @@ namespace Plumbery.UI.MVC.Controllers {
         /// </summary>
         /// <param name="code">Time sheet code</param>
         /// <returns></returns>
-        public ActionResult Items(string code) {
+        public async Task<ActionResult> Items(string code) {
             try {
-                TimeSheet sheet = _timeSheetService.GetTimeSheet(code);
-                Plumber plumber = _timeSheetService.GetPlumber(sheet.PlumberId);
-                List<TimeSheetMaterialItem> materialItems = _timeSheetService.ListMaterialItems(sheet.Id).ToList();
-                List<TimeSheetCommentItem> commentItems = _timeSheetService.ListCommentItems(sheet.Id).ToList();
-                IEnumerable<Material> materials = _timeSheetService.ListMaterials(plumber);
-                SelectList materialList = new SelectList(materials, "Id", "StockDescription", materials.FirstOrDefault());
+                var sheet = await _timeSheetService.GetTimeSheet(code);
+                var plumber = await _timeSheetService.GetPlumber(sheet.PlumberId);
+                var materialItems = await _timeSheetService.ListMaterialItems(sheet.Id);
+                var commentItems = await _timeSheetService.ListCommentItems(sheet.Id);
+                IEnumerable<Material> materials = await _timeSheetService.ListMaterials(plumber);
+                SelectList materialList = new SelectList(materials.ToList(), "Id", "StockDescription", materials.FirstOrDefault());
 
                 ViewBag.Error = TempData["Failure"];
                 ViewBag.Success = TempData["Success"];
                 ViewBag.MaterialList = materialList;
-                ViewBag.Materials = materialItems;
-                ViewBag.Comments = commentItems;
+                ViewBag.Materials = materialItems.ToList();
+                ViewBag.Comments = commentItems.ToList();
                 ViewBag.TimeSheetCode = sheet.Code;
                 return View();
             } catch (Exception x) {
@@ -148,28 +155,29 @@ namespace Plumbery.UI.MVC.Controllers {
         /// <param name="model">Model representing Material Data</param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult AddMaterial(MaterialItemModel model) {
+        public async Task<ActionResult> AddMaterial(MaterialItemModel model) {
             try {
-                var timeSheet = _timeSheetService.GetTimeSheet(model.TimeSheetCode);
+                var timeSheet = await _timeSheetService.GetTimeSheet(model.TimeSheetCode);
                 TimeSheetMaterialItem item = new TimeSheetMaterialItem {
                     BOM_No = model.BOM_No,
                     Quantity = model.Quantity,
-                    MaterialId = model.MaterialId,
+                    MaterialId = Convert.ToInt32(model.MaterialId),
                     TimeSheetId = timeSheet.Id,
                     Supplier = model.Supplier
                 };
-                _timeSheetService.AddMaterialItem(item);
-                Plumber plumber = _timeSheetService.GetPlumber(timeSheet.PlumberId);
-                IEnumerable<Material> materials = _timeSheetService.ListMaterials(plumber);
+                var result = await _timeSheetService.AddMaterialItem(item);
+
+                Plumber plumber = await _timeSheetService.GetPlumber(timeSheet.PlumberId);
+                IEnumerable<Material> materials = await _timeSheetService.ListMaterials(plumber);
                 SelectList materialList = new SelectList(materials, "Id", "Description", materials.FirstOrDefault());
                 ViewBag.AvailableMaterials = materials;
                 TempData["Success"] = "A material was succeessfully added!";
                 return RedirectToAction("Items", new { code = model.TimeSheetCode });
             } catch {
                 TempData["Failure"] = "Item was not added!";
-                var timeSheet = _timeSheetService.GetTimeSheet(model.TimeSheetCode);
-                Plumber plumber = _timeSheetService.GetPlumber(timeSheet.PlumberId);
-                IEnumerable<Material> materials = _timeSheetService.ListMaterials(plumber);
+                var timeSheet = await _timeSheetService.GetTimeSheet(model.TimeSheetCode);
+                Plumber plumber = await _timeSheetService.GetPlumber(timeSheet.PlumberId);
+                IEnumerable<Material> materials = await _timeSheetService.ListMaterials(plumber);
                 SelectList materialList = new SelectList(materials, "Id", "Description", materials.FirstOrDefault());
                 ViewBag.AvailableMaterials = materials;
                 return RedirectToAction("Items", new { code = model.TimeSheetCode });
@@ -182,10 +190,13 @@ namespace Plumbery.UI.MVC.Controllers {
         /// <param name="collection">Collection of inputs from Form</param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult DeleteMaterialItem(FormCollection collection) {
+        public async Task<ActionResult> DeleteMaterialItem(FormCollection collection) {
             int MaterialId = Convert.ToInt32(collection.Get("MaterialId"));
             string timesheetCode = collection.Get("timesheetCode");
-            _timeSheetService.DeleteMaterialItem(MaterialId);
+            var result = await _timeSheetService.DeleteMaterialItem(MaterialId);
+            if (result > 0) {
+                return RedirectToAction("Items", "TimeSheet", new { code = timesheetCode });
+            }
             return RedirectToAction("Items", "TimeSheet", new { code = timesheetCode });
         }
         /// <summary>
@@ -194,10 +205,13 @@ namespace Plumbery.UI.MVC.Controllers {
         /// <param name="collection">collection to get ids</param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult DeleteCommentItem(FormCollection collection) {
+        public async Task<ActionResult> DeleteCommentItem(FormCollection collection) {
             int commentId = Convert.ToInt32(collection.Get("CommentId"));
             string timesheetCode = collection.Get("timesheetCode");
-            _timeSheetService.DeleteCommentItem(commentId);
+            var result = await _timeSheetService.DeleteCommentItem(commentId);
+            if (result > 0) {
+                return RedirectToAction("Items", "TimeSheet", new { code = timesheetCode });
+            }
             return RedirectToAction("Items", "TimeSheet", new { code = timesheetCode });
         }
         /// <summary>
@@ -206,17 +220,19 @@ namespace Plumbery.UI.MVC.Controllers {
         /// <param name="model">Model representing comment data</param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult AddComment(CommentItemModel model) {
+        public async Task<ActionResult> AddComment(CommentItemModel model) {
             try {
-                var timeSheet = _timeSheetService.GetTimeSheet(model.TimeSheetCode);
+                var timeSheet = await _timeSheetService.GetTimeSheet(model.TimeSheetCode);
                 TimeSheetCommentItem item = new TimeSheetCommentItem {
                     Description = model.Description,
                     Metric = model.Metric,
                     TimeSheetId = timeSheet.Id
                 };
-                _timeSheetService.AddCommentItem(item);
-
-                TempData["Success"] = "A comment was successfully added!";                
+                var result = await _timeSheetService.AddCommentItem(item);
+                if (result > 0) {
+                    TempData["Success"] = "A comment was successfully added!";
+                    return RedirectToAction("Items", new { code = model.TimeSheetCode });
+                }          
                 return RedirectToAction("Items", new { code = model.TimeSheetCode });
             } catch {
                 TempData["Error"] = "Item was not added!";                
@@ -229,9 +245,12 @@ namespace Plumbery.UI.MVC.Controllers {
         /// <param name="collection"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult DeleteSheet(FormCollection collection) {
+        public async Task<ActionResult> DeleteSheet(FormCollection collection) {
             int id = Convert.ToInt32(collection.Get("SheetId"));
-            _timeSheetService.DeleteSheet(id);
+            var result = await _timeSheetService.DeleteSheet(id);
+            if (result > 0) {
+                return RedirectToAction("Index");
+            }
             return RedirectToAction("Index");
         }
         /// <summary>
@@ -240,13 +259,13 @@ namespace Plumbery.UI.MVC.Controllers {
         /// <param name="collection"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult ClearAll(FormCollection collection) {
+        public async Task<ActionResult> ClearAll(FormCollection collection) {
             string code = collection.Get("TimeSheetCode");
-            TimeSheet sheet = _timeSheetService.GetTimeSheet(code);
-            List<TimeSheetMaterialItem> materialItems = _timeSheetService.ListMaterialItems(sheet.Id).ToList();
-            List<TimeSheetCommentItem> commentItems = _timeSheetService.ListCommentItems(sheet.Id).ToList();
-            _timeSheetService.DeleteCommentItems(commentItems);
-            _timeSheetService.DeleteMaterialItems(materialItems);
+            TimeSheet sheet = await _timeSheetService.GetTimeSheet(code);
+            IEnumerable<TimeSheetMaterialItem> materialItems = await _timeSheetService.ListMaterialItems(sheet.Id);
+            IEnumerable<TimeSheetCommentItem> commentItems = await _timeSheetService.ListCommentItems(sheet.Id);
+            var result = await _timeSheetService.DeleteCommentItems(commentItems.ToList());
+            var result2 = await _timeSheetService.DeleteMaterialItems(materialItems.ToList());
 
             return RedirectToAction("Items", "TimeSheet", new { TimeSheet = code });
         }
@@ -260,12 +279,12 @@ namespace Plumbery.UI.MVC.Controllers {
             // Get Timesheet Code from collection
             string code = collection.Get("timesheetCode");
             // Use code to get timesheet object
-            TimeSheet timeSheet = _timeSheetService.GetTimeSheet(code);
+            TimeSheet timeSheet = await _timeSheetService.GetTimeSheet(code);
             // Get collections of timesheet items
-            var materialItems = _timeSheetService.ListMaterialItems(timeSheet.Id).ToList();
-            var commentItems = _timeSheetService.ListCommentItems(timeSheet.Id).ToList();
+            var materialItems = await _timeSheetService.ListMaterialItems(timeSheet.Id);
+            var commentItems = await _timeSheetService.ListCommentItems(timeSheet.Id);
             // Deduct items from inventory
-            _timeSheetService.DeductFromInventory(materialItems);
+            var result = await _timeSheetService.DeductFromInventory(materialItems.ToList());
             // Populate a datatable to use in the PDF
             DataTable data = new DataTable();
             data.Columns.Add("BOM No.", typeof(string));
@@ -273,8 +292,8 @@ namespace Plumbery.UI.MVC.Controllers {
             data.Columns.Add("Description", typeof(string));
             data.Columns.Add("Quantity", typeof(string));
             data.Columns.Add("Supplier", typeof(string));
-            materialItems.ForEach(m => data.Rows.Add(m.BOM_No, m.Material.StockCode, m.Material.StockDescription, m.Quantity.ToString("F2"), m.Supplier));
-            commentItems.ForEach(c => data.Rows.Add("", "", c.Description, c.Metric, ""));
+            materialItems.ToList().ForEach(m => data.Rows.Add(m.BOM_No, m.Material.StockCode, m.Material.StockDescription, m.Quantity.ToString("F2"), m.Supplier));
+            commentItems.ToList().ForEach(c => data.Rows.Add("", "", c.Description, c.Metric, ""));
 
             // Assign timesheet code to document name
             data.TableName = timeSheet.Code;
@@ -310,13 +329,15 @@ namespace Plumbery.UI.MVC.Controllers {
         /// Get list of all time sheets
         /// </summary>
         /// <returns></returns>
-        public ActionResult Index() {
+        public async Task<ActionResult> Index() {
             List<TimeSheet> timesheets = null;
-            Plumber plumber = _timeSheetService.GetPlumber(User.Identity.GetUserId());
+            Plumber plumber = await _timeSheetService.GetPlumber(User.Identity.GetUserId());
             if (plumber != null) {
-                timesheets = _timeSheetService.GetAll().ToList().Where(x=>x.PlumberId==plumber.Id).ToList();
+                var alltimesheets = await _timeSheetService.GetAll();
+                timesheets = alltimesheets.ToList().Where(x=>x.PlumberId==plumber.Id).ToList();
             }else {
-                timesheets = _timeSheetService.GetAll().ToList();
+                var all = await _timeSheetService.GetAll();
+                timesheets = all.ToList();
             }
 
             return View(timesheets);

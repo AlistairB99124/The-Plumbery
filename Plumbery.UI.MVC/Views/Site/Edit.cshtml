@@ -1,0 +1,66 @@
+﻿@using Plumbery.UI.MVC.Models
+@model EditSiteViewModels
+@{
+    ViewBag.Title = "Edit";
+}
+<!-- general form elements -->
+<div class="myforms-box">
+    <div class="myforms-logo">
+        <h3 class="box-title">Fill in information</h3>
+    </div>
+    <!-- /.box-header -->
+    <!-- form start -->
+    @using (Html.BeginForm("Edit", "Site", FormMethod.Post, new { @class = "form-horizontal", role = "form" })) {
+        @Html.AntiForgeryToken()
+
+        <div class="myforms-box-body">
+            @Html.HiddenFor(m => m.SiteId)
+            @Html.HiddenFor(m => m.LocationId)
+            <div class="form-group">
+                @Html.LabelFor(m => m.Name, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Abbr, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.Abbr, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Address1, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.Address1, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Address2, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.Address2, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.City, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.City, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Province, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.Province, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Postal_Code, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.Postal_Code, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Country, new { @class = "control-label" })
+                @Html.DropDownListFor(m => m.Country, ViewBag.CountrySelect as SelectList, new { @class = "form-control select2", @style = "width:100%" })
+            </div>
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+            <div class="col-sm-4">
+                <button type="reset" class="btn btn-flat btn-primary btn-block">Clear</button>
+            </div>
+            <div class="col-sm-4">
+                @Html.ActionLink("Back To List", "Index", "Site", new { @class = "btn btn-flat btn-primary btn-block" })
+            </div>
+            <div class="col-sm-4">
+                <button type="submit" class="btn btn-flat btn-primary btn-block">Edit</button>
+            </div>
+        </div>
+    }
+</div>
+<!-- /.box -->

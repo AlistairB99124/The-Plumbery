@@ -87,7 +87,7 @@ namespace Plumbery.UI.MVC.Controllers
                 }
                 TempData["Modified"] = counts[1] + " materials were modified!";
                 TempData["Added"] = counts[0] + " new materials were added!";
-                return RedirectToAction("Index", "Inventory", null);
+                return RedirectToAction("UpdateInventory", "Inventory", null);
             }
             ViewBag.PlumberSelect = new SelectList(_inventoryService.GetPlumberUsers(), "Id", "FullName");
             return RedirectToAction("Index", "Inventory", null);
@@ -125,6 +125,7 @@ namespace Plumbery.UI.MVC.Controllers
             return View();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include ="Id,MaterialId,Quantity,WarehouseId,DateAdded,DateModified,ModifiedBy")] Inventory inventory) {
             if (ModelState.IsValid) {
                 _inventoryService.EditInventory(inventory);
@@ -134,6 +135,7 @@ namespace Plumbery.UI.MVC.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Delete(FormCollection collection) {
             string id = collection.Get("inventoryId");
             int Id = Convert.ToInt32(id);

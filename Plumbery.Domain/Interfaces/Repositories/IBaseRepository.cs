@@ -14,7 +14,7 @@ namespace Plumbery.Domain.Interfaces.Repositories {
         /// Get generic list of all of type TEntity
         /// </summary>
         /// <returns>List of TEntity</returns>
-        IList<TEntity> GetAll();
+        IEnumerable<TEntity> GetAll();
         /// <summary>
         /// Get TEntity by Id
         /// </summary>

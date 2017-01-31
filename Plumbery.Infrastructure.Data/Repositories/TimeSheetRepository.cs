@@ -47,11 +47,11 @@ namespace Plumbery.Infrastructure.Data.Repositories {
 
         public void EditMaterialItem(TimeSheetMaterialItem material) => _context.Entry(material).State = System.Data.Entity.EntityState.Modified;
 
-        public Plumber GetPlumber(int Id) => _context.Plumbers.Find(Id);
+        public async Task<Plumber> GetPlumber(int Id) => await _context.Plumbers.FindAsync(Id);
+        
+        public async Task<Plumber> GetPlumber(string UserId) => _context.Plumbers.Where(x => x.UserId == UserId).FirstOrDefault();
 
-        public Plumber GetPlumber(string UserId) => _context.Plumbers.Where(x => x.UserId == UserId).FirstOrDefault();
-
-        public IEnumerable<User> GetPlumberUsers() {
+        public async Task<IEnumerable<User>> GetPlumberUsers() {
             var users = new List<User>();
             var plumbers = _context.Plumbers.ToList();
             foreach(var p in plumbers) {
@@ -61,15 +61,17 @@ namespace Plumbery.Infrastructure.Data.Repositories {
             return users;
         }
 
-        public Site GetSite(int Id) => _context.Sites.Find(Id);
+        public async Task<IEnumerable<TimeSheet>> GetAllTimeSheets() => _context.TimeSheets;
 
-        public TimeSheet GetTimeSheet(string Code) => _context.TimeSheets.Where(x => x.Code == Code).FirstOrDefault();
+        public async Task<Site> GetSite(int Id) => await _context.Sites.FindAsync(Id);
 
-        public IEnumerable<TimeSheetCommentItem> ListCommentItems(int TimeSheetId) => _context.TimeSheetCommentItems.Where(x => x.TimeSheetId == TimeSheetId);
+        public async Task<TimeSheet> GetTimeSheet(string Code) => _context.TimeSheets.Where(x => x.Code == Code).FirstOrDefault();
 
-        public IEnumerable<TimeSheetMaterialItem> ListMaterialItems(int TimeSheetId) => _context.TimeSheetMaterialItems.Where(x => x.TimeSheetId == TimeSheetId);
+        public async Task<IEnumerable<TimeSheetCommentItem>> ListCommentItems(int TimeSheetId) => _context.TimeSheetCommentItems.Where(x => x.TimeSheetId == TimeSheetId);
 
-        public IEnumerable<Material> ListMaterials(Plumber plumber) {
+        public async Task<IEnumerable<TimeSheetMaterialItem>> ListMaterialItems(int TimeSheetId) => _context.TimeSheetMaterialItems.Where(x => x.TimeSheetId == TimeSheetId);
+
+        public async Task<IEnumerable<Material>> ListMaterials(Plumber plumber) {
             var warehouse = _context.Warehouses.Where(x => x.Id == plumber.WarehouseId).FirstOrDefault();
             List<Inventory> inventory = _context.Inventories.Where(x => x.WarehouseId == warehouse.Id).ToList();
             List<Material> materials = new List<Material>();
@@ -80,7 +82,7 @@ namespace Plumbery.Infrastructure.Data.Repositories {
             return materials;
         }
 
-        public IEnumerable<Plumber> ListPlumbers() => _context.Plumbers;
-        public IEnumerable<Site> ListSites() => _context.Sites;
+        public async Task<IEnumerable<Plumber>> ListPlumbers() => _context.Plumbers;
+        public async Task<IEnumerable<Site>> ListSites() => _context.Sites;
     }
 }

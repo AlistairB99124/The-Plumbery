@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 
 namespace Plumbery.Domain.Interfaces.Repositories {
     public interface ISiteRepository:IBaseRepository<Site> {
-        
+        void AddLocation(Location location);
+        void EditLocation(Location location);
+        Location GetLocation(int locationId);
     }
 }

@@ -12,16 +12,14 @@
 <!-- general form elements -->
 <div class="myforms-box">
     <!-- form start -->
-    <div class="myforms-box-body">
+    <div class="myforms-box-body">        
+        @Html.Partial("AddMaterial",new MaterialItemModel { TimeSheetCode=code })
+        @Html.Partial("AddComment", new CommentItemModel { TimeSheetCode = code })
         <div class="form-group">
             <label class="success">@ViewBag.Success</label>
             <label class="danger">@ViewBag.Failure</label>
         </div>     
-       @Html.Partial("AddMaterial",new MaterialItemModel { TimeSheetCode=code })
-       @Html.Partial("AddComment", new CommentItemModel { TimeSheetCode = code })
-        <hr />
-        @Html.Partial("ListItems",new ListItemsModel {  MaterialItems= materials, CommentItems = comments})
-        
+        @Html.Partial("ListItems",new ListItemsModel {  MaterialItems= materials, CommentItems = comments})       
     </div>
 
     <!-- /.box-body -->

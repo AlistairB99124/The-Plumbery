@@ -23,7 +23,7 @@
     <![endif]-->
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
-    <div class="wrapper fa-">
+    <div class="wrapper">
         @Html.Partial("_Header")
         @Html.Partial("_Sidebar")
 
@@ -40,7 +40,12 @@
                 @RenderBody()
             </section>
         </div>
-
+        <footer class="main-footer">
+            <div class="pull-right hidden-xs">
+                <b>Version</b> 1.0.0
+            </div>
+            <strong>Copyright &copy; 2017 <a href="http://almsaeedstudio.com">The Plumbery</a>.</strong> All rights reserved.
+        </footer>
         @Html.Partial("_ControlSidebar")
     </div>
 

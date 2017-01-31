@@ -1,5 +1,6 @@
 ﻿using Microsoft.Practices.ServiceLocation;
 using Plumbery.Domain.Interfaces.Infrastructure;
+using System.Threading.Tasks;
 
 namespace Plumbery.Domain.Services {
     /// <summary>
@@ -20,5 +21,8 @@ namespace Plumbery.Domain.Services {
         public virtual void PersistTransaction() {
             _unitOfWork.SaveChanges();
         }
+
+        public virtual async Task<int> PersistTransactionAsync() => await _unitOfWork.SaveChangesAsync();
+        
     }
 }

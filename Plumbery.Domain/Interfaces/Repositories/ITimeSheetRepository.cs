@@ -35,7 +35,7 @@ namespace Plumbery.Domain.Interfaces.Repositories {
         /// </summary>
         /// <param name="TimeSheetId"></param>
         /// <returns></returns>
-        IEnumerable<TimeSheetMaterialItem> ListMaterialItems(int TimeSheetId);
+        Task<IEnumerable<TimeSheetMaterialItem>> ListMaterialItems(int TimeSheetId);
         /// <summary>
         /// 
         /// </summary>
@@ -61,52 +61,52 @@ namespace Plumbery.Domain.Interfaces.Repositories {
         /// </summary>
         /// <param name="TimeSheetId"></param>
         /// <returns></returns>
-        IEnumerable<TimeSheetCommentItem> ListCommentItems(int TimeSheetId);
+        Task<IEnumerable<TimeSheetCommentItem>> ListCommentItems(int TimeSheetId);
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        IEnumerable<Plumber> ListPlumbers();
+        Task<IEnumerable<Plumber>> ListPlumbers();
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        IEnumerable<Site> ListSites();
+        Task<IEnumerable<Site>> ListSites();
         /// <summary>
         /// 
         /// </summary>
         /// <param name="UserId"></param>
         /// <returns></returns>
-        Plumber GetPlumber(string UserId);
+        Task<Plumber> GetPlumber(string UserId);
         /// <summary>
         /// 
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
-        Plumber GetPlumber(int Id);
+        Task<Plumber> GetPlumber(int Id);
         /// <summary>
         /// 
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
-        Site GetSite(int Id);
+        Task<Site> GetSite(int Id);
         /// <summary>
         /// 
         /// </summary>
         /// <param name="Code"></param>
         /// <returns></returns>
-        TimeSheet GetTimeSheet(string Code);
+        Task<TimeSheet> GetTimeSheet(string Code);
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        IEnumerable<User> GetPlumberUsers();
+        Task<IEnumerable<User>> GetPlumberUsers();
         /// <summary>
         /// 
         /// </summary>
         /// <param name="plumber"></param>
         /// <returns></returns>
-        IEnumerable<Material> ListMaterials(Plumber plumber);
+        Task<IEnumerable<Material>> ListMaterials(Plumber plumber);
         /// <summary>
         /// 
         /// </summary>
@@ -117,5 +117,7 @@ namespace Plumbery.Domain.Interfaces.Repositories {
         /// </summary>
         /// <param name="Id"></param>
         void DeleteSheet(int Id);
+
+        Task<IEnumerable<TimeSheet>> GetAllTimeSheets();
     }
 }

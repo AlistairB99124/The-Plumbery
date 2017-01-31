@@ -24,6 +24,7 @@ namespace Plumbery.Infrastructure.IoC
             container.Register(typeof(IPlumberRepository), typeof(PlumberRepository), Lifestyle.Scoped);
             container.Register(typeof(ISupervisorRepository), typeof(SupervisorRepository), Lifestyle.Scoped);
             container.Register(typeof(IHomeRepository), typeof(HomeRepository), Lifestyle.Scoped);
+            container.Register(typeof(ISiteRepository), typeof(SiteRepository), Lifestyle.Scoped);
 
             // Domain
             container.Register(typeof(IUserService), typeof(UserService), Lifestyle.Scoped);
@@ -32,6 +33,7 @@ namespace Plumbery.Infrastructure.IoC
             container.Register(typeof(IPlumberService), typeof(PlumberService), Lifestyle.Scoped);
             container.Register(typeof(ISupervisorService), typeof(SupervisorService), Lifestyle.Scoped);
             container.Register(typeof(IHomeService), typeof(HomeService), Lifestyle.Scoped);
+            container.Register(typeof(ISiteService), typeof(SiteService), Lifestyle.Scoped);
 
 
             // Service Locator

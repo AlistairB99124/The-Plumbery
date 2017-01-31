@@ -101,6 +101,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\Country.cs" />
     <Compile Include="Entities\Inventory.cs" />
     <Compile Include="Entities\Location.cs" />
     <Compile Include="Entities\Material.cs" />
@@ -117,6 +118,7 @@
     <Compile Include="Interfaces\Domain\IHomeService.cs" />
     <Compile Include="Interfaces\Domain\IInventoryService.cs" />
     <Compile Include="Interfaces\Domain\IPlumberService.cs" />
+    <Compile Include="Interfaces\Domain\ISiteService.cs" />
     <Compile Include="Interfaces\Domain\ISupervisorService.cs" />
     <Compile Include="Interfaces\Domain\ITimeSheetService.cs" />
     <Compile Include="Interfaces\Domain\IUserService.cs" />
@@ -139,6 +141,7 @@
     <Compile Include="Services\InventoryService.cs" />
     <Compile Include="Services\PlumberService.cs" />
     <Compile Include="Services\ServiceBase.cs" />
+    <Compile Include="Services\SiteService.cs" />
     <Compile Include="Services\SupervisorService.cs" />
     <Compile Include="Services\TimeSheetService.cs" />
     <Compile Include="Services\UserService.cs" />

@@ -162,6 +162,7 @@
     <Compile Include="Repositories\HomeRepository.cs" />
     <Compile Include="Repositories\InventoryRepository.cs" />
     <Compile Include="Repositories\PlumberyRepository.cs" />
+    <Compile Include="Repositories\SiteRepository.cs" />
     <Compile Include="Repositories\SupervisorRepository.cs" />
     <Compile Include="Repositories\TimeSheetRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />

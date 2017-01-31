@@ -14,7 +14,7 @@
                                 Browse… <input type="file" style="display:none" name="file" onchange="displayName()" id="file" />
                             </span>
                         </label>
-                        <input type="text" class="form-control" id="uploadText" readonly="" placeholder="Upload Profile Image">
+                        <input type="text" class="form-control" id="uploadText" readonly="" placeholder="Upload .xls or .xlsx files only!">
                     </div>
                 </div>
                 <div class="form-group has-feedback">
@@ -26,8 +26,8 @@
         }          
     </div>  
     <div class="myforms-box-msg">
-        <label class="label-success">@ViewBag.Modified</label>
-        <label class="label-warning">@ViewBag.Added</label>
+        <label class="label-success pull-left">@ViewBag.Modified</label>
+        <label class="label-warning pull-right">@ViewBag.Added</label>
     </div> 
 </div>
 @section Scripts{

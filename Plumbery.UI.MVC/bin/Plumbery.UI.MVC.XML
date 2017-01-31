@@ -205,6 +205,29 @@
             </summary>
             <param name="disposing"></param>
         </member>
+        <member name="M:Plumbery.UI.MVC.Controllers.HomeController.Index">
+            <summary>
+            Load Home Page
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="F:Plumbery.UI.MVC.Controllers.SiteController._siteService">
+            <summary>
+            Site service
+            </summary>
+        </member>
+        <member name="M:Plumbery.UI.MVC.Controllers.SiteController.#ctor(Plumbery.Domain.Interfaces.Domain.ISiteService)">
+            <summary>
+            Initialise Site Services
+            </summary>
+            <param name="siteService"></param>
+        </member>
+        <member name="M:Plumbery.UI.MVC.Controllers.SiteController.Index">
+            <summary>
+            Get list of all sites
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:Plumbery.UI.MVC.Controllers.TimeSheetController">
             <summary>
             COntroller for Time sheet view and functions
@@ -301,6 +324,96 @@
             <param name="file">File Name to be saved in folder</param>
             <param name="content">Content eg pdf byte[] from memory stream</param>
             <returns></returns>
+        </member>
+        <member name="P:Plumbery.UI.MVC.Models.CreateSiteViewModels.Name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.UI.MVC.Models.CreateSiteViewModels.Abbr">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.UI.MVC.Models.CreateSiteViewModels.Address1">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.UI.MVC.Models.CreateSiteViewModels.Address2">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.UI.MVC.Models.CreateSiteViewModels.City">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.UI.MVC.Models.CreateSiteViewModels.Province">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.UI.MVC.Models.CreateSiteViewModels.Country">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.UI.MVC.Models.CreateSiteViewModels.Postal_Code">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.UI.MVC.Models.EditSiteViewModels.SiteId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.UI.MVC.Models.EditSiteViewModels.Name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.UI.MVC.Models.EditSiteViewModels.Abbr">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.UI.MVC.Models.EditSiteViewModels.LocationId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.UI.MVC.Models.EditSiteViewModels.Address1">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.UI.MVC.Models.EditSiteViewModels.Address2">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.UI.MVC.Models.EditSiteViewModels.City">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.UI.MVC.Models.EditSiteViewModels.Province">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.UI.MVC.Models.EditSiteViewModels.Country">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Plumbery.UI.MVC.Models.EditSiteViewModels.Postal_Code">
+            <summary>
+            
+            </summary>
         </member>
         <member name="F:Plumbery.UI.MVC.Utilities.PdfHelper.document">
             <summary>

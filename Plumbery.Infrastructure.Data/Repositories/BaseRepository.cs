@@ -63,7 +63,7 @@ namespace Plumbery.Infrastructure.Data.Repositories {
         /// Get generic list of all of type TEntity
         /// </summary>
         /// <returns>List of TEntity</returns>
-        public IList<TEntity> GetAll() => _context.Set<TEntity>().ToList();
+        public IEnumerable<TEntity> GetAll() => _context.Set<TEntity>().ToList();
         /// <summary>
         /// Remove TEntity by Id from database
         /// </summary>

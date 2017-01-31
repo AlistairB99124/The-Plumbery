@@ -1,4 +1,6 @@
-﻿using Microsoft.Practices.ServiceLocation;
+﻿using System;
+using System.Threading.Tasks;
+using Microsoft.Practices.ServiceLocation;
 using Plumbery.Domain.Interfaces.Infrastructure;
 using Plumbery.Infrastructure.Data.Context;
 
@@ -25,5 +27,9 @@ namespace Plumbery.Infrastructure.Data.Configuration {
         public void SaveChanges() {
             _context.SaveChanges();
         }
+
+        public async Task<int> SaveChangesAsync() =>
+            await _context.SaveChangesAsync();
+
     }
 }

@@ -29,198 +29,198 @@ namespace Plumbery.Domain.Services {
         #region Methods
         
 
-        public void AddCommentItem(TimeSheetCommentItem comment) {
+        public async Task<int> AddCommentItem(TimeSheetCommentItem comment) {
             try {
                 StartTransaction();
                 _sheetRepository.AddCommentItem(comment);
-                PersistTransaction();
+                return await PersistTransactionAsync();
             } catch (Exception ex) {
                 throw new ApplicationException(ex.Message);
             }
         }
 
-        public void AddMaterialItem(TimeSheetMaterialItem material) {
+        public async Task<int> AddMaterialItem(TimeSheetMaterialItem material) {
             try {
                 StartTransaction();
                 _sheetRepository.AddMaterialItem(material);
-                PersistTransaction();
+                return await PersistTransactionAsync();
             } catch (Exception ex) {
                 throw new ApplicationException(ex.Message);
             }
         }
 
-        public void AddTimeSheet(TimeSheet timeSheet) {
+        public async Task<int> AddTimeSheet(TimeSheet timeSheet) {
             try {
                 StartTransaction();
                 _sheetRepository.Add(timeSheet);
-                PersistTransaction();
+                return await PersistTransactionAsync();
             } catch (Exception ex) {
                 throw new ApplicationException(ex.Message);
             }
         }
 
-        public void DeductFromInventory(List<TimeSheetMaterialItem> items) {
+        public async Task<int> DeductFromInventory(List<TimeSheetMaterialItem> items) {
             try {
                 StartTransaction();
                 _sheetRepository.DeductFromInventory(items);
-                PersistTransaction();
+                return await PersistTransactionAsync();
             } catch(Exception ex) {
                 throw new ApplicationException(ex.Message);
             }
         }
 
-        public void DeleteCommentItem(int Id) {
+        public async Task<int> DeleteCommentItem(int Id) {
             try {
                 StartTransaction();
                 _sheetRepository.DeleteCommentItem(Id);
-                PersistTransaction();
+                return await PersistTransactionAsync();
             } catch (Exception ex) {
                 throw new ApplicationException(ex.Message);
             }
         }
 
-        public void DeleteCommentItems(List<TimeSheetCommentItem> items) {
+        public async Task<int> DeleteCommentItems(List<TimeSheetCommentItem> items) {
             try {
                 StartTransaction();
                 _sheetRepository.DeleteCommentItems(items);
-                PersistTransaction();
+                return await PersistTransactionAsync();
             } catch (Exception ex) {
                 throw new ApplicationException(ex.Message);
             }
         }
 
-        public void DeleteMaterialItem(int Id) {
+        public async Task<int> DeleteMaterialItem(int Id) {
             try {
                 StartTransaction();
                 _sheetRepository.DeleteMaterialItem(Id);
-                PersistTransaction();
+                return await PersistTransactionAsync();
             } catch (Exception ex) {
                 throw new ApplicationException(ex.Message);
             }
         }
 
-        public void DeleteMaterialItems(List<TimeSheetMaterialItem> items) {
+        public async Task<int> DeleteMaterialItems(List<TimeSheetMaterialItem> items) {
             try {
                 StartTransaction();
                 _sheetRepository.DeleteMaterialItems(items);
-                PersistTransaction();
+                return await PersistTransactionAsync();
             } catch (Exception ex) {
                 throw new ApplicationException(ex.Message);
             }
         }
 
-        public void DeleteSheet(int id) {
+        public async Task<int> DeleteSheet(int id) {
             try {
                 StartTransaction();
                 _sheetRepository.DeleteSheet(id);
-                PersistTransaction();
+                return await PersistTransactionAsync();
             } catch (Exception ex) {
                 throw new ApplicationException(ex.Message);
             }
         }
 
-        public void EditCommentItem(TimeSheetCommentItem comment) {
+        public async Task<int> EditCommentItem(TimeSheetCommentItem comment) {
             try {
                 StartTransaction();
                 _sheetRepository.EditCommentItem(comment);
-                PersistTransaction();
+                return await PersistTransactionAsync();
             } catch (Exception ex) {
                 throw new ApplicationException(ex.Message);
             }
         }
 
-        public void EditMaterialItem(TimeSheetMaterialItem material) {
+        public async Task<int> EditMaterialItem(TimeSheetMaterialItem material) {
             try {
                 StartTransaction();
                 _sheetRepository.EditMaterialItem(material);
-                PersistTransaction();
+                return await PersistTransactionAsync();
             } catch (Exception ex) {
                 throw new ApplicationException(ex.Message);
             }
         }
 
-        public IEnumerable<TimeSheet> GetAll() {
+        public async Task<IEnumerable<TimeSheet>> GetAll() {
             try {
-                return _sheetRepository.GetAll();
+                return await _sheetRepository.GetAllTimeSheets();
             } catch (Exception ex) {
                 throw new ApplicationException(ex.Message);
             }
         }
 
-        public Plumber GetPlumber(int Id) {
+        public async Task<Plumber> GetPlumber(int Id) {
             try {
-                return _sheetRepository.GetPlumber(Id);
+                return await _sheetRepository.GetPlumber(Id);
             } catch (Exception ex) {
                 throw new ApplicationException(ex.Message);
             }
         }
 
-        public Plumber GetPlumber(string UserId) {
+        public async Task<Plumber> GetPlumber(string UserId) {
             try {
-                return _sheetRepository.GetPlumber(UserId);
+                return await _sheetRepository.GetPlumber(UserId);
             } catch (Exception ex) {
                 throw new ApplicationException(ex.Message);
             }
         }
 
-        public IEnumerable<User> GetPlumberUsers() {
+        public async Task<IEnumerable<User>> GetPlumberUsers() {
             try {
-                return _sheetRepository.GetPlumberUsers();
+                return await _sheetRepository.GetPlumberUsers();
             } catch (Exception ex) {
                 throw new ApplicationException(ex.Message);
             }
         }
 
-        public Site GetSite(int Id) {
+        public async Task<Site> GetSite(int Id) {
             try {
-                return _sheetRepository.GetSite(Id);
+                return await _sheetRepository.GetSite(Id);
             } catch (Exception ex) {
                 throw new ApplicationException(ex.Message);
             }
         }
 
-        public TimeSheet GetTimeSheet(string Code) {
+        public async Task<TimeSheet> GetTimeSheet(string Code) {
             try {
-                return _sheetRepository.GetTimeSheet(Code);
+                return await _sheetRepository.GetTimeSheet(Code);
             } catch (Exception ex) {
                 throw new ApplicationException(ex.Message);
             }
         }
         
-        public IEnumerable<TimeSheetCommentItem> ListCommentItems(int TimeSheetId) {
+        public async Task<IEnumerable<TimeSheetCommentItem>> ListCommentItems(int TimeSheetId) {
             try {
-                return _sheetRepository.ListCommentItems(TimeSheetId);
+                return await _sheetRepository.ListCommentItems(TimeSheetId);
             } catch (Exception ex) {
                 throw new ApplicationException(ex.Message);
             }
         }
 
-        public IEnumerable<TimeSheetMaterialItem> ListMaterialItems(int TimeSheetId) {
+        public async Task<IEnumerable<TimeSheetMaterialItem>> ListMaterialItems(int TimeSheetId) {
             try {
-                return _sheetRepository.ListMaterialItems(TimeSheetId);
+                return await _sheetRepository.ListMaterialItems(TimeSheetId);
             } catch (Exception ex) {
                 throw new ApplicationException(ex.Message);
             }
         }
-        public IEnumerable<Material> ListMaterials(Plumber plumber) {
+        public async Task<IEnumerable<Material>> ListMaterials(Plumber plumber) {
             try {
-                return _sheetRepository.ListMaterials(plumber);
+                return await _sheetRepository.ListMaterials(plumber);
             }catch(Exception ex) {
                 throw new ApplicationException(ex.Message);
             }
         }
 
-        public IEnumerable<Plumber> ListPlumbers() {
+        public async Task<IEnumerable<Plumber>> ListPlumbers() {
             try {
-                return _sheetRepository.ListPlumbers();
+                return await _sheetRepository.ListPlumbers();
             } catch (Exception ex) {
                 throw new ApplicationException(ex.Message);
             }
         }
 
-        public IEnumerable<Site> ListSites() {
+        public async Task<IEnumerable<Site>> ListSites() {
             try {
-                return _sheetRepository.ListSites();                    
+                return await _sheetRepository.ListSites();                    
             } catch (Exception ex) {
                 throw new ApplicationException(ex.Message);
             }

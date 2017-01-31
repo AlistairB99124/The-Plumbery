@@ -64,7 +64,8 @@
                         <td>@Html.DropDownList("Materials" + item.Id,materials, new { @class = "form-control" })</td>
                         <td>@Html.DropDownList("Comments" + item.Id,comments,new { @class="form-control" })</td>
                         <td>
-                            @using (Html.BeginForm("DeleteSheet","TimeSheet",FormMethod.Post)) {
+                            @using (Html.BeginForm("DeleteSheet", "TimeSheet", FormMethod.Post)) {
+                                @Html.AntiForgeryToken()
                                 <input type="hidden" value="@item.Id" name="SheetId"/>
                                 <button type="submit" class="btn btn-flat btn-danger"><i class="fa fa-times"></i></button>
                             }

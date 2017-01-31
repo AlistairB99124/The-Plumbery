@@ -35,7 +35,6 @@
                     <th>Cost</th>
                     <th></th>
                     <th></th>
-                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -50,20 +49,10 @@
                         <td>@item.ModifiedBy</td>
                         <td>@item.Quantity</td>
                         <td>@item.Material.Cost</td>
-                        <td>
-                            @using (Html.BeginForm("UpdateInventory", "Inventory", FormMethod.Get)) {
-                                <input type="hidden" value="@item.Id" name="inventoryId" id="inventoryId" />
-                                <button type="submit" class="btn btn-flat btn-success"><i class="fa fa-plus"></i></button>
-                            }
-                        </td>
-                        <td>
-                            @using (Html.BeginForm("Edit", "Inventory", FormMethod.Get)) {
-                                <input type="hidden" value="@item.Id" name="inventoryId" id="inventoryId" />
-                                <button type="submit" class="btn btn-flat btn-warning"><i class="fa fa-pencil"></i></button>
-                            }
-                        </td>
+                        <td><button onclick="location.href='@Url.Action("","",new { id=item.Id })'" type="submit" class="btn btn-flat btn-warning"><i class="fa fa-pencil"></i></button></td>
                         <td>
                             @using (Html.BeginForm("Delete", "Inventory", FormMethod.Post)) {
+                                @Html.AntiForgeryToken()
                                 <input type="hidden" value="@item.Id" name="inventoryId" id="inventoryId" />
                                 <button type="submit" class="btn btn-flat btn-danger"><i class="fa fa-times"></i></button>
                             }

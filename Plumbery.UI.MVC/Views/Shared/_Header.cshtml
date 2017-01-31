@@ -33,9 +33,9 @@
     @* BEGIN Logo *@
     <a href="@Url.Action("Index", "Home")" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
-        <span class="logo-mini"><b>P</b></span>
+        <span class="logo-mini"><img src="../../Content/img/icon.png" height="22" style="background:#fff;margin:8px;padding:2px" /></span>
         <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg">the<b>Plumbery</b></span>
+        <span class="logo-lg">THE<b>PLUMBERY</b><img src="../../Content/img/icon.png" height="22" style="background:#fff;margin:8px;padding:2px" /></span>
     </a>
     @Html.AntiForgeryToken()
     @* END Logo *@
@@ -145,9 +145,9 @@
 
                             </li>
                             <li class="user-footer">
-                                @*<div class="pull-left">
+                                <div class="pull-left">
                                     @Html.ActionLink("Profile", "Index", "Manage", null, new { @class = "btn btn-default btn-flat" })
-                                </div>*@
+                                </div>
                                 <div class="pull-right">
                                     <a href="javascript:document.getElementById('logoutForm').submit()" class="btn btn-default btn-flat">Log Out</a>
                                 </div>
