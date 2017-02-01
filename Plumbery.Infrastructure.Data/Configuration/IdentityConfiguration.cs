@@ -7,33 +7,58 @@ using Plumbery.Domain.Entities;
 using Plumbery.Infrastructure.Data.Configuration;
 using Plumbery.Infrastructure.Data.Context;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Net.Mail;
 using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
+using System.Web.Script.Serialization;
 
 namespace Plumbery.Infrastructure.Data.Configuration {
     /// <summary>
     /// EMail service for email confirmation and password recovery
     /// </summary>
     public class EmailService : IIdentityMessageService {
+        private List<KeyValuePair<string, Stream>> _attachments;
+        private List<KeyValuePair<string, string>> _recipients;
         /// <summary>
         /// Send EMail with configured service
         /// </summary>
         /// <param name="message">Message to be sent</param>
         /// <returns></returns>
         public async Task SendAsync(IdentityMessage message) {
-            MailMessage email = new MailMessage(new MailAddress("theplumbery.email.service@gmail.com", "(do not reply)"),
-           new MailAddress(message.Destination));
+            MailMessage email = new MailMessage(
+                new MailAddress("theplumbery.email.service@gmail.com", "(do not reply)"),
+                new MailAddress(message.Destination)
+            );
             email.Subject = message.Subject;
             email.Body = message.Body;
-            email.IsBodyHtml = true;
+            email.IsBodyHtml = true;            
             using (var mailClient = new GMailService()) {
                 //In order to use the original from email address, uncomment this line:
                 email.From = new MailAddress(mailClient.UserName, "(do not reply)");
 
                 await mailClient.SendMailAsync(email);
             }
+        }
+        public async Task SendAsync(IdentityMessage message, string AttachmentPath) {
+            MailMessage email = new MailMessage(
+                new MailAddress("theplumbery.email.service@gmail.com", "(do not reply)"),
+                new MailAddress(message.Destination)
+            );
+            email.Subject = message.Subject;
+            email.Body = message.Body;
+            email.IsBodyHtml = true;
+            var attachement = new Attachment(AttachmentPath);
+            email.Attachments.Add(attachement);
+                using (var mailClient = new GMailService()) {
+                    //In order to use the original from email address, uncomment this line:
+                    email.From = new MailAddress(mailClient.UserName, "(do not reply)");
+
+                    await mailClient.SendMailAsync(email);
+                }
         }
     }
     /// <summary>
@@ -66,6 +91,7 @@ namespace Plumbery.Infrastructure.Data.Configuration {
     /// User Manager handling user tasks such as login and register
     /// </summary>
     public class UserManager : UserManager<User> {
+        
         /// <summary>
         /// Initialise userstore in constructor
         /// </summary>
@@ -73,6 +99,17 @@ namespace Plumbery.Infrastructure.Data.Configuration {
         public UserManager(IUserStore<User> store)
             : base(store) {
         }
+
+        public static async Task<bool> SendEmailAttachment(string email, string body, string subject, string AttachmentPath) {
+            EmailService myService = new EmailService();
+            IdentityMessage IMessage = new IdentityMessage();
+            IMessage.Body = body;
+            IMessage.Subject = subject;
+            IMessage.Destination = email;
+            await myService.SendAsync(IMessage, AttachmentPath);
+            return true;
+        }
+
         /// <summary>
         /// Create the UserManager
         /// </summary>

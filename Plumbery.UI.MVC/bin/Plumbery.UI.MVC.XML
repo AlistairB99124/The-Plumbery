@@ -233,6 +233,16 @@
             COntroller for Time sheet view and functions
             </summary>
         </member>
+        <member name="P:Plumbery.UI.MVC.Controllers.TimeSheetController.SignInManager">
+            <summary>
+            Sign in manager for logging user
+            </summary>
+        </member>
+        <member name="P:Plumbery.UI.MVC.Controllers.TimeSheetController.UserManager">
+            <summary>
+            USer Manager to handle User interaction
+            </summary>
+        </member>
         <member name="M:Plumbery.UI.MVC.Controllers.TimeSheetController.#ctor(Plumbery.Domain.Interfaces.Domain.ITimeSheetService)">
             <summary>
             GET Service dependency in Constructor

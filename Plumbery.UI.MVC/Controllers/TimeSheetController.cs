@@ -17,6 +17,8 @@ using System.Threading.Tasks;
 using System.IO;
 using Dropbox.Api.Files;
 using System.Text;
+using Plumbery.Infrastructure.Data.Configuration;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace Plumbery.UI.MVC.Controllers {
     /// <summary>
@@ -25,6 +27,32 @@ namespace Plumbery.UI.MVC.Controllers {
     [Authorize]
     public class TimeSheetController : Controller {
         private ITimeSheetService _timeSheetService;
+        private SignInManager _signInManager;
+        private UserManager _userManager;
+        #region Properties
+        /// <summary>
+        /// Sign in manager for logging user
+        /// </summary>
+        public SignInManager SignInManager {
+            get {
+                return _signInManager ?? HttpContext.GetOwinContext().Get<SignInManager>();
+            }
+            private set {
+                _signInManager = value;
+            }
+        }
+        /// <summary>
+        /// USer Manager to handle User interaction
+        /// </summary>
+        public UserManager UserManager {
+            get {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<UserManager>();
+            }
+            private set {
+                _userManager = value;
+            }
+        }
+        #endregion
         /// <summary>
         /// GET Service dependency in Constructor
         /// </summary>
@@ -323,7 +351,10 @@ namespace Plumbery.UI.MVC.Controllers {
             DropboxClient dbx = new DropboxClient("QQm9MqbFkuIAAAAAAAAQqTl01HSny0wZg7sJ4IDy5wRGZIJkfFXXSKgNsZV5pXrs");
             byte[] content = System.IO.File.ReadAllBytes(Server.MapPath(filename));
             await Upload(dbx, "/Apps/The Plumbery/Daily Time Sheets",timeSheet.Code + ".pdf", content);
-
+            var emailResult = await UserManager.SendEmailAttachment("alistair.bowendavies@gmail.com", "Attached is a submitted time sheet.", "Time Sheet: " + timeSheet.Code, Server.MapPath(filename));
+            if (emailResult == true) {
+                return RedirectToAction("Create", "TimeSheet", null);
+            }
             return RedirectToAction("Create", "TimeSheet", null);
         }
         /// <summary>

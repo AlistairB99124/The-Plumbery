@@ -108,3 +108,4 @@ P:\The-Plumbery\Plumbery.Infrastructure.Data\bin\Debug\Twilio.Api.xml
 P:\The-Plumbery\Plumbery.Infrastructure.Data\obj\Debug\Plumbery.Infrastructure.Data.csprojResolveAssemblyReference.cache
 P:\The-Plumbery\Plumbery.Infrastructure.Data\obj\Debug\Plumbery.Infrastructure.Data.dll
 P:\The-Plumbery\Plumbery.Infrastructure.Data\obj\Debug\Plumbery.Infrastructure.Data.pdb
+P:\The-Plumbery\Plumbery.Infrastructure.Data\bin\Debug\SendGrid.dll
