@@ -54,7 +54,7 @@ namespace Plumbery.UI.MVC.Models {
         public int? BOM_No { get; set; }
         [Display(Name = "Material")]
         public int? MaterialId { get; set; }
-        public decimal Quantity { get; set; }
+        public decimal? Quantity { get; set; }
         public string Supplier { get; set; }
     }
 

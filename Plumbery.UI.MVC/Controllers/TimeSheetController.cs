@@ -135,9 +135,10 @@ namespace Plumbery.UI.MVC.Controllers {
                 var plumber = await _timeSheetService.GetPlumber(sheet.PlumberId);
                 var materialItems = await _timeSheetService.ListMaterialItems(sheet.Id);
                 var commentItems = await _timeSheetService.ListCommentItems(sheet.Id);
-                IEnumerable<Material> materials = await _timeSheetService.ListMaterials(plumber);
-                SelectList materialList = new SelectList(materials.ToList(), "Id", "StockDescription", materials.FirstOrDefault());
+                var materials = await _timeSheetService.ListMaterials(plumber);
 
+                SelectList materialList = new SelectList(materials.ToList(), "Id", "SelectDescription", materials.FirstOrDefault());
+                
                 ViewBag.Error = TempData["Failure"];
                 ViewBag.Success = TempData["Success"];
                 ViewBag.MaterialList = materialList;
@@ -160,7 +161,7 @@ namespace Plumbery.UI.MVC.Controllers {
                 var timeSheet = await _timeSheetService.GetTimeSheet(model.TimeSheetCode);
                 TimeSheetMaterialItem item = new TimeSheetMaterialItem {
                     BOM_No = model.BOM_No,
-                    Quantity = model.Quantity,
+                    Quantity = Convert.ToDecimal(model.Quantity),
                     MaterialId = Convert.ToInt32(model.MaterialId),
                     TimeSheetId = timeSheet.Id,
                     Supplier = model.Supplier

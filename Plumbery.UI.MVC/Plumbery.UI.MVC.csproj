@@ -294,6 +294,7 @@
     <Content Include="Content\css\Plugins\boostrap-slider\bootstrap-slider.css" />
     <Content Include="Content\css\select2.css" />
     <Content Include="Content\css\select2.min.css" />
+    <Content Include="Content\css\selectAlt.css" />
     <Content Include="Content\css\skins\skin-black-light.css" />
     <Content Include="Content\css\skins\skin-black-light.min.css" />
     <Content Include="Content\css\skins\skin-black.css" />
@@ -374,8 +375,11 @@
     <Content Include="Content\js\plugins\select2\select2.full.min.js" />
     <Content Include="Content\js\plugins\select2\select2.js" />
     <Content Include="Content\js\plugins\select2\select2.min.js" />
+    <Content Include="Content\js\plugins\select2\selectAlt.js" />
     <Content Include="Content\js\plugins\slimscroll\jquery.slimscroll.js" />
     <Content Include="Content\js\plugins\slimscroll\jquery.slimscroll.min.js" />
+    <Content Include="Content\img\logo.png" />
+    <Content Include="Content\img\logo2.png" />
     <Content Include="Global.asax" />
     <Content Include="Content\css\bootstrap.css.map" />
     <Content Include="Content\css\bootstrap.min.css.map" />

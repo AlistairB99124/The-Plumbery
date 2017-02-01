@@ -28,6 +28,10 @@ namespace Plumbery.Domain.Entities {
         /// </summary>
         public string StockDescription { get; set; }
         /// <summary>
+        /// Combine attributes for ease of searching in dropdown lists
+        /// </summary>
+        public string SelectDescription { get { return this.StockCode + ": " + this.StockDescription; } }
+        /// <summary>
         /// 
         /// </summary>
         public decimal Cost { get; set; }

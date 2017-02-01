@@ -64,6 +64,6 @@ P:\The-Plumbery\Plumbery.Domain\bin\Debug\Microsoft.Practices.ServiceLocation.pd
 P:\The-Plumbery\Plumbery.Domain\bin\Debug\Microsoft.Practices.ServiceLocation.xml
 P:\The-Plumbery\Plumbery.Domain\bin\Debug\Newtonsoft.Json.xml
 P:\The-Plumbery\Plumbery.Domain\bin\Debug\SimpleInjector.xml
+P:\The-Plumbery\Plumbery.Domain\obj\Debug\Plumbery.Domain.csprojResolveAssemblyReference.cache
 P:\The-Plumbery\Plumbery.Domain\obj\Debug\Plumbery.Domain.dll
 P:\The-Plumbery\Plumbery.Domain\obj\Debug\Plumbery.Domain.pdb
-P:\The-Plumbery\Plumbery.Domain\obj\Debug\Plumbery.Domain.csprojResolveAssemblyReference.cache

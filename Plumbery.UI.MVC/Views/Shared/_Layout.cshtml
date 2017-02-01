@@ -13,7 +13,7 @@
     </title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link href="~/Content/css/font-awesome.min.css" rel="stylesheet">
-    <link href="~/Content/css/icheck/blue.min.css" rel="stylesheet">
+    <link href="~/Content/css/icheck/blue.min.css" rel="stylesheet">    
     @Styles.Render("~/Bundles/css")
     @RenderSection("styles", required: false)
     
@@ -25,9 +25,10 @@
 <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
         @Html.Partial("_Header")
-        @Html.Partial("_Sidebar")
-
-        <div class="content-wrapper">
+        @Html.Partial("_Sidebar")        
+        <div class="content-wrapper"> 
+            <link href="~/Content/css/selectAlt.css" rel="stylesheet" />
+            <script src="~/Content/js/plugins/select2/selectAlt.js"></script>           
             <section class="content-header">
                 <h1>
                     @ViewBag.Title
@@ -50,7 +51,7 @@
     </div>
 
     <script src="@RouteJs.RouteJsHandler.HandlerUrl"></script>
-    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jquery")    
     @Scripts.Render("~/Bundles/js")
     @RenderSection("scripts", required: false)
 </body>

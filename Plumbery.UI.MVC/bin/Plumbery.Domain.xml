@@ -129,6 +129,11 @@
             
             </summary>
         </member>
+        <member name="P:Plumbery.Domain.Entities.Material.SelectDescription">
+            <summary>
+            Combine attributes for ease of searching in dropdown lists
+            </summary>
+        </member>
         <member name="P:Plumbery.Domain.Entities.Material.Cost">
             <summary>
             
