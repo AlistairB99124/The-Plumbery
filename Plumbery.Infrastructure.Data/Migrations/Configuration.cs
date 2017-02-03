@@ -17,7 +17,7 @@ namespace Plumbery.Infrastructure.Data.Migrations {
         protected override void Seed(Context.ContextBank context)
         {
             //var users = DatabaseInitialiser.GetUsers();
-            //foreach(var user in users) {
+            //foreach (var user in users) {
             //    var passwordHash = new PasswordHasher();
             //    string password = passwordHash.HashPassword("000000");
             //    user.PasswordHash = password;

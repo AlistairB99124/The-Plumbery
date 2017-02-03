@@ -22,10 +22,10 @@ namespace Plumbery.Domain.Services {
         /// Add site to database
         /// </summary>
         /// <param name="site">Site to add</param>
-        public async Task<int> Add(Site site) {
+        public async Task<int> Add(Site site, Location location) {
             try {
                 StartTransaction();
-                _siteRepository.Add(site);
+                _siteRepository.AddSite(site,location);
                 return await PersistTransactionAsync();
             } catch (Exception ex) {
                 throw new ApplicationException(ex.Message);

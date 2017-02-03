@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Plumbery.Domain.Interfaces.Domain {
     public interface ISiteService {
-        Task<int> Add(Site site);
+        Task<int> Add(Site site, Location location);
         Task<int> Edit(Site site);
         Task<int> Delete(Site site);
         void List();

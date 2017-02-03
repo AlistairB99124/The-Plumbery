@@ -83,7 +83,7 @@ namespace Plumbery.UI.MVC.Controllers {
             ViewBag.PlumberList = plumberList;
             ViewBag.SiteList = siteList;
             //return the view
-            return View();
+            return View(new TimeSheetModel());
         }
         /// <summary>
         /// Create the timesheet from the input form
@@ -92,7 +92,6 @@ namespace Plumbery.UI.MVC.Controllers {
         /// <param name="collection">COllection to get data from select inputs</param>
         /// <returns></returns>
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(TimeSheetModel model, FormCollection collection) {
             try {
                 var site = await _timeSheetService.GetSite(model.SiteId);

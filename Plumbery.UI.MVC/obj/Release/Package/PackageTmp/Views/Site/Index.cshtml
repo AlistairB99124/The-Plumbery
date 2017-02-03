@@ -1,0 +1,81 @@
+﻿@using Plumbery.Domain.Entities
+@model List<Site>
+@{
+    ViewBag.Title = "Site";
+    ViewBag.Description = "List of all sites";
+}
+@section Styles{
+    <style>
+        #ListTable_filter label {
+            float: right;
+        }
+
+        #ListTable_paginate {
+            float: right;
+        }
+    </style>
+}
+<div class="box">
+    <!-- /.box-header -->
+    <div class="box-body">
+        <table id="ListTable" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Abbr</th>
+                    <th>Address 1</th>
+                    <th>Address 2</th>
+                    <th>City</th>
+                    <th>Province</th>
+                    <th>Postal Code</th>
+                    <th>Country</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model) {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.Name</td>
+                        <td>@item.Abbr</td>
+                        <td>@item.Location.Address1</td>
+                        <td>@item.Location.Address2</td>
+                        <td>@item.Location.City</td>
+                        <td>@item.Location.Province</td>
+                        <td>@item.Location.Postal_Code</td>
+                        <td>@item.Location.Country</td>
+                        <td><button class = "btn btn-flat btn-warning" onclick="location.href='@Url.Action("Edit","Site",new { id = item.Id })'"><i class="fa fa-pencil"></i></button></td>
+                        <td>
+                            @using (Html.BeginForm("Delete", "Site", FormMethod.Post)) {
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" id="siteId" name="siteId" value="@item.Id"/>
+                                <button type="submit" class = "btn btn-flat btn-danger"><i class="fa fa-times"></i></button>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@section Scripts{
+    <script src="~/Content/js/plugins/Datatables/jquery.dataTables.min.js"></script>
+    <script src="~/Content/js/plugins/Datatables/dataTables.bootstrap.min.js"></script>
+    <script src="~/Content/js/plugins/Datatables/dataTables.Responsive.js"></script>
+    <script>
+        $(function () {
+            $("#ListTable").DataTable({
+                "paging": true,
+                "lengthChange": true,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "autoWidth": true,
+                "scrollX": true,
+                "responsive": true
+            });
+        });
+    </script>
+}

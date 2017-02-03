@@ -21,8 +21,6 @@ namespace Plumbery.Infrastructure.Data.Configuration {
     /// EMail service for email confirmation and password recovery
     /// </summary>
     public class EmailService : IIdentityMessageService {
-        private List<KeyValuePair<string, Stream>> _attachments;
-        private List<KeyValuePair<string, string>> _recipients;
         /// <summary>
         /// Send EMail with configured service
         /// </summary>
@@ -36,7 +34,7 @@ namespace Plumbery.Infrastructure.Data.Configuration {
             email.Subject = message.Subject;
             email.Body = message.Body;
             email.IsBodyHtml = true;            
-            using (var mailClient = new GMailService()) {
+            using (var mailClient = new HostKingService()) {
                 //In order to use the original from email address, uncomment this line:
                 email.From = new MailAddress(mailClient.UserName, "(do not reply)");
 
@@ -45,7 +43,7 @@ namespace Plumbery.Infrastructure.Data.Configuration {
         }
         public async Task SendAsync(IdentityMessage message, string AttachmentPath) {
             MailMessage email = new MailMessage(
-                new MailAddress("theplumbery.email.service@gmail.com", "(do not reply)"),
+                new MailAddress("admin@plumbery.org.za", "(do not reply)"),
                 new MailAddress(message.Destination)
             );
             email.Subject = message.Subject;
@@ -53,7 +51,7 @@ namespace Plumbery.Infrastructure.Data.Configuration {
             email.IsBodyHtml = true;
             var attachement = new Attachment(AttachmentPath);
             email.Attachments.Add(attachement);
-                using (var mailClient = new GMailService()) {
+                using (var mailClient = new HostKingService()) {
                     //In order to use the original from email address, uncomment this line:
                     email.From = new MailAddress(mailClient.UserName, "(do not reply)");
 
@@ -64,7 +62,7 @@ namespace Plumbery.Infrastructure.Data.Configuration {
     /// <summary>
     /// Gmail service to support EmailService
     /// </summary>
-    public class GMailService : SmtpClient {
+    public class HostKingService : SmtpClient {
         /// <summary>
         /// Gmail username for email service
         /// </summary>
@@ -72,11 +70,11 @@ namespace Plumbery.Infrastructure.Data.Configuration {
         /// <summary>
         /// Configuration for Gmail
         /// </summary>
-        public GMailService():base(ConfigurationManager.AppSettings["GmailHost"], Int32.Parse(ConfigurationManager.AppSettings["GmailPort"])) {
-            this.UserName = ConfigurationManager.AppSettings["GmailUserName"];
-            this.EnableSsl = Boolean.Parse(ConfigurationManager.AppSettings["GmailSsl"]);
+        public HostKingService():base(ConfigurationManager.AppSettings["HostKingHost"], Int32.Parse(ConfigurationManager.AppSettings["HostKingPort"])) {
+            this.UserName = ConfigurationManager.AppSettings["HostKingUserName"];
+            this.EnableSsl = Boolean.Parse(ConfigurationManager.AppSettings["HostKingSsl"]);
             this.UseDefaultCredentials = false;
-            this.Credentials = new System.Net.NetworkCredential(this.UserName, ConfigurationManager.AppSettings["GmailPassword"]);
+            this.Credentials = new System.Net.NetworkCredential(this.UserName, ConfigurationManager.AppSettings["HostKingPassword"]);
         }
     }
     /*---------NOT IMPLEMENTED---------------------*/

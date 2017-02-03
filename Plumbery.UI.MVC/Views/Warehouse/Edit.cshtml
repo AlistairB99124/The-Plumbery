@@ -1,0 +1,38 @@
+﻿@using Plumbery.Domain.Entities
+@model Warehouse
+@{
+    ViewBag.Title = "Warehouse";
+    ViewBag.Description = "Edit"
+}
+<!-- general form elements -->
+<div class="myforms-box">
+    <div class="myforms-logo">
+        <h3 class="box-title">Fill in information</h3>
+    </div>
+    <!-- /.box-header -->
+    <!-- form start -->
+    @using (Html.BeginForm("Edit", "Warehouse", FormMethod.Post, new { @class = "form-horizontal", role = "form" })) {
+        @Html.AntiForgeryToken()
+
+        <div class="myforms-box-body">
+            @Html.HiddenFor(m => m.Id)
+            <div class="form-group">
+                @Html.LabelFor(m=>m.Name, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+            </div>
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+            <div class="col-sm-4">
+                <button type="reset" class="btn btn-flat btn-primary btn-block">Clear</button>
+            </div>
+            <div class="col-sm-4">
+                @Html.ActionLink("Back To List", "Index", "Warehouse", new { @class = "btn btn-flat btn-primary btn-block" })
+            </div>
+            <div class="col-sm-4">
+                <button type="submit" class="btn btn-flat btn-primary btn-block">Edit</button>
+            </div>
+        </div>
+    }
+</div>
+<!-- /.box -->

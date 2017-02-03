@@ -9,11 +9,9 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
-namespace Plumbery.UI.MVC.Controllers
-{
+namespace Plumbery.UI.MVC.Controllers {
     [Authorize]
-    public class SiteController : Controller
-    {
+    public class SiteController : Controller {
         /// <summary>
         /// Site service
         /// </summary>
@@ -30,19 +28,17 @@ namespace Plumbery.UI.MVC.Controllers
         /// Get list of all sites
         /// </summary>
         /// <returns></returns>
-        public ActionResult Index()
-        {
+        public ActionResult Index() {
             List<Site> sites = _siteService.GetAll().ToList();
             return View(sites);
         }
 
         public ActionResult Create() {
-            ViewBag.CountrySelect = new SelectList(Country.GetCountries(),"Code","Name","ZAF");
+            ViewBag.CountrySelect = new SelectList(Country.GetCountries(), "Code", "Name", "ZAF");
             return View();
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(CreateSiteViewModels model) {
             if (ModelState.IsValid) {
                 Location location = new Location {
@@ -53,23 +49,14 @@ namespace Plumbery.UI.MVC.Controllers
                     Postal_Code = model.Postal_Code,
                     Province = model.Province
                 };
-                var locationResult = await _siteService.AddLocation(location);
-                if(locationResult == 1) {
-                    Site site = new Site {
-                        Name = model.Name,
-                        Abbr = model.Abbr,
-                        LocationId = location.Id
-                    };
-                    var siteResult = await _siteService.Add(site);
-                    if (siteResult == 1) {
-                        return RedirectToAction("Index");
-                    }else {
-                        ViewBag.ErrorMessage = "Could not add site";
-                        return View(model);
-                    }
-                } else {
-                    ViewBag.ErrorMessage = "Could not add location";
-                    return View(model);
+                Site site = new Site {
+                    Abbr = model.Abbr,
+                    Location = location,
+                    Name = model.Name
+                };
+                var result = await _siteService.Add(site,location);
+                if (result > 0) {
+                    return RedirectToAction("Index","Site",null);
                 }
             }
             ViewBag.CountrySelect = new SelectList(Country.GetCountries(), "Code", "Name", "RSA");
@@ -105,10 +92,10 @@ namespace Plumbery.UI.MVC.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(EditSiteViewModels model) {
-            
+
             Site site = _siteService.Get(model.SiteId);
             Location location = _siteService.GetLocation(model.LocationId);
-            if (ModelState.IsValid) {                
+            if (ModelState.IsValid) {
                 site.Abbr = model.Abbr;
                 site.Name = model.Name;
                 location.Address1 = model.Address1;
@@ -118,7 +105,7 @@ namespace Plumbery.UI.MVC.Controllers
                 location.Postal_Code = model.Postal_Code;
                 location.Country = model.Country;
 
-                
+
                 int locationResult = await _siteService.EditLocation(location);
                 if (locationResult == 1) {
                     int siteResult = await _siteService.Edit(site);

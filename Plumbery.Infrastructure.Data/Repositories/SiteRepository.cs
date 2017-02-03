@@ -10,6 +10,11 @@ namespace Plumbery.Infrastructure.Data.Repositories {
     public class SiteRepository:BaseRepository<Site>, ISiteRepository {
         public void AddLocation(Location location) => _context.Locations.Add(location);
 
+        public void AddSite(Site site, Location location) {
+            _context.Locations.Add(location);
+            _context.Sites.Add(site);
+        }
+
         public void EditLocation(Location location) => _context.Entry(location).State = System.Data.Entity.EntityState.Modified;
 
         public Location GetLocation(int locationId) => _context.Locations.Find(locationId);

@@ -1,0 +1,154 @@
+﻿@using Plumbery.UI.MVC.Models
+@using Plumbery.Domain.Entities
+@{
+    ViewBag.Title = "Add Materials";
+    ViewBag.Description = DateTime.Now.ToString("dd, MMM yyyy");
+    string ErrorMessage = ViewBag.Error;
+    ViewBag.TimeSheetCode = ViewBag.TimeSheetCode;
+    string code = ViewBag.TimeSheetCode;
+    var materials = ViewBag.Materials as List<TimeSheetMaterialItem>;
+    var comments = ViewBag.Comments as List<TimeSheetCommentItem>;
+}
+<!-- general form elements -->
+<div class="myforms-box">
+    <!-- form start -->
+    <div class="myforms-box-body">        
+        @Html.Partial("AddMaterial",new MaterialItemModel { TimeSheetCode=code, Quantity=null })
+        @Html.Partial("AddComment", new CommentItemModel { TimeSheetCode = code })
+        <div class="form-group">
+            <label class="success">@ViewBag.Success</label>
+            <label class="danger">@ViewBag.Failure</label>
+        </div>     
+        @Html.Partial("ListItems",new ListItemsModel {  MaterialItems= materials, CommentItems = comments})       
+    </div>
+
+    <!-- /.box-body -->
+    <div class="box-footer">
+        @using (Html.BeginForm("ClearAll", "TimeSheet", FormMethod.Post, new { @class="col-xs-6" })) {
+            <input type="hidden" name="TimeSheetCode" value="@code" />
+                <button type="submit" class="btn btn-flat btn-primary btn-block" id="ClearBtn">Clear</button>
+        }
+        @using (Html.BeginForm("SendTimeSheet", "TimeSheet", FormMethod.Post, new { @class = "col-xs-6" })) {
+            <input type="hidden" value="@code" name="timesheetCode"/>
+            <button type="submit" class="btn btn-flat btn-primary btn-block">Submit</button>
+        }        
+    </div>
+</div>
+<!-- /.box -->
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Content/js/plugins/Datatables/jquery.dataTables.min.js"></script>
+    <script src="~/Content/js/plugins/Datatables/dataTables.bootstrap.min.js"></script>
+    <script src="~/Content/js/plugins/Datatables/dataTables.Responsive.js"></script>   
+    <script type="text/javascript">
+        
+        $(function () {
+            $(".select2").select2();
+            $("#Table").DataTable({
+                "scrollX": true,
+                "responsive": true,
+                "paging": false,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": false,
+                "info": false,
+                "autoWidth": false
+            });
+            //function will be called on button click having id btnsave
+            $("#SaveComment").click(function () {
+                $("#commentLoader").removeClass('hidden');
+                $.ajax({
+                    xhr: function () {
+                        var xhr = new window.XMLHttpRequest();
+
+                        // Upload progress
+                        xhr.upload.addEventListener("progress", function (evt) {
+                            if (evt.lengthComputable) {
+                                var percentComplete = evt.loaded / evt.total;
+                                //Do something with upload progress
+                                $("#commentLoader").removeClass('hidden');
+                                console.log(percentComplete);
+                            }
+                        }, false);
+
+                        // Download progress
+                        xhr.addEventListener("progress", function (evt) {
+                            if (evt.lengthComputable) {
+                                var percentComplete = evt.loaded / evt.total;
+                                // Do something with download progress
+                                $("#commentLoader").removeClass('hidden');
+                                console.log(percentComplete);
+                            }
+                        }, false);
+
+                        return xhr;
+                    },
+                    type: "POST", //HTTP POST Method
+                    url: '@Url.Action("AddComment", "TimeSheet", null)', // Controller/View
+                    data: { //Passing data
+                        TimeSheetCode: $("#TimeSheetCode").val(),
+                        Description: $("#Description").val(),
+                        Metric: $("#Metric").val()//Reading text box values using Jquery
+                    },
+                    success: function (data) {
+                        window.location.href = '../TimeSheet/Items?code=@code';
+                        $("#commentLoader").addClass('hidden');
+                    },
+                    error: function () {
+                        $("#commentLoader").addClass('hidden');
+                        alert("Error");
+                    }
+                });
+
+            });
+
+            //function will be called on button click having id btnsave
+            $("#SaveMaterial").click(function () {
+                $.ajax({
+                    xhr: function () {
+                        var xhr = new window.XMLHttpRequest();
+                        // Upload progress
+                        xhr.upload.addEventListener("progress", function (evt) {
+                            if (evt.lengthComputable) {
+                                var percentComplete = evt.loaded / evt.total;
+                                //Do something with upload progress
+                                $("#materialLoader").removeClass('hidden');
+                                console.log(percentComplete);
+                            }
+                        }, false);
+
+                        // Download progress
+                        xhr.addEventListener("progress", function (evt) {
+                            if (evt.lengthComputable) {
+                                var percentComplete = evt.loaded / evt.total;
+                                // Do something with download progress
+                                $("#materialLoader").removeClass('hidden');
+                                console.log(percentComplete);
+                            }
+                        }, false);
+
+                        return xhr;
+                    },
+                    type: "POST", //HTTP POST Method
+                    url: '@Url.Action("AddMaterial", "TimeSheet", null)', // Controller/View
+                    data: { //Passing data
+                        MaterialId: $("#MaterialId").val(), //Reading text box values using Jquery
+                        Supplier: $("#Supplier").val(),
+                        Quantity: $("#Quantity").val(),
+                        BOM_No: $("#BOM_No").val(),
+                        TimeSheetCode: $("#TimeSheetCode").val()
+                    },
+                    success: function (data) {
+                        window.location.href = '../TimeSheet/Items?code=@code';
+                        $("#materialLoader").addClass('hidden');
+                    },
+                    error: function () {
+                        alert("error")
+                    }
+                });
+
+            });
+        });
+    </script>
+}

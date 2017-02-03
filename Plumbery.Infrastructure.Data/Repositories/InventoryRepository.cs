@@ -100,7 +100,7 @@ namespace Plumbery.Infrastructure.Data.Repositories {
                             Inventory inventory = new Inventory {
                                 DateAdded = DateTime.Now,
                                 DateModified = DateTime.Now,
-                                MaterialId = m.Id,
+                                Material = m,
                                 ModifiedBy = user.FullName,
                                 Quantity = newLevel,
                                 WarehouseId = p.WarehouseId
@@ -108,13 +108,15 @@ namespace Plumbery.Infrastructure.Data.Repositories {
                             this.Add(inventory);
                             ++countAdded;
                         }
-                        if (inv.Quantity != newLevel) {
-                            inv.Quantity = Convert.ToDecimal(quantity, CultureInfo.InvariantCulture);
-                            inv.DateModified = DateTime.Now;
-                            inv.ModifiedBy = user.FullName;
-                            Edit(inv);
-                            ++countModified;
-                        }
+                        if(inv != null) {
+                            if (inv.Quantity != newLevel) {
+                                inv.Quantity = Convert.ToDecimal(quantity, CultureInfo.InvariantCulture);
+                                inv.DateModified = DateTime.Now;
+                                inv.ModifiedBy = user.FullName;
+                                Edit(inv);
+                                ++countModified;
+                            }
+                        }                        
                     } else {
                         finished = true;
                     }

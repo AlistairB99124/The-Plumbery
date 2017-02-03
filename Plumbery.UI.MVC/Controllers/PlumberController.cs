@@ -28,21 +28,28 @@ namespace Plumbery.UI.MVC.Controllers {
         }
 
         public ActionResult Create(string id) {
-
-            Supervisor supervisor = _plumberService.GetSupervisor(User.Identity.GetUserId());
-            if (supervisor == null) {
-                return RedirectToAction("Login", "Account", null);
-            }
-
-            if (id == null) {
+            var warehouses = _plumberService.GetWarehouses();
+            if (warehouses.Count() < 1) {
+                ViewBag.Error = "No warehouses to assign.Please add a warehouse first.";
                 ViewBag.Users = new SelectList(_plumberService.GetUsers(), "Id", "FullName");
                 ViewBag.Warehouses = new SelectList(_plumberService.GetWarehouses(), "Id", "Name");
                 return View();
-            } else {
-                ViewBag.Users = new SelectList(_plumberService.GetUsers(), "Id", "FullName", id);
-                ViewBag.Warehouses = new SelectList(_plumberService.GetWarehouses(), "Id", "Name");
-                return View();
-            }
+            }else {
+                Supervisor supervisor = _plumberService.GetSupervisor(User.Identity.GetUserId());
+                if (supervisor == null) {
+                    return RedirectToAction("Login", "Account", null);
+                }
+
+                if (id == null) {
+                    ViewBag.Users = new SelectList(_plumberService.GetUsers(), "Id", "FullName");
+                    ViewBag.Warehouses = new SelectList(_plumberService.GetWarehouses(), "Id", "Name");
+                    return View();
+                } else {
+                    ViewBag.Users = new SelectList(_plumberService.GetUsers(), "Id", "FullName", id);
+                    ViewBag.Warehouses = new SelectList(_plumberService.GetWarehouses(), "Id", "Name");
+                    return View();
+                }
+            }           
 
         }
 
@@ -54,13 +61,16 @@ namespace Plumbery.UI.MVC.Controllers {
                 return RedirectToAction("Login", "Account", null);
             }
             if (ModelState.IsValid) {
-                Plumber plumber = new Plumber {
-                    UserId = model.UserId,
-                    WarehouseId = model.WarehouseId
-                };
-                _plumberService.AddPlumber(plumber);
-
-                return RedirectToAction("Index");
+                if (model.WarehouseId != null||model.WarehouseId!=0) {
+                    Plumber plumber = new Plumber {
+                        UserId = model.UserId,
+                        WarehouseId = model.WarehouseId
+                    };
+                    _plumberService.AddPlumber(plumber);
+                    return RedirectToAction("Index");
+                }
+                ViewBag.Error = "No warehouse was selected";
+                return View(model);
             }
 
             ViewBag.Users = new SelectList(_plumberService.GetUsers(), "Id", "FullName");

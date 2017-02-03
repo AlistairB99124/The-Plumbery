@@ -168,6 +168,7 @@
     <Compile Include="Repositories\SupervisorRepository.cs" />
     <Compile Include="Repositories\TimeSheetRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
+    <Compile Include="Repositories\WarehouseRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Sql\Procedures\" />

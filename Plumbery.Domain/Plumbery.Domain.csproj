@@ -124,6 +124,7 @@
     <Compile Include="Interfaces\Domain\ISupervisorService.cs" />
     <Compile Include="Interfaces\Domain\ITimeSheetService.cs" />
     <Compile Include="Interfaces\Domain\IUserService.cs" />
+    <Compile Include="Interfaces\Domain\IWarehouseService.cs" />
     <Compile Include="Interfaces\Infrastructure\IRepositoryManager.cs" />
     <Compile Include="Interfaces\Infrastructure\IUnitOfWork.cs" />
     <Compile Include="Interfaces\Repositories\IBaseRepository.cs" />
@@ -147,6 +148,7 @@
     <Compile Include="Services\SupervisorService.cs" />
     <Compile Include="Services\TimeSheetService.cs" />
     <Compile Include="Services\UserService.cs" />
+    <Compile Include="Services\WarehouseService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

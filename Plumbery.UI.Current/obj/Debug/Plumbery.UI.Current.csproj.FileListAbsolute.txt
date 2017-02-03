@@ -1,0 +1,57 @@
+P:\The-Plumbery\Plumbery.UI.Current\bin\roslyn\csc.exe
+P:\The-Plumbery\Plumbery.UI.Current\bin\roslyn\csc.exe.config
+P:\The-Plumbery\Plumbery.UI.Current\bin\roslyn\csc.rsp
+P:\The-Plumbery\Plumbery.UI.Current\bin\roslyn\csi.exe
+P:\The-Plumbery\Plumbery.UI.Current\bin\roslyn\csi.rsp
+P:\The-Plumbery\Plumbery.UI.Current\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+P:\The-Plumbery\Plumbery.UI.Current\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+P:\The-Plumbery\Plumbery.UI.Current\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+P:\The-Plumbery\Plumbery.UI.Current\bin\roslyn\Microsoft.CodeAnalysis.dll
+P:\The-Plumbery\Plumbery.UI.Current\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+P:\The-Plumbery\Plumbery.UI.Current\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+P:\The-Plumbery\Plumbery.UI.Current\bin\roslyn\Microsoft.CSharp.Core.targets
+P:\The-Plumbery\Plumbery.UI.Current\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+P:\The-Plumbery\Plumbery.UI.Current\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+P:\The-Plumbery\Plumbery.UI.Current\bin\roslyn\Microsoft.VisualBasic.Core.targets
+P:\The-Plumbery\Plumbery.UI.Current\bin\roslyn\System.AppContext.dll
+P:\The-Plumbery\Plumbery.UI.Current\bin\roslyn\System.Collections.Immutable.dll
+P:\The-Plumbery\Plumbery.UI.Current\bin\roslyn\System.Diagnostics.StackTrace.dll
+P:\The-Plumbery\Plumbery.UI.Current\bin\roslyn\System.IO.FileSystem.dll
+P:\The-Plumbery\Plumbery.UI.Current\bin\roslyn\System.IO.FileSystem.Primitives.dll
+P:\The-Plumbery\Plumbery.UI.Current\bin\roslyn\System.Reflection.Metadata.dll
+P:\The-Plumbery\Plumbery.UI.Current\bin\roslyn\vbc.exe
+P:\The-Plumbery\Plumbery.UI.Current\bin\roslyn\vbc.exe.config
+P:\The-Plumbery\Plumbery.UI.Current\bin\roslyn\vbc.rsp
+P:\The-Plumbery\Plumbery.UI.Current\bin\roslyn\VBCSCompiler.exe
+P:\The-Plumbery\Plumbery.UI.Current\bin\roslyn\VBCSCompiler.exe.config
+P:\The-Plumbery\Plumbery.UI.Current\bin\AdminLTE Template.dll.config
+P:\The-Plumbery\Plumbery.UI.Current\bin\AdminLTE Template.dll
+P:\The-Plumbery\Plumbery.UI.Current\bin\AdminLTE Template.pdb
+P:\The-Plumbery\Plumbery.UI.Current\bin\Antlr3.Runtime.dll
+P:\The-Plumbery\Plumbery.UI.Current\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+P:\The-Plumbery\Plumbery.UI.Current\bin\Microsoft.Web.Infrastructure.dll
+P:\The-Plumbery\Plumbery.UI.Current\bin\Newtonsoft.Json.dll
+P:\The-Plumbery\Plumbery.UI.Current\bin\RouteJs.dll
+P:\The-Plumbery\Plumbery.UI.Current\bin\RouteJs.Mvc5.dll
+P:\The-Plumbery\Plumbery.UI.Current\bin\System.Web.Helpers.dll
+P:\The-Plumbery\Plumbery.UI.Current\bin\System.Web.Mvc.dll
+P:\The-Plumbery\Plumbery.UI.Current\bin\System.Web.Optimization.dll
+P:\The-Plumbery\Plumbery.UI.Current\bin\System.Web.Razor.dll
+P:\The-Plumbery\Plumbery.UI.Current\bin\System.Web.Webpages.Deployment.dll
+P:\The-Plumbery\Plumbery.UI.Current\bin\System.Web.Webpages.dll
+P:\The-Plumbery\Plumbery.UI.Current\bin\System.Web.Webpages.Razor.dll
+P:\The-Plumbery\Plumbery.UI.Current\bin\WebActivatorEx.dll
+P:\The-Plumbery\Plumbery.UI.Current\bin\WebGrease.dll
+P:\The-Plumbery\Plumbery.UI.Current\bin\Antlr3.Runtime.pdb
+P:\The-Plumbery\Plumbery.UI.Current\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+P:\The-Plumbery\Plumbery.UI.Current\bin\Newtonsoft.Json.xml
+P:\The-Plumbery\Plumbery.UI.Current\bin\System.Web.Optimization.xml
+P:\The-Plumbery\Plumbery.UI.Current\bin\System.Web.Razor.xml
+P:\The-Plumbery\Plumbery.UI.Current\bin\System.Web.Webpages.xml
+P:\The-Plumbery\Plumbery.UI.Current\bin\System.Web.Webpages.Deployment.xml
+P:\The-Plumbery\Plumbery.UI.Current\bin\System.Web.Webpages.Razor.xml
+P:\The-Plumbery\Plumbery.UI.Current\bin\System.Web.Helpers.xml
+P:\The-Plumbery\Plumbery.UI.Current\bin\System.Web.Mvc.xml
+P:\The-Plumbery\Plumbery.UI.Current\obj\Debug\Plumbery.UI.Current.csprojResolveAssemblyReference.cache
+P:\The-Plumbery\Plumbery.UI.Current\obj\Debug\AdminLTE Template.dll
+P:\The-Plumbery\Plumbery.UI.Current\obj\Debug\AdminLTE Template.pdb

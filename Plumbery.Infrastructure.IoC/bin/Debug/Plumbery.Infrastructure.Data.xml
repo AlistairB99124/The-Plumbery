@@ -21,17 +21,17 @@
             <param name="message">Message to be sent</param>
             <returns></returns>
         </member>
-        <member name="T:Plumbery.Infrastructure.Data.Configuration.GMailService">
+        <member name="T:Plumbery.Infrastructure.Data.Configuration.HostKingService">
             <summary>
             Gmail service to support EmailService
             </summary>
         </member>
-        <member name="P:Plumbery.Infrastructure.Data.Configuration.GMailService.UserName">
+        <member name="P:Plumbery.Infrastructure.Data.Configuration.HostKingService.UserName">
             <summary>
             Gmail username for email service
             </summary>
         </member>
-        <member name="M:Plumbery.Infrastructure.Data.Configuration.GMailService.#ctor">
+        <member name="M:Plumbery.Infrastructure.Data.Configuration.HostKingService.#ctor">
             <summary>
             Configuration for Gmail
             </summary>

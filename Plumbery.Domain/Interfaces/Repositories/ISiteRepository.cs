@@ -10,5 +10,6 @@ namespace Plumbery.Domain.Interfaces.Repositories {
         void AddLocation(Location location);
         void EditLocation(Location location);
         Location GetLocation(int locationId);
+        void AddSite(Site site, Location location);
     }
 }

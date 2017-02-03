@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<mvcSiteMap xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0"
+            xsi:schemaLocation="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0 MvcSiteMapSchema.xsd">
+  
+  <mvcSiteMapNode title="Home" controller="Home" action="Index">
+      <mvcSiteMapNode title="TimeSheets" clickable="false" controller="TimeSheet" action="Index">
+        <mvcSiteMapNode title="Create" controller="TimeSheet" action="Create">
+          <mvcSiteMapNode title="Add Items" controller="TimeSheet" action="Items">
+            <mvcSiteMapNode title="Confirmation" controller="TimeSheet" action="Confirmation"/>
+          </mvcSiteMapNode>
+        </mvcSiteMapNode>
+        <mvcSiteMapNode title="History" controller="TimeSheet" action="Index"/>
+      </mvcSiteMapNode>
+      <mvcSiteMapNode title="Inventory" controller="Inventory" clickable="false" action="Index">
+        <mvcSiteMapNode title="List All" controller="Inventory" action="Index"/>
+        <mvcSiteMapNode title="Low Stock" controller="Inventory" action="LowStock"/>
+        <mvcSiteMapNode title="Depleted Stock" controller="Inventory" action="DepletedStock"/>
+      </mvcSiteMapNode>      
+    <mvcSiteMapNode title="Control" clickable="false" controller="Home" action="Index">
+      <mvcSiteMapNode title="Supervisors" controller="Supervisor" action="Index" clickable="false">
+        <mvcSiteMapNode title="Add" controller="Supervisor" action="Create"/>
+        <mvcSiteMapNode title="Edit" controller="Supervisor" action="Edit"/>
+        <mvcSiteMapNode title="Delete" controller="Supervisor" action="Delete"/>
+        <mvcSiteMapNode title="List" controller="Supervisor" action="Index"/>
+      </mvcSiteMapNode>
+      <mvcSiteMapNode title="Plumbers" clickable="false" controller="Plumber" action="Index">
+        <mvcSiteMapNode title="Add" controller="Plumber" action="Create"/>
+        <mvcSiteMapNode title="Edit" controller="Plumber" action="Edit"/>
+        <mvcSiteMapNode title="Delete" controller="Plumber" action="Delete"/>
+        <mvcSiteMapNode title="List" controller="Plumber" action="Index"/>
+      </mvcSiteMapNode>
+      <mvcSiteMapNode title="Time Sheets" clickable="false" controller="TimeSheet" action="Index">
+        <mvcSiteMapNode title="Add" controller="TimeSheet" action="Create"/>
+        <mvcSiteMapNode title="Edit" controller="TimeSheet" action="Edit"/>
+        <mvcSiteMapNode title="Delete" controller="TimeSheet" action="Delete"/>
+        <mvcSiteMapNode title="List" controller="TimeSheet" action="Index"/>
+      </mvcSiteMapNode>
+      <mvcSiteMapNode title="Inventory" clickable="false" controller="Inventory" action="Index">
+        <mvcSiteMapNode title="Add" controller="Inventory" action="Create"/>
+        <mvcSiteMapNode title="Edit" controller="Inventory" action="Edit"/>
+        <mvcSiteMapNode title="Delete" controller="Inventory" action="Delete"/>
+        <mvcSiteMapNode title="List" controller="Inventory" action="Index"/>
+      </mvcSiteMapNode>
+    </mvcSiteMapNode>     
+    <mvcSiteMapNode title="Account" clickable="false" controller="Account" action="Register">
+      <mvcSiteMapNode title="Register" controller="Account" action="Register">
+        <mvcSiteMapNode title="External" controller="Account" action="ExternalLoginConfirmation"/>
+      </mvcSiteMapNode>
+      <mvcSiteMapNode title="Login" controller="Account" action="Login"/>
+      <mvcSiteMapNode title="Management" controller="Manage" action="Index"/>
+    <mvcSiteMapNode title="Users" controller="Account" action="Index"/>
+    </mvcSiteMapNode>
+  </mvcSiteMapNode>
+</mvcSiteMap>

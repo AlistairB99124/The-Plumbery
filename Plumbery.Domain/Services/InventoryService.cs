@@ -154,8 +154,9 @@ namespace Plumbery.Domain.Services {
         public int[] ImportToDatabase(Plumber p, User user, string filePath, string extension, string firstRowHeader) {
             try {
                 StartTransaction();
-                return _inventoryRepository.ImportToDatabase(p,user,filePath,extension,firstRowHeader);
+                var result = _inventoryRepository.ImportToDatabase(p,user,filePath,extension,firstRowHeader);
                 PersistTransaction();
+                return result;
             }catch (Exception ex) {
                 throw new ApplicationException(ex.Message);
             }

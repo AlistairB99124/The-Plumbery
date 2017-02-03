@@ -924,7 +924,7 @@
             </summary>
             <param name="siteRepository"></param>
         </member>
-        <member name="M:Plumbery.Domain.Services.SiteService.Add(Plumbery.Domain.Entities.Site)">
+        <member name="M:Plumbery.Domain.Services.SiteService.Add(Plumbery.Domain.Entities.Site,Plumbery.Domain.Entities.Location)">
             <summary>
             Add site to database
             </summary>
@@ -1065,6 +1065,35 @@
             </summary>
             <param name="userId">User's ID</param>
             <returns>IEnumerable Inventory</returns>
+        </member>
+        <member name="M:Plumbery.Domain.Services.WarehouseService.#ctor(Plumbery.Domain.Interfaces.Repositories.IWarehouseRepository)">
+            <summary>
+            Initialise Repository
+            </summary>
+            <param name="warehouseRepository"></param>
+        </member>
+        <member name="M:Plumbery.Domain.Services.WarehouseService.Add(Plumbery.Domain.Entities.Warehouse)">
+            <summary>
+            Add warehouse to database
+            </summary>
+            <param name="warehouse">Warehouse to add</param>
+        </member>
+        <member name="M:Plumbery.Domain.Services.WarehouseService.Delete(Plumbery.Domain.Entities.Warehouse)">
+            <summary>
+            Delete warehouse from database
+            </summary>
+            <param name="warehouse">Warehouse to delete</param>
+        </member>
+        <member name="M:Plumbery.Domain.Services.WarehouseService.Edit(Plumbery.Domain.Entities.Warehouse)">
+            <summary>
+            Edit warehouse in database
+            </summary>
+            <param name="warehouse">Warehouse to be edited</param>
+        </member>
+        <member name="M:Plumbery.Domain.Services.WarehouseService.List">
+            <summary>
+            List all warehouses
+            </summary>
         </member>
     </members>
 </doc>

@@ -335,6 +335,23 @@
             <param name="content">Content eg pdf byte[] from memory stream</param>
             <returns></returns>
         </member>
+        <member name="F:Plumbery.UI.MVC.Controllers.WarehouseController._warehouseService">
+            <summary>
+            Warehouse service
+            </summary>
+        </member>
+        <member name="M:Plumbery.UI.MVC.Controllers.WarehouseController.#ctor(Plumbery.Domain.Interfaces.Domain.IWarehouseService)">
+            <summary>
+            Initialise Warehouse Services
+            </summary>
+            <param name="WarehouseService"></param>
+        </member>
+        <member name="M:Plumbery.UI.MVC.Controllers.WarehouseController.Index">
+            <summary>
+            Get list of all Warehouses
+            </summary>
+            <returns></returns>
+        </member>
         <member name="P:Plumbery.UI.MVC.Models.CreateSiteViewModels.Name">
             <summary>
             

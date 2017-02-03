@@ -1,0 +1,74 @@
+﻿@model IEnumerable<Plumbery.Domain.Entities.Supervisor>
+@{
+    ViewBag.Title = "Supervisor";
+    ViewBag.Description = "List";
+}
+@section Styles{
+    <style>
+        #ListTable_filter label{
+            float:right;
+        }
+        #ListTable_paginate{
+            float:right;
+        }
+    </style>
+    }
+<div class="box">
+    <div class="box-header">
+        Table of supervisors
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+        <table id="ListTable" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Date Registered</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model) {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.User.FirstName</td>
+                        <td>@item.User.LastName</td>
+                        <td>@item.User.DateRegistered.ToString("dd.MM.yyyy")</td>
+                        <td>
+                            <button type="button" onclick="location.href='@Url.Action("Edit","Supervisor",new {Id=item.Id })'" class="btn btn-flat btn-warning"><i class="fa fa-pencil"></i></button>
+                        </td>
+                        <td>
+                            @using (Html.BeginForm("Delete", "Supervisor", FormMethod.Post)) {
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" value="@item.Id" name="supervisorId" id="supervisorId" />
+                                <button type="submit" class="btn btn-flat btn-danger"><i class="fa fa-times"></i></button>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@section Scripts{
+    <script src="~/Content/js/plugins/Datatables/jquery.dataTables.min.js"></script>
+    <script src="~/Content/js/plugins/Datatables/dataTables.bootstrap.min.js"></script>
+    <script src="~/Content/js/plugins/Datatables/dataTables.Responsive.js"></script>
+    <script>
+        $(function () {
+            $("#ListTable").DataTable({
+                "paging": true,
+                "lengthChange": true,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "autoWidth": true,
+                "scrollX": true,
+                "responsive": true
+            });
+        });
+    </script>
+}

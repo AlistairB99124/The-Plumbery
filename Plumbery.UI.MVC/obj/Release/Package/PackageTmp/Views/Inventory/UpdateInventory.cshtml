@@ -1,0 +1,56 @@
+﻿@using Plumbery.Domain.Entities
+@{
+    ViewBag.Title = "Inventory";
+    ViewBag.Description = "Update Inventory";
+}
+<div class="box myforms-box">
+    <div class="box-body myforms-box-body">
+        @using (Html.BeginForm("UpdateInventory", "Inventory", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data" })) {
+            
+                <div class="form-group has-feedback">
+                    <div class="input-group">
+                        <label class="input-group-btn">
+                            <span class="btn btn-primary btn-block btn-flat">
+                                Browse… <input type="file" style="display:none" name="file" onchange="displayName()" id="file" />
+                            </span>
+                        </label>
+                        <input type="text" class="form-control" id="uploadText" readonly="" placeholder="Upload .xls or .xlsx files only!">
+                    </div>
+                </div>
+                <div class="form-group has-feedback">
+                    @Html.DropDownList("PlumberList", ViewBag.PlumberSelect as SelectList, new { @class="form-control select2", @style="width:100%;" })
+                </div>
+                <div class="form-group has-feedback">
+                    <input type="submit" value="Load" class="btn btn-flat btn-primary" />
+                </div>
+        }          
+    </div>  
+    <div class="myforms-box-msg">
+        <label class="label-success pull-left">@ViewBag.Modified</label>
+        <label class="label-warning pull-right">@ViewBag.Added</label>
+    </div> 
+</div>
+@section Scripts{
+    <script type="text/javascript">
+        function displayName() {
+            var x = document.getElementById("file");
+            var txt = "";
+            if ('files' in x) {
+                if (x.files.length == 0) {
+                    txt = "Select one or more files.";
+                } else {
+                    for (var i = 0; i < x.files.length; i++) {
+                        var file = x.files[i];
+                        if ('name' in file) {
+                            txt += file.name;
+                        }
+                        if ('size' in file) {
+                            txt += " [" + file.size + "]";
+                        }
+                    }
+                }
+            }
+            document.getElementById("uploadText").value = txt;
+        }
+    </script>
+    }

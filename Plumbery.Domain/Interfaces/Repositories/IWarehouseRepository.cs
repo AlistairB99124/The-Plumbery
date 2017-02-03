@@ -7,6 +7,6 @@ using System.Threading.Tasks;
 
 namespace Plumbery.Domain.Interfaces.Repositories {
     public interface IWarehouseRepository:IBaseRepository<Warehouse> {
-        void UpdateInventory(IEnumerable<Inventory> inventory);
+
     }
 }
