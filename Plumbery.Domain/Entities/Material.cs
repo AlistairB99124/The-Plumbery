@@ -1,10 +1,13 @@
-﻿using System;
+﻿using Plumbery.Domain.Interfaces.Domain;
+using Plumbery.Domain.Interfaces.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Plumbery.Domain.Entities {
+    
     /// <summary>
     /// 
     /// </summary>
@@ -30,7 +33,11 @@ namespace Plumbery.Domain.Entities {
         /// <summary>
         /// Combine attributes for ease of searching in dropdown lists
         /// </summary>
-        public string SelectDescription { get { return this.StockCode + ": " + this.StockDescription; } }
+        public string SelectDescription {
+            get {
+                return this.StockCode + ": " + this.StockDescription;
+            }
+        }
         /// <summary>
         /// 
         /// </summary>

@@ -34,8 +34,9 @@ namespace Plumbery.UI.MVC.Controllers {
         }
 
         public ActionResult Create() {
-            ViewBag.CountrySelect = new SelectList(Country.GetCountries(), "Code", "Name", "ZAF");
-            return View();
+            ViewBag.CountrySelect = new SelectList(Country.GetCountries(), "Name", "Name", "South Africa");
+            CreateSiteViewModels model = new CreateSiteViewModels { Province = "Western Cape", City = "Cape Town" };
+            return View(model);
         }
 
         [HttpPost]

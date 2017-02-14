@@ -33,12 +33,10 @@ namespace Plumbery.Domain.Entities {
         /// 
         /// </summary>
         public string DetailedPoint { get; set; }    
-           
+           /// <summary>
+           /// 
+           /// </summary>
         public Status SheetStatus { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public bool StatusComplete { get; set; }
         /// <summary>
         /// 
         /// </summary>

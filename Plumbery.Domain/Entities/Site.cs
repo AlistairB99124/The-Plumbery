@@ -20,6 +20,11 @@ namespace Plumbery.Domain.Entities {
         /// 
         /// </summary>
         public string Abbr { get; set; }
+        public string CombineNames {
+            get {
+                return this.Id + ": " + this.Name;
+            }
+        }
         /// <summary>
         /// 
         /// </summary>

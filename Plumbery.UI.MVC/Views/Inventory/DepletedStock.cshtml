@@ -52,8 +52,8 @@
                     <td>@item.DateAdded.ToString("dd, MMM yyyy")</td>
                     <td>@item.DateModified.ToString("dd, MMM yyyy")</td>
                     <td>@item.ModifiedBy</td>
-                    <td>@item.Quantity</td>
-                    <td>@item.Material.Cost</td>
+                    <td>@item.Quantity.ToString("F3").Replace(',','.')</td>
+                    <td>@item.Material.Cost.ToString("C2").Replace(',','.')</td>
                 </tr>
             }
         </tbody>

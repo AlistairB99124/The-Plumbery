@@ -23,30 +23,42 @@
         <table id="ListTable" class="table table-bordered table-striped">
             <thead>
                 <tr>
+                    <th></th>
+                    <th></th>
                     <th>Id</th>
                     <th>Code</th>
                     <th>Date</th>
                     <th>Plumber</th>
                     <th>Site</th>
                     <th>Specific Location</th>
-                    <th>DetailedLocation</th>
-                    <th>Status</th>
-                    <th>Description</th>
+                    <th>Detailed Location</th>
+                    <th>Completion Status</th>
+                    <th>Description of work</th>
                     <th>Plumber's Time</th>
-                    <th>Assistant Time</th>
+                    <th>Assistants' Time</th>
                     <th>Original Quote</th>
                     <th>Quote No</th>
                     <th>SI Number</th>
                     <th>Materials</th>
                     <th>Comments</th>
-                    <th></th>
+                    
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model) {
-                    SelectList materials = new SelectList(item.Materials, "StockCode", "StockCode");
-                    SelectList comments =new SelectList(item.Comments, "Description", "Description");
+                    List<TimeSheetMaterialItem> materials = item.Materials.ToList();
+                    List<TimeSheetCommentItem> comments =item.Comments.ToList();
                     <tr>
+                        <td>
+                            @using (Html.BeginForm("DeleteSheet", "TimeSheet", FormMethod.Post)) {
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" value="@item.Id" name="SheetId" />
+                                <button type="submit" class="btn btn-flat btn-danger"><i class="fa fa-times"></i></button>
+                            }
+                        </td>
+                        <td>                            
+                            <button class="btn btn-flat btn-github" type="submit" onclick="window.open('@("../../Content/documents/timesheets/"+item.Code+".pdf")')"><i class="fa fa-print"></i></button>
+                        </td>                       
                         <td>@if (item.Id != 0) { <text>@item.Id</text> }</td>
                         <td>@if(item.Code!=null) {<text>@item.Code</text>}</td>
                         <td>@if(item.DateCreated!=null) {<text>@item.DateCreated.ToString("dd.MM.yyyy")</text>}</td>
@@ -61,15 +73,20 @@
                         <td>@item.OriginalQuote</td>
                         <td>@if(item.QuoteNo!=null){<text>@item.QuoteNo</text>}</td>
                         <td>@if(item.SINumber!=null) {<text>@item.SINumber</text>}</td>
-                        <td>@Html.DropDownList("Materials" + item.Id,materials, new { @class = "form-control" })</td>
-                        <td>@Html.DropDownList("Comments" + item.Id,comments,new { @class="form-control" })</td>
                         <td>
-                            @using (Html.BeginForm("DeleteSheet", "TimeSheet", FormMethod.Post)) {
-                                @Html.AntiForgeryToken()
-                                <input type="hidden" value="@item.Id" name="SheetId"/>
-                                <button type="submit" class="btn btn-flat btn-danger"><i class="fa fa-times"></i></button>
-                            }
+                            <select class="form-control select2">
+                                @foreach(var m in materials) {
+                                    <option value="@m.MaterialId">@(m.Material.StockCode + ": " + m.Material.StockDescription)</option>
+                                }
+                            </select>
                         </td>
+                        <td>
+                            <select class="form-control select2">
+                                @foreach (var c in comments) {
+                                    <option value="@c.Id">@(c.Description + " - " + c.Description)</option>
+                                }
+                            </select>
+                        </td>                        
                     </tr>
                 }
             </tbody>
@@ -81,6 +98,18 @@
     <script src="~/Content/js/plugins/Datatables/dataTables.bootstrap.min.js"></script>
     <script src="~/Content/js/plugins/Datatables/dataTables.Responsive.js"></script>
     <script>
+        function printPdf(code){
+            var emb = document.getElementById("embeder");
+            emb.setAttribute("src","../../Content/documents/timesheets/"+code+".pdf");
+
+            if(typeof emb.print==='undefined'){
+                setTimeout(function(){
+                    printPdf(code);
+                }, 1000);
+            }else{
+                emb.print();
+            }
+        }
         $(function () {
             $("#ListTable").DataTable({
                 "paging": true,

@@ -78,15 +78,15 @@ namespace Plumbery.Infrastructure.Data.Configuration {
                 this.Property(t => t.AssistantTime).IsRequired();
                 this.Property(t => t.Code).IsRequired();
                 this.Property(t => t.DateCreated).IsRequired();
-                this.Property(t => t.Description).IsRequired();
-                this.Property(t => t.DetailedPoint).IsRequired();
+                this.Property(t => t.Description).IsOptional();
+                this.Property(t => t.DetailedPoint).IsOptional();
                 this.Property(t => t.OriginalQuote).IsRequired();
                 this.Property(t => t.PlumberTime).IsRequired();
                 this.Property(t => t.QuoteNo).IsOptional();
                 this.Property(t => t.SheetStatus).IsRequired();
-                this.Property(t => t.StatusComplete).IsRequired();
                 this.Property(t => t.SINumber).IsOptional();
                 this.Property(t => t.SpecificLocation).IsOptional();
+                
                 this.HasRequired(t => t.Site);
                 this.HasRequired(t => t.Plumber);
                 this.ToTable("TimeSheet", "dbo");
@@ -107,6 +107,7 @@ namespace Plumbery.Infrastructure.Data.Configuration {
                 this.HasKey(t => t.Id);
                 this.Property(t => t.BOM_No).IsOptional();
                 this.Property(t => t.Quantity).IsRequired();
+                this.Property(t => t.Supplier).IsOptional();
 
                 this.HasRequired(t => t.Material);
                 this.ToTable("MaterialItem", "dbo");

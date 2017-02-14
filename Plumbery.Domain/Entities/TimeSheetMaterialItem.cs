@@ -16,7 +16,7 @@ namespace Plumbery.Domain.Entities {
         /// <summary>
         /// 
         /// </summary>
-        public int? BOM_No { get; set; }
+        public string BOM_No { get; set; }
         /// <summary>
         /// 
         /// </summary>
@@ -33,10 +33,6 @@ namespace Plumbery.Domain.Entities {
         /// 
         /// </summary>
         public string Supplier { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public string StockCode { get { return GetMaterialNumber(); } }
 
         /// <summary>
         /// 
@@ -46,19 +42,6 @@ namespace Plumbery.Domain.Entities {
         /// 
         /// </summary>
         public virtual Material Material { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public TimeSheetMaterialItem() {
-
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        private string GetMaterialNumber() {
-            return Material.StockCode;
-        }
+        
     }
 }

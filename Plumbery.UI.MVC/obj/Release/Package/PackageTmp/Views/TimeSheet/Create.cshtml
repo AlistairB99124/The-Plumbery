@@ -1,156 +1,800 @@
-﻿@model Plumbery.UI.MVC.Models.TimeSheetModel
+﻿@model Plumbery.UI.MVC.Models.TimeSheetViewModel
+@using Plumbery.UI.MVC.Models
+@using System.Text
 @using Plumbery.Domain.Entities
 @{
     ViewBag.Title = "Daily Time Sheet";
     ViewBag.Description = DateTime.Now.ToString("dd, MMM yyyy");
-    SelectList plumberList = ViewBag.PlumberList;
-    SelectList siteList = ViewBag.SiteList;
+    var db = new Plumbery.Infrastructure.Data.Context.ContextBank();
+    List<Material> materials = ViewBag.Materials as List<Material>;
+    List<Plumber> plumbers = ViewBag.PlumberList as List<Plumber>;
+    Plumber plumber = ViewBag.Plumber;
+    var browser = Request.Browser.Browser;
 }
 @section Styles{
-
-    <link href="~/Content/css/Plugins/boostrap-slider/bootstrap-slider.css" rel="stylesheet" />
+    @if (browser != "InternetExplorer") {
+        <link href="~/Content/css/Plugins/boostrap-slider/bootstrap-slider.css" rel="stylesheet" />
+    }    
+    <style>
+        label {
+            font-weight: normal !important;
+        }
+    </style>
 }
-<!-- general form elements -->
 <div class="myforms-box">
-    <!-- /.box-header -->
     <!-- form start -->
-        <div class="myforms-box-body">
-            <div class="row">
-                <div class="col-sm-12">
-                    @Html.ValidationSummary("", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.PlumberId, new { @class = "control-label" })
-                @Html.DropDownListFor(m => m.PlumberId, plumberList, new { @class = "form-control select2", @style = "width:100%" })
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.SiteId, new { @class = "control-label" })
-                @Html.DropDownListFor(m => m.SiteId, siteList, new { @class = "form-control select2", @style = "width:100%" })
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.SpecificLocation, new { @class = "control-label" })
-                @Html.TextBoxFor(m => m.SpecificLocation, new { @class = "form-control" })
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.DetailedPoint, new { @class = "control-label" })
-                @Html.TextBoxFor(m => m.DetailedPoint, new { @class = "form-control" })
-            </div>
-            <div class="form-group">
-                <label for="SheetStatus">Completion Status</label>
-                <div style="margin-left:25px">
-                    <input type="text" value="" name="statusSlider" style="width:90%;margin-left:25px" class="slider form-control center-block" data-slider-min="0" data-slider-max="3" data-slider-step="1" data-slider-value="0" data-slider-orientation="horizontal" data-slider-selection="before" data-slider-tooltip="hide" data-slider-id="red" data-slider-ticks="[0, 1, 2, 3]" data-slider-ticks-labels='["Chasing","1st Fix","2nd Fix","Final Fix"]'>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="StatusComplete">Is Fix Complete?</label>
-                @Html.CheckBoxFor(m => m.StatusComplete)
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Description, new { @class = "control-label" })
-                @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
-            </div>
-            <div class="form-group">
-                <table class="table" style="width:100%">
-                    <tr>
-                        <th colspan="2">
-                            @Html.Label("Time Spent (Plumber)", new { @class = "control-label" })
-                        </th>
-                    </tr>
-                    <tr style="width:100%">
-                        <td width="50%">
-                            <select name="PlumberHours" id="PlumberHours" class="form-control select2" style="width:100%">
-                                <option selected value="0">0h</option>
-                                <option value="1">1h</option>
-                                <option value="2">2h</option>
-                                <option value="3">3h</option>
-                                <option value="4">4h</option>
-                                <option value="5">5h</option>
-                                <option value="6">6h</option>
-                                <option value="7">7h</option>
-                                <option value="8">8h</option>
-                            </select>
-                        </td>
-                        <td width="50%">
-                            <select name="PlumberMins" id="PlumberMins" class="form-control select2" style="width:100%">
-                                <option selected value="0">0min</option>
-                                <option value="10">10min</option>
-                                <option value="20">20min</option>
-                                <option value="30">30min</option>
-                                <option value="40">40min</option>
-                                <option value="50">50min</option>
-                            </select>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div class="form-group">
+    <div class="myforms-box-body">
+        <!-- Custom Tabs -->
+        <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+                <li id="DetailsList" class="active"><a href="#Details" data-toggle="tab" id="DetailsTab"><span class="hidden-xs">Details</span><span class="hidden-md hidden-lg hidden-sm"><i class="fa fa-info"></i></span></a></a></li>
+                <li id="AddItemsList" class="disabled"><a href="#AddItems" class="disabled" id="AddItemsTab"><span class="hidden-xs">Add Items</span><span class="hidden-md hidden-lg hidden-sm"><i class="fa fa-tags"></i></span></a></a></li>
+                <li id="ConfirmationList" class="disabled"><a href="#Confirmation" class="disabled" id="ConfirmationTab"><span class="hidden-xs">Confirmation</span><span class="hidden-md hidden-lg hidden-sm"><i class="fa fa-check"></i></span></a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="Details">
+                    <div class="box">
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    @Html.ValidationSummary("", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.PlumberId, new { @class = "control-label" })
+                                <select id="PlumberId" name="PlumberId" onchange="GetPlumber(this)" class="select2 form-control" style="width:100%;">
+                                    @foreach (var p in plumbers) {
+                                        var user = db.Users.Where(x => x.Id == p.UserId).FirstOrDefault();
+                                        if (p.Id == plumber.Id) {
+                                            <option value="@p.Id" selected>@user.FullName</option>
+                                        } else {
+                                            <option value="@p.Id">@user.FullName</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.SiteId, new { @class = "control-label" })
+                                @Html.DropDownListFor(m => m.SiteId, ViewBag.SiteList as SelectList, new { @class = "form-control select2", @style = "width:100%" })
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.SpecificLocation, new { @class = "control-label" })
+                                @Html.TextBoxFor(m => m.SpecificLocation, new { @class = "form-control", @placeholder = "Optional" })
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.DetailedPoint, new { @class = "control-label" })
+                                @Html.TextBoxFor(m => m.DetailedPoint, new { @class = "form-control", @placeholder = "Optional" })
+                            </div>
+                            <div class="form-group">
+                                <label for="SheetStatus">Completion Status</label>
+                                @if (browser=="InternetExplorer") {
+                                    <label>
+                                        <input type="radio" name="statusSlider" value="0" /> Chasing
+                                    </label><br />
+                                    <label>
+                                        <input type="radio" name="statusSlider" value="1" /> 1<sup>st</sup> Fix
+                                    </label><br />
+                                    <label>
+                                        <input type="radio" name="statusSlider" value="2" /> 2<sup>nd</sup> Fix
+                                    </label><br />
+                                    <label>
+                                        <input type="radio" name="statusSlider" value="3" /> Final Fix
+                                    </label>
+                                } else {
+                                    <div style="margin-left:25px">
+                                        <input type="text" value="" id="statusSlider" name="statusSlider"
+                                               style="width:90%;margin-left:25px" class="slider form-control center-block"
+                                               data-slider-min="0" data-slider-max="3" data-slider-step="1"
+                                               data-slider-value="0" data-slider-orientation="horizontal"
+                                               data-slider-selection="before" data-slider-tooltip="hide"
+                                               data-slider-id="red" data-slider-ticks="[0, 1, 2, 3]"
+                                               data-slider-ticks-labels='["Chasing","1st Fix","2nd Fix","Final Fix"]'>
+                                    </div>
+                                }                              
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Description, new { @class = "control-label" })
+                                @Html.TextAreaFor(m => m.Description, new { @class = "form-control", @placeholder = "Optional" })
+                            </div>
+                            <div class="form-group">
+                                <table class="table" style="width:100%">
+                                    <tr>
+                                        <th colspan="2">
+                                            @Html.Label("Time Spent (Plumber)", new { @class = "control-label" })
+                                        </th>
+                                    </tr>
+                                    <tr style="width:100%">
+                                        <td width="50%">
+                                            <select name="PlumberHours" id="PlumberHours" class="form-control select2" style="width:100%">
+                                                <option selected value="0">0h</option>
+                                                <option value="1">1h</option>
+                                                <option value="2">2h</option>
+                                                <option value="3">3h</option>
+                                                <option value="4">4h</option>
+                                                <option value="5">5h</option>
+                                                <option value="6">6h</option>
+                                                <option value="7">7h</option>
+                                                <option value="8">8h</option>
+                                            </select>
+                                        </td>
+                                        <td width="50%">
+                                            <select name="PlumberMins" id="PlumberMins" class="form-control select2" style="width:100%">
+                                                <option selected value="0">0min</option>
+                                                <option value="10">10min</option>
+                                                <option value="20">20min</option>
+                                                <option value="30">30min</option>
+                                                <option value="40">40min</option>
+                                                <option value="50">50min</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="form-group">
 
-                <table class="table" style="width:100%">
-                    <tr>
-                        <th colspan="2">
-                            @Html.LabelFor(m => m.AssistantHours, new { @class = "control-label" })
-                        </th>
-                    </tr>
-                    <tr style="width:100%">
-                        <td width="50%">
-                            <select name="AssistantHours" id="AssistantHours" class="form-control select2" style="width:100%">
-                                <option selected value="0">0h</option>
-                                <option value="1">1h</option>
-                                <option value="2">2h</option>
-                                <option value="3">3h</option>
-                                <option value="4">4h</option>
-                                <option value="5">5h</option>
-                                <option value="6">6h</option>
-                                <option value="7">7h</option>
-                                <option value="8">8h</option>
-                            </select>
-                        </td>
-                        <td width="50%">
-                            <select name="AssistantMins" id="AssistantMins" class="form-control select2" style="width:100%">
-                                <option selected value="0">0min</option>
-                                <option value="10">10min</option>
-                                <option value="20">20min</option>
-                                <option value="30">30min</option>
-                                <option value="40">40min</option>
-                                <option value="50">50min</option>
-                            </select>
-                        </td>
-                    </tr>
-                </table>
+                                <table class="table" style="width:100%">
+                                    <tr>
+                                        <th colspan="2">
+                                            @Html.LabelFor(m => m.AssistantHours, new { @class = "control-label" })
+                                        </th>
+                                    </tr>
+                                    <tr style="width:100%">
+                                        <td width="50%">
+                                            <select name="AssistantHours" id="AssistantHours" class="form-control select2" style="width:100%">
+                                                <option selected value="0">0h</option>
+                                                <option value="1">1h</option>
+                                                <option value="2">2h</option>
+                                                <option value="3">3h</option>
+                                                <option value="4">4h</option>
+                                                <option value="5">5h</option>
+                                                <option value="6">6h</option>
+                                                <option value="7">7h</option>
+                                                <option value="8">8h</option>
+                                            </select>
+                                        </td>
+                                        <td width="50%">
+                                            <select name="AssistantMins" id="AssistantMins" class="form-control select2" style="width:100%">
+                                                <option selected value="0">0min</option>
+                                                <option value="10">10min</option>
+                                                <option value="20">20min</option>
+                                                <option value="30">30min</option>
+                                                <option value="40">40min</option>
+                                                <option value="50">50min</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        @Html.LabelFor(m => m.OriginalQuote, new { @class = "control-label" })<br />
+                                        <input type="radio" name="OriginalQuote" value="true" /> Yes - <input type="radio" name="OriginalQuote" value="false" checked /> No
+                                    </div>
+                                    <div class="col-xs-6">
+                                            @Html.LabelFor(m => m.QuoteNo, new { @class = "control-label" })
+                                            @Html.TextBoxFor(m => m.QuoteNo, new { @class = "form-control", @placeholder = "Optional" })
+                                        
+                                    </div>
+                                </div>                               
+
+                            </div>
+                            <div class="form-group" id="SINumberDiv">
+                                @Html.LabelFor(m => m.SINumber, new { @class = "control-label" })
+                                @Html.TextBoxFor(m => m.SINumber, new { @class = "form-control", @placeholder="Optional" })
+                            </div>
+                            <div class="form-group">
+                                <label class="danger" id="myLabel"></label>
+                            </div>
+                        </div>
+                        <div class="box-footer">
+                            <div class="col-xs-4">
+
+                            </div>
+                            <div class="col-xs-4">
+                                <button class="btn btn-flat btn-primary btn-block" onclick="location.href='@Url.Action("Index","Home",null)'"><i class="fa fa-remove"></i></button>
+                            </div>
+                            <div class="col-xs-4">
+                                <button class="btn btn-flat btn-primary btn-block" id="DetailNext"><i class="fa fa-arrow-right"></i></button>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.tab-pane -->
+                <div class="tab-pane" id="AddItems">
+                    <div class="box">
+                        <div class="box-body">
+                            <div class="box">
+                                <div class="box-header">
+                                    <h4>Add Material</h4>
+                                </div>
+                                <div class="box-body" style="margin-left:-10px;margin-right:-10px">
+                                    <div class="form-horizontal">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                @Html.LabelFor(m => m.MaterialId, new { @class = "control-label" })
+                                                <select name="MaterialId" id="MaterialId" class="form-control select2" style="width:100%">
+                                                    @foreach (var mat in materials) {
+                                                        var inventory = db.Inventories.Where(x => x.MaterialId == mat.Id && x.WarehouseId == plumber.WarehouseId).FirstOrDefault();
+                                                        <option value="@inventory.Material.StockCode">@(inventory.Quantity + " - " + inventory.Material.StockCode + ": " + inventory.Material.StockDescription)</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                @Html.LabelFor(m => m.Supplier, new { @class = "control-label" })
+                                                @Html.TextBoxFor(m => m.Supplier, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                @Html.LabelFor(m => m.BOM_No, new { @class = "control-label" })
+                                                @Html.TextBoxFor(m => m.BOM_No, new { @class = "form-control" })
+                                            </div>
+                                            <div class="col-sm-6">
+                                                @Html.LabelFor(m => m.Quantity, new { @class = "control-label" })
+                                                @Html.TextBoxFor(m => m.Quantity, new { @class = "form-control", @placeholder = "0,00" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="box-footer">
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <div id="materialLoader" class="loader hidden pull-left"></div>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <button type="button" id="SaveMaterial" class="btn btn-flat btn-primary btn-block">Add Material</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="box">
+                                <div class="box-header">
+                                    <h4>Add Non-stock Items</h4>
+                                </div>
+                                <div class="box-body" style="margin-left:-10px;margin-right:-10px">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            @Html.LabelFor(m => m.Comment, new { @class = "control-label" })
+                                            @Html.TextBoxFor(m => m.Comment, new { @class = "form-control" })
+                                        </div>
+                                        <div class="col-sm-6">
+                                            @Html.LabelFor(m => m.Metric, new { @class = "control-label" })
+                                            @Html.TextBoxFor(m => m.Metric, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="box-footer">
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <div id="commentLoader" class="loader hidden pull-left"></div>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <button type="button" id="SaveComment" class="btn btn-flat btn-primary btn-block">Add Item</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-6">
+                                    <label class="success">@ViewBag.Success</label>
+                                    <label class="danger">@ViewBag.Failure</label>
+                                </div>
+                                <div class="col-xs-6">
+                                    
+                                </div>
+
+                            </div>
+                            <table id="Table" class="table table-bordered table-striped" style="width:100%;">
+                                <thead style="width:100%">
+                                    <tr>
+                                        <th style="width:10%">BOM No.</th>
+                                        <th style="width:20%">Code</th>
+                                        <th style="width:40%">Description</th>
+                                        <th style="width:10%">Quantity</th>
+                                        <th style="width:20%">Supplier</th>
+                                    </tr>
+                                </thead>
+                                <tbody style="width:100%">
+
+                                </tbody>
+                            </table>
+                            <div class="form-group">
+                                <div class="col-xs-8">
+                                    <label class="pull-right">Select row and delete item</label>
+                                </div>
+                                <div class="col-xs-4">
+                                    <button class="btn btn-flat btn-danger btn-block" id="DeleteRecord">Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-footer">
+                            <div class="col-xs-4">
+                                <button class="btn btn-flat btn-primary btn-block" id="BackAddItems"><i class="fa fa-arrow-left"></i></button>
+                            </div>
+                            <div class="col-xs-4">
+                                <button class="btn btn-flat btn-primary btn-block" onclick="location.href='@Url.Action("Index","Home",null)'"><i class="fa fa-remove"></i></button>
+                            </div>
+                            <div class="col-xs-4">
+                                <button class="btn btn-flat btn-primary btn-block" id="ItemsNext"><i class="fa fa-arrow-right"></i></button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- /.tab-pane -->
+                <div id="Confirmation" class="tab-pane">
+                    <div class="box">
+                        <div class="box-body">
+                            <div style="background-color:#fff;line-height:1.7;text-align:left;padding-left:15px;padding-right:15px;padding-top:30px;">
+                                <div class="post">
+                                    <div class="user-block">
+                                        <span style="margin-left:90px" class="username">
+                                            <label id="PlumberLabel"></label>
+                                        </span>
+                                        <span class="description" style="margin-left:90px;"><strong>Site</strong> <label style="font-weight:normal;" id="SiteLabel"></label></span>
+                                        <span class="description" style="margin-left:90px;"><strong>Specific Location</strong> <label style="font-weight:normal;" id="SpecificLocationLabel"></label></span>
+                                        <span class="description" style="margin-left:90px;"><strong>Detailed Point</strong> <label style="font-weight:normal;" id="DetailedPointLabel"></label></span>
+                                        <span class="description" style="margin-left:90px;"><strong>Completion Status</strong> <label style="font-weight:normal;" id="SheetStatusLabel"></label></span>
+                                        <span class="description" style="margin-left:90px;"><strong>Plumber Hours</strong> <label style="font-weight:normal;" id="PlumberHoursLabel"></label>:<label style="font-weight:normal;" id="PlumberMinsLabel"></label></span>
+                                        <span class="description" style="margin-left:90px;"><strong>Assistant(s) Hours</strong> <label style="font-weight:normal;" id="AssistantHoursLabel"></label>:<label style="font-weight:normal;" id="AssistantMinsLabel"></label></span>
+                                        <span class="description" style="margin-left:90px;"><strong>Original Quote?</strong> <label style="font-weight:normal;" id="OriginalQuoteLabel"></label></span>
+                                        <span class="description" style="margin-left:90px;"><strong>Quote No</strong> <label style="font-weight:normal;" id="QuoteLabel"></label></span>
+                                        <span class="description" style="margin-left:90px;"><strong>SI Number</strong> <label style="font-weight:normal;" id="SINumberLabel"></label></span>
+                                    </div>
+                                    <p>
+                                        <strong>Description:</strong> <label style="font-weight:normal;" id="DescriptionLabel"></label>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <table id="ConfirmItems" class="table table-striped table-bordered" style="width:100%;">
+                                    <thead style="width:100%">
+                                        <tr style="width:100%">
+                                            <th style="width:10%">BOM No.</th>
+                                            <th style="width:20%">Code</th>
+                                            <th style="width:40%">Description</th>
+                                            <th style="width:10%">Quantity</th>
+                                            <th style="width:20%">Supplier</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody style="width:100%">
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="box-footer">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <button type="button" id="BackConfirmation" class="btn btn-flat btn-primary btn-block"><i class="fa fa-arrow-left"></i></button>
+                                </div>
+                                <div class="col-xs-4">
+                                    <button type="button" onclick="location.href='@Url.Action("Index","Home",null)'" class="btn btn-flat btn-primary btn-block"><i class="fa fa-remove"></i></button>
+                                </div>
+                                <div class="col-xs-4">
+                                    <button type="button" id="SaveTimeSheet" class="btn btn-flat btn-success btn-block"><i class="fa fa-save"></i></button>
+                                </div>
+                            </div>
+                           <div class="row">
+                               <div class="col-md-12">
+                                   <div id="TimeSheetLoader" class="loader hidden pull-left center-block"></div>
+                               </div>
+                           </div>
+
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
             </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.OriginalQuote, new { @class = "control-label" })
-                @Html.CheckBoxFor(m => m.OriginalQuote)
-            </div>
-            <div class="form-group">
-                <div id="Loader" class="loader hidden center-block"></div>
-            </div>
+            <!-- /.tab-content -->
         </div>
-        <!-- /.box-body -->
-        <div class="box-footer">
-            <div class="col-xs-6">
-                <button type="reset" class="btn btn-flat btn-primary btn-block">Clear</button>
-            </div>
-            <div class="col-xs-6">
-                <button type="button" id="SaveSheet" class="btn btn-flat btn-primary btn-block">Next</button>
-            </div>
-        </div>
+        <!-- nav-tabs-custom -->
+    </div>
 </div>
-<!-- /.box -->
-
 @section Scripts{
-    <script src="~/Content/js/plugins/icheck/icheck.js"></script>
-
-    <script src="~/Content/js/plugins/bootstrap-slider/bootstrap-slider.js"></script>
+    <script src="~/Content/js/plugins/icheck/icheck.js"></script>    
+    @if (browser != "InternetExplorer") {
+        <text>
+            <script src="~/Content/js/plugins/bootstrap-slider/bootstrap-slider.js"></script>
+        </text>
+    }
+    <script src="~/Content/js/plugins/Datatables/jquery.dataTables.min.js"></script>
+    <script src="~/Content/js/plugins/Datatables/dataTables.bootstrap.min.js"></script>
+    <script src="~/Content/js/plugins/Datatables/dataTables.Responsive.js"></script>
     <script type="text/javascript">
-        $(function () {
-            $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
-                checkboxClass: 'icheckbox_minimal-blue',
-                radioClass: 'iradio_minimal-blue'
+        function GetPlumber(value) {
+            $.ajax({
+                url: '/TimeSheet/GetPlumber?PlumberId=' + value.value,
+                type: "GET",
+                success: function (Result) {
+                    location.reload();
+                }
             });
-            /* BOOTSTRAP SLIDER */
-            $('.slider').slider();            
+        }
+
+        $(document).ready(function () {
+            $("input[name=OriginalQuote]").on("change", function () {
+                var test = $(this).val();
+                if (test == "true") {
+                    $("#SINumberDiv").hide();
+                } else {
+                    $("#SINumberDiv").show();
+                }
+            });
+            $("#BackConfirmation").click(function () {
+                $("#AddItemsTab").attr("data-toggle", "tab");
+                $("#AddItemsTab").attr("class", "");
+                $("#AddItemsList").attr("class", "");
+                $("#ConfirmationList").attr("class", "disabled");
+                $("#ConfirmationTab").attr("data-toggle", "");
+                $("#ConfirmationTab").attr("class", "disabled");
+                var AddItemsTab = document.getElementById("AddItemsTab");
+                AddItemsTab.click.apply(AddItemsTab);
+                $("#AddItems").attr("class", "tab-pane active");
+                $("#Confirmation").attr("class", "tab-pane");
+                $('body').scrollTop(0);
+            });
+            $("#BackAddItems").click(function () {
+                $("#DetailsTab").attr("data-toggle", "tab");
+                $("#DetailsTab").attr("class", "");
+                $("#DetailsList").attr("class", "");
+                $("#AddItemsList").attr("class", "disabled");
+                $("#AddItemsTab").attr("data-toggle", "");
+                $("#AddItemsTab").attr("class", "disabled");
+                var DetailsTab = document.getElementById("DetailsTab");
+                DetailsTab.click.apply(DetailsTab);
+                $("#Details").attr("class", "tab-pane active");
+                $("#AddItems").attr("class", "tab-pane");
+                $('body').scrollTop(0);
+            });
+            $("#ItemsNext").click(function () {
+                $("#AddItemsTab").attr("data-toggle", "");
+                $("#AddItemsTab").attr("class", "disabled");
+                $("#AddItemsList").attr("class", "disabled");
+                $("#ConfirmationList").attr("class", "active");
+                $("#ConfirmationTab").attr("data-toggle", "tab");
+                $("#ConfirmationTab").attr("class", "");
+                var link = document.getElementById("ConfirmationTab");
+                AddItemsTab.click.apply(AddItemsTab);
+                $("#AddItems").attr("class", "tab-pane");
+                $("#Confirmation").attr("class", "tab-pane active");
+                $('body').scrollTop(0);
+            });
+            $("#DetailNext").click(function () {
+                $("#SiteLabel").text($("#SiteId option:selected").text());
+                $("#SpecificLocationLabel").text($("#SpecificLocation").val());
+                $("#DetailedPointLabel").text($("#DetailedPoint").val());
+                @if (browser == "InternetExplorer")
+                {
+                    <text>
+                        var val = parseInt($('input[name=statusSlider]:checked').val());
+                        switch (val) {
+                            case 0:
+                                $("#SheetStatusLabel").text("Chasing");
+                                break;
+                            case 1:
+                                $("#SheetStatusLabel").text("1st Fix");
+                                break;
+                            case 2:
+                                $("#SheetStatusLabel").text("2nd Fix");
+                                break;
+                            case 3:
+                                $("#SheetStatusLabel").text("Final Fix");
+                                break;
+                            default:
+                                $("#SheetStatusLabel").text("ERROR");
+                                break;
+                        }
+                    </text>
+                }else {
+                    <text>
+                        var val = parseInt($("#statusSlider").attr("data-value"));
+                        switch (val) {
+                            case 0:
+                                $("#SheetStatusLabel").text("Chasing");
+                                break;
+                            case 1:
+                                $("#SheetStatusLabel").text("1st Fix");
+                                break;
+                            case 2:
+                                $("#SheetStatusLabel").text("2nd Fix");
+                                break;
+                            case 3:
+                                $("#SheetStatusLabel").text("Final Fix");
+                                break;
+                            default:
+                                $("#SheetStatusLabel").text("ERROR");
+                                break;
+                        }
+                     </text>
+                }
+
+                $("#StatusCompleteLabel").text($("#StatusComplete").val());
+                $("#DescriptionLabel").text($("#Description").val());
+                $("#PlumberHoursLabel").text($("#PlumberHours option:selected").text());
+                $("#PlumberMinsLabel").text($("#PlumberMins option:selected").text());
+                $("#AssistantHoursLabel").text($("#AssistantHours option:selected").text());
+                $("#AssistantMinsLabel").text($("#AssistantMins option:selected").text());
+                $("#OriginalQuoteLabel").text($("#OriginalQuote").val());
+                $("#QuoteLabel").text($("#QuoteNo").val());
+                $("#SINumberLabel").text($("#SINumber").val());
+                $("#PlumberLabel").text($("#PlumberId option:selected").text());
+
+                $("#DetailsTab").attr("data-toggle", "");
+                $("#DetailsTab").attr("class", "disabled");
+                $("#DetailsList").attr("class", "disabled");
+                $("#AddItemsList").attr("class", "active");
+                $("#AddItemsTab").attr("data-toggle", "tab");
+                $("#AddItemsTab").attr("class", "");
+                var AddItemsTab = document.getElementById("AddItemsTab");
+                AddItemsTab.click.apply(AddItemsTab);
+                $("#Details").attr("class", "tab-pane");
+                $("#AddItems").attr("class", "tab-pane active");
+                $('body').scrollTop(0);
+
+            });
+            @if (browser!="InternetExplorer") // replace with your check
+            {
+                <text>
+                /* BOOTSTRAP SLIDER */
+                    $('.slider').slider();
+                </text>
+            }
+
+            /*SELECT 2*/
+            $("#MaterialId").select2({ dropdownCssClass: 'bigdrop' });
+            /*THE DATE*/
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1; //January is 0!
+
+            var yyyy = today.getFullYear();
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+            var today = dd + mm + yyyy;
+
+            /*Table for confirmation*/
+            var tt = $("#ConfirmItems").DataTable({
+                "scrollX": true,
+                "responsive": true,
+                "paging": false,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": false,
+                "info": false,
+                "autoWidth": false
+            });
+            /*TABLE FOR MAIN*/
+            var t = $("#Table").DataTable({
+                "scrollX": true,
+                "responsive": true,
+                "paging": false,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": false,
+                "info": false,
+                "autoWidth": false
+            });
+            //function will be called on button click having id btnsave
+            $("#SaveComment").click(function () {
+                t.row.add([
+                    "",
+                    "",
+                  $("#Comment").val(),
+                  $("#Metric").val(),
+                  ""
+                ]).draw(false);
+                tt.row.add([
+                    "",
+                    "",
+                  $("#Comment").val(),
+                  $("#Metric").val(),
+                  ""
+                ]).draw(false);
+                $("#Comment").text("");
+                $("#Comment").val(null);
+                $("#Metric").text("");
+                $("#Metric").val(null);
+            });
+            function isFloat(n) {
+                return n === +n && n !== (n | 0);
+            }
+
+            function isInteger(n) {
+                return n === +n && n === (n | 0);
+            }
+
+            //function will be called on button click having id btnsave
+            $("#SaveMaterial").click(function () {
+                if ($('#BOM_No').val() != null) {
+                    var val = $.trim($("#Quantity").val());
+                    if (val != null || val != 0) {
+                        if (!val.match(/[a-z]/i)) {
+                            var description = $("#MaterialId option:selected").text().split(': ')[1];
+                            var availableLevel = parseFloat($("#MaterialId option:selected").text().split(' - ')[0]);
+                            var quant = parseFloat(val);
+                            if (availableLevel < quant) {
+                                var r = confirm("You do not have enough stock. Are you sure you can proceed?");
+                                if (r == true) {
+                                    t.row.add([
+                                     $("#BOM_No").val(),
+                                     $("#MaterialId option:selected").val(),
+                                     description,
+                                     $("#Quantity").val(),
+                                     $("#Supplier").val()
+                                    ]).draw(false);
+                                    tt.row.add([
+                                    $("#BOM_No").val(),
+                                    $("#MaterialId option:selected").val(),
+                                    description,
+                                    $("#Quantity").val(),
+                                    $("#Supplier").val()
+                                    ]).draw(false);
+                                    $("#Supplier").text("");
+                                    $("#Quantity").text("");
+                                    $("#BOM_No").val(null);
+                                    $("#Supplier").val(null);
+                                    $("#Quantity").val(null);
+                                    $("#BOM_No").val(null);
+                                } else {
+                                    alert("Okay then");
+                                }
+                            } else {
+                                t.row.add([
+                               $("#BOM_No").val(),
+                               $("#MaterialId option:selected").val(),
+                               description,
+                               $("#Quantity").val(),
+                               $("#Supplier").val()
+                                ]).draw(false);
+                                tt.row.add([
+                               $("#BOM_No").val(),
+                               $("#MaterialId option:selected").val(),
+                               description,
+                               $("#Quantity").val(),
+                               $("#Supplier").val()
+                                ]).draw(false);
+                                $("#Supplier").text("");
+                                $("#Quantity").text("");
+                                $("#BOM_No").val(null);
+                                $("#Supplier").val(null);
+                                $("#Quantity").val(null);
+                                $("#BOM_No").val(null);
+                            }
+                        } else {
+                            alert("Quantity is not valid!");
+                        }
+                    } else {
+                        alert("You have entered no quantity for this material.")
+                    }
+                } else {
+                    alert("BOM No is required");
+                }
+
+            });
+
+            $('#Table tbody').on('click', 'tr', function () {
+                if ($(this).hasClass('myactive')) {
+                    $(this).removeClass('myactive');
+                }
+                else {
+                    t.$('tr.myactive').removeClass('myactive');
+                    $(this).addClass('myactive');
+                }
+            });
+            $('#ConfirmTable tbody').on('click', 'tr', function () {
+                if ($(this).hasClass('myactive')) {
+                    $(this).removeClass('myactive');
+                }
+                else {
+                    t.$('tr.myactive').removeClass('myactive');
+                    $(this).addClass('myactive');
+                }
+            });
+            $('#DeleteRecord').click(function () {
+                t.row('.myactive').remove().draw(false);
+                var index = t.row('.myactive').index();
+                tt.row(index).remove().draw(false);
+            });
+
+            $('#SaveTimeSheet').click(function () {
+                $("#TimeSheetLoader").removeClass("hidden");
+                GetSheetCount();
+            });
+            function GetSheetCount() {
+                $.ajax({
+                    url: '@Url.Action("GetTimeSheetCount","TimeSheet",null)',
+                    type: "POST",
+                    data:{
+                        PlumberId:$("#PlumberId option:selected").val()
+                    },
+                    success: function (Result) {
+                        StartTimeSheet(Result.Result);
+                    }
+                });
+            }
+            function StartTimeSheet(Result) {
+                $.ajax({
+                    type: "POST", //HTTP POST Method
+                    url: '@Url.Action("CreateTimeSheet", "TimeSheet", null)', // Controller/View
+                    data: { //Passing data
+                        SpecificLocation: $("#SpecificLocation").val(),
+                        DetailedPoint: $("#DetailedPoint").val(),
+                        SheetStatus: $("#statusSlider").val(),
+                        Description: $("#Description").val(),
+                        PlumberHours: $("#PlumberHours option:selected").val(),
+                        PlumberMins: $("#PlumberMins option:selected").val(),
+                        AssistantHours: $("#AssistantHours option:selected").val(),
+                        AssistantMins: $("#AssistantMins option:selected").val(),
+                        OriginalQuote: $('input[name=OriginalQuote]:checked').val(),
+                        QuoteNo: $("#QuoteNo").val(),
+                        SINumber: $("#SINumber").val(),
+                        PlumberId: $("#PlumberId option:selected").val(),
+                        SiteName: $("#SiteId option:selected").text(),
+                        Code: $("#SiteId option:selected").val() + "-" + $("#PlumberId option:selected").val() + "-" + (Result + 1) + "-" + today
+                    },
+                    success: function (Result) {
+                        t.rows().every(function (rowIdx, tableLoop, rowLoop) {
+                            var array = this.data();
+                            AddItems(array);
+                        });                        
+                        SendPDF();
+                        $("#TimeSheetLoader").addClass("hidden");
+                        location.reload();
+                    },
+                    error: function (x, e) {
+                        if (x.status == 0) {
+                            alert('You are offline!!\n Please Check Your Network.');
+                        } else if (x.status == 404) {
+                            alert('Requested URL not found.');
+                        } else if (x.status == 500) {
+                            alert('Internel Server Error.');
+                        } else if (e == 'parsererror') {
+                            alert('Error.\nParsing JSON Request failed.');
+                        } else if (e == 'timeout') {
+                            alert('Request Time out.');
+                        } else {
+                            alert('Unknow Error.\n' + x.responseText);
+                        }
+                    }
+                });
+            }
+
+            function AddItems(array) {
+                    $.ajax({
+                        type: "POST",
+                        url: '@Url.Action("ProcessTable","TimeSheet",null)',
+                        data: {
+                            BOM_NO: array[0],
+                            Stock_Code: array[1],
+                            Stock_description: array[2],
+                            Quantity: array[3],
+                            Supplier: array[4]
+                        },
+                        success: function (data) {
+                            return 1;
+                        },
+                        error: function () {
+                            return 0;
+                        }
+                    });
+            }
+            function SendPDF() {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("SendTimeSheet", "TimeSheet",null)',
+                    success: function (data) {
+                        
+                    }
+                });
+            }
         });
     </script>
 }

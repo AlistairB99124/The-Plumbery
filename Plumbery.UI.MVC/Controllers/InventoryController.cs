@@ -15,8 +15,7 @@ using Microsoft.AspNet.Identity;
 namespace Plumbery.UI.MVC.Controllers
 {
     [Authorize]
-    public class InventoryController : Controller
-    {
+    public class InventoryController : Controller {
         private IInventoryService _inventoryService;
 
         public InventoryController(IInventoryService inventoryService) {
@@ -59,6 +58,7 @@ namespace Plumbery.UI.MVC.Controllers
             }
             ViewBag.Modified = TempData["Modified"];
             ViewBag.Added = TempData["Added"];
+            ViewBag.Removed = TempData["Removed"];
             ViewBag.PlumberSelect = new SelectList(_inventoryService.GetPlumberUsers(), "Id", "FullName");
             return View();
         }
@@ -74,7 +74,7 @@ namespace Plumbery.UI.MVC.Controllers
                 string select = collection.Get("PlumberList");
                 Plumber p = _inventoryService.GetPlumber(select);
                 User user = _inventoryService.GetUser(User.Identity.GetUserId());
-                int[] counts = new int[2] { 0, 0 };
+                int[] counts = new int[3] { 0, 0, 0 };
                 if(p!=null && user != null) {
                     string fileName = Path.GetFileName(file.FileName);
                     string Extension = Path.GetExtension(file.FileName);
@@ -87,24 +87,11 @@ namespace Plumbery.UI.MVC.Controllers
                 }
                 TempData["Modified"] = counts[1] + " materials were modified!";
                 TempData["Added"] = counts[0] + " new materials were added!";
+                TempData["Removed"] = counts[2] + " materials were removed from warehoure";
                 return RedirectToAction("UpdateInventory", "Inventory", null);
             }
             ViewBag.PlumberSelect = new SelectList(_inventoryService.GetPlumberUsers(), "Id", "FullName");
             return RedirectToAction("Index", "Inventory", null);
-        }
-
-        public ActionResult LowStock() {
-            string UserId = User.Identity.GetUserId();
-            Plumber plumber = _inventoryService.GetPlumber(UserId);
-            List<Inventory> low = null;
-            Supervisor supervisor = _inventoryService.GetSupervisor(UserId);
-            if (plumber != null)
-                low = _inventoryService.GetLowInventory().Where(x => x.WarehouseId == plumber.WarehouseId).ToList();
-            else
-                low = _inventoryService.GetLowInventory().ToList();
-            ViewBag.Plumber = plumber;
-            ViewBag.Supervisor = supervisor;
-            return View(low);
         }
 
         public ActionResult DepletedStock() {

@@ -274,7 +274,7 @@
             
             </summary>
         </member>
-        <member name="P:Plumbery.Domain.Entities.TimeSheet.StatusComplete">
+        <member name="P:Plumbery.Domain.Entities.TimeSheet.SheetStatus">
             <summary>
             
             </summary>
@@ -409,11 +409,6 @@
             
             </summary>
         </member>
-        <member name="P:Plumbery.Domain.Entities.TimeSheetMaterialItem.StockCode">
-            <summary>
-            
-            </summary>
-        </member>
         <member name="P:Plumbery.Domain.Entities.TimeSheetMaterialItem.TimeSheet">
             <summary>
             
@@ -423,17 +418,6 @@
             <summary>
             
             </summary>
-        </member>
-        <member name="M:Plumbery.Domain.Entities.TimeSheetMaterialItem.#ctor">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:Plumbery.Domain.Entities.TimeSheetMaterialItem.GetMaterialNumber">
-            <summary>
-            
-            </summary>
-            <returns></returns>
         </member>
         <member name="T:Plumbery.Domain.Entities.User">
             <summary>

@@ -249,55 +249,6 @@
             </summary>
             <param name="timeSheetService"></param>
         </member>
-        <member name="M:Plumbery.UI.MVC.Controllers.TimeSheetController.Create">
-            <summary>
-            GET view for Creating a SHeet
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Plumbery.UI.MVC.Controllers.TimeSheetController.Create(Plumbery.UI.MVC.Models.TimeSheetModel,System.Web.Mvc.FormCollection)">
-            <summary>
-            Create the timesheet from the input form
-            </summary>
-            <param name="model">Model representing Time Sheet Data</param>
-            <param name="collection">COllection to get data from select inputs</param>
-            <returns></returns>
-        </member>
-        <member name="M:Plumbery.UI.MVC.Controllers.TimeSheetController.Items(System.String)">
-            <summary>
-            Get form to add items to a given timesheet        /// 
-            </summary>
-            <param name="code">Time sheet code</param>
-            <returns></returns>
-        </member>
-        <member name="M:Plumbery.UI.MVC.Controllers.TimeSheetController.AddMaterial(Plumbery.UI.MVC.Models.MaterialItemModel)">
-            <summary>
-            Add material to time sheet
-            </summary>
-            <param name="model">Model representing Material Data</param>
-            <returns></returns>
-        </member>
-        <member name="M:Plumbery.UI.MVC.Controllers.TimeSheetController.DeleteMaterialItem(System.Web.Mvc.FormCollection)">
-            <summary>
-            Delete Item from Time Sheet
-            </summary>
-            <param name="collection">Collection of inputs from Form</param>
-            <returns></returns>
-        </member>
-        <member name="M:Plumbery.UI.MVC.Controllers.TimeSheetController.DeleteCommentItem(System.Web.Mvc.FormCollection)">
-            <summary>
-            POST delete comment from time sheet
-            </summary>
-            <param name="collection">collection to get ids</param>
-            <returns></returns>
-        </member>
-        <member name="M:Plumbery.UI.MVC.Controllers.TimeSheetController.AddComment(Plumbery.UI.MVC.Models.CommentItemModel)">
-            <summary>
-            POST add comment to time sheet
-            </summary>
-            <param name="model">Model representing comment data</param>
-            <returns></returns>
-        </member>
         <member name="M:Plumbery.UI.MVC.Controllers.TimeSheetController.DeleteSheet(System.Web.Mvc.FormCollection)">
             <summary>
             Delete entire sheet, including link comments and materials
@@ -305,14 +256,7 @@
             <param name="collection"></param>
             <returns></returns>
         </member>
-        <member name="M:Plumbery.UI.MVC.Controllers.TimeSheetController.ClearAll(System.Web.Mvc.FormCollection)">
-            <summary>
-            Clear all items from the Time Sheet
-            </summary>
-            <param name="collection"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Plumbery.UI.MVC.Controllers.TimeSheetController.SendTimeSheet(System.Web.Mvc.FormCollection)">
+        <member name="M:Plumbery.UI.MVC.Controllers.TimeSheetController.SendTimeSheet">
             <summary>
             Convert Timesheet to PDF and Send to Dropbox or Email
             </summary>

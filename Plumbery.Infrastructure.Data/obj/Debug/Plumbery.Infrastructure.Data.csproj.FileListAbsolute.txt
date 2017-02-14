@@ -70,6 +70,7 @@ P:\The-Plumbery\Plumbery.Infrastructure.Data\bin\Debug\Owin.dll
 P:\The-Plumbery\Plumbery.Infrastructure.Data\bin\Debug\Plumbery.Domain.dll
 P:\The-Plumbery\Plumbery.Infrastructure.Data\bin\Debug\RestSharp.dll
 P:\The-Plumbery\Plumbery.Infrastructure.Data\bin\Debug\SendGrid.CSharp.HTTP.Client.dll
+P:\The-Plumbery\Plumbery.Infrastructure.Data\bin\Debug\SendGrid.dll
 P:\The-Plumbery\Plumbery.Infrastructure.Data\bin\Debug\SimpleInjector.dll
 P:\The-Plumbery\Plumbery.Infrastructure.Data\bin\Debug\System.Net.Http.Formatting.dll
 P:\The-Plumbery\Plumbery.Infrastructure.Data\bin\Debug\System.Web.Helpers.dll
@@ -108,4 +109,3 @@ P:\The-Plumbery\Plumbery.Infrastructure.Data\bin\Debug\Twilio.Api.xml
 P:\The-Plumbery\Plumbery.Infrastructure.Data\obj\Debug\Plumbery.Infrastructure.Data.csprojResolveAssemblyReference.cache
 P:\The-Plumbery\Plumbery.Infrastructure.Data\obj\Debug\Plumbery.Infrastructure.Data.dll
 P:\The-Plumbery\Plumbery.Infrastructure.Data\obj\Debug\Plumbery.Infrastructure.Data.pdb
-P:\The-Plumbery\Plumbery.Infrastructure.Data\bin\Debug\SendGrid.dll

@@ -244,6 +244,7 @@
     <Compile Include="App_Start\SimpleInjectorInitialiser.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InventoryController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -295,6 +296,7 @@
     <Content Include="Content\css\icheck\yellow.css" />
     <Content Include="Content\css\icheck\yellow.min.css" />
     <Content Include="Content\css\Plugins\boostrap-slider\bootstrap-slider.css" />
+    <Content Include="Content\css\Plugins\Datatables\editor.dataTables.min.css" />
     <Content Include="Content\css\select2.css" />
     <Content Include="Content\css\select2.min.css" />
     <Content Include="Content\css\skins\skin-black-light.css" />
@@ -397,6 +399,7 @@
     <Content Include="Content\css\Plugins\Datatables\Datatables.Bootstrap.css" />
     <Content Include="favicon.ico" />
     <Content Include="Mvc.sitemap" />
+    <Content Include="Content\js\plugins\Datatables\dataTables.editor.min.js" />
     <None Include="MvcSiteMapSchema.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -454,7 +457,6 @@
     <Content Include="Views\Shared\_Header.cshtml" />
     <Content Include="Views\Shared\_Sidebar.cshtml" />
     <Content Include="Views\TimeSheet\Create.cshtml" />
-    <Content Include="Views\TimeSheet\Items.cshtml" />
     <Content Include="Views\Inventory\UpdateInventory.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\SiteMapTitleHelperModel.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\SiteMapPathHelperModel.cshtml" />
@@ -472,23 +474,23 @@
     <Content Include="Views\Supervisor\Index.cshtml" />
     <Content Include="Views\Supervisor\Create.cshtml" />
     <Content Include="Views\Supervisor\Edit.cshtml" />
-    <Content Include="Views\Inventory\LowStock.cshtml" />
     <Content Include="Views\Inventory\DepletedStock.cshtml" />
     <Content Include="Views\Inventory\ControlIndex.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />
-    <Content Include="Views\TimeSheet\AddMaterial.cshtml" />
-    <Content Include="Views\TimeSheet\AddComment.cshtml" />
-    <Content Include="Views\TimeSheet\ListItems.cshtml" />
     <Content Include="Views\Site\Index.cshtml" />
     <Content Include="Views\Site\Create.cshtml" />
     <Content Include="Views\Site\Edit.cshtml" />
     <Content Include="Views\Warehouse\Index.cshtml" />
     <Content Include="Views\Warehouse\Create.cshtml" />
     <Content Include="Views\Warehouse\Edit.cshtml" />
+    <Content Include="Views\Error\InternalServer.cshtml" />
+    <Content Include="Views\Error\NotFound.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\documents\excel\" />
+    <Folder Include="Content\documents\timesheets\" />
+    <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

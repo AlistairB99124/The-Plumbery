@@ -29,204 +29,257 @@ namespace Plumbery.Domain.Services {
         #region Methods
         
 
-        public async Task<int> AddCommentItem(TimeSheetCommentItem comment) {
+        public void AddCommentItem(TimeSheetCommentItem comment) {
             try {
                 StartTransaction();
                 _sheetRepository.AddCommentItem(comment);
-                return await PersistTransactionAsync();
+                PersistTransaction();
             } catch (Exception ex) {
                 throw new ApplicationException(ex.Message);
             }
         }
 
-        public async Task<int> AddMaterialItem(TimeSheetMaterialItem material) {
+        public void AddMaterialItem(TimeSheetMaterialItem material) {
             try {
                 StartTransaction();
                 _sheetRepository.AddMaterialItem(material);
-                return await PersistTransactionAsync();
+                PersistTransaction();
             } catch (Exception ex) {
                 throw new ApplicationException(ex.Message);
             }
         }
 
-        public async Task<int> AddTimeSheet(TimeSheet timeSheet) {
+        public void AddTimeSheet(TimeSheet timeSheet) {
             try {
                 StartTransaction();
-                _sheetRepository.Add(timeSheet);
-                return await PersistTransactionAsync();
+                _sheetRepository.AddMyTimeSheet(timeSheet);
+                PersistTransaction();
             } catch (Exception ex) {
                 throw new ApplicationException(ex.Message);
             }
         }
 
-        public async Task<int> DeductFromInventory(List<TimeSheetMaterialItem> items) {
+        public void DeductFromInventory(List<TimeSheetMaterialItem> items) {
             try {
                 StartTransaction();
                 _sheetRepository.DeductFromInventory(items);
-                return await PersistTransactionAsync();
+                PersistTransaction();
             } catch(Exception ex) {
                 throw new ApplicationException(ex.Message);
             }
         }
 
-        public async Task<int> DeleteCommentItem(int Id) {
+        public void DeleteCommentItem(int Id) {
             try {
                 StartTransaction();
                 _sheetRepository.DeleteCommentItem(Id);
-                return await PersistTransactionAsync();
+                PersistTransaction();
             } catch (Exception ex) {
                 throw new ApplicationException(ex.Message);
             }
         }
 
-        public async Task<int> DeleteCommentItems(List<TimeSheetCommentItem> items) {
+        public void DeleteCommentItems(List<TimeSheetCommentItem> items) {
             try {
                 StartTransaction();
                 _sheetRepository.DeleteCommentItems(items);
-                return await PersistTransactionAsync();
+                PersistTransaction();
             } catch (Exception ex) {
                 throw new ApplicationException(ex.Message);
             }
         }
 
-        public async Task<int> DeleteMaterialItem(int Id) {
+        public void DeleteMaterialItem(int Id) {
             try {
                 StartTransaction();
                 _sheetRepository.DeleteMaterialItem(Id);
-                return await PersistTransactionAsync();
+                PersistTransaction();
             } catch (Exception ex) {
                 throw new ApplicationException(ex.Message);
             }
         }
 
-        public async Task<int> DeleteMaterialItems(List<TimeSheetMaterialItem> items) {
+        public void DeleteMaterialItems(List<TimeSheetMaterialItem> items) {
             try {
                 StartTransaction();
                 _sheetRepository.DeleteMaterialItems(items);
-                return await PersistTransactionAsync();
+                PersistTransaction();
             } catch (Exception ex) {
                 throw new ApplicationException(ex.Message);
             }
         }
 
-        public async Task<int> DeleteSheet(int id) {
+        public void DeleteSheet(int id) {
             try {
                 StartTransaction();
                 _sheetRepository.DeleteSheet(id);
-                return await PersistTransactionAsync();
+                PersistTransaction();
             } catch (Exception ex) {
                 throw new ApplicationException(ex.Message);
             }
         }
 
-        public async Task<int> EditCommentItem(TimeSheetCommentItem comment) {
+        public void EditCommentItem(TimeSheetCommentItem comment) {
             try {
                 StartTransaction();
                 _sheetRepository.EditCommentItem(comment);
-                return await PersistTransactionAsync();
+                PersistTransaction();
             } catch (Exception ex) {
                 throw new ApplicationException(ex.Message);
             }
         }
 
-        public async Task<int> EditMaterialItem(TimeSheetMaterialItem material) {
+        public void EditMaterialItem(TimeSheetMaterialItem material) {
             try {
                 StartTransaction();
                 _sheetRepository.EditMaterialItem(material);
-                return await PersistTransactionAsync();
+                PersistTransaction();
             } catch (Exception ex) {
                 throw new ApplicationException(ex.Message);
             }
         }
 
-        public async Task<IEnumerable<TimeSheet>> GetAll() {
+        public IEnumerable<TimeSheet> GetAll() {
             try {
-                return await _sheetRepository.GetAllTimeSheets();
+                return _sheetRepository.GetAllTimeSheets();
             } catch (Exception ex) {
                 throw new ApplicationException(ex.Message);
             }
         }
 
-        public async Task<Plumber> GetPlumber(int Id) {
+        public decimal GetInventoryLeft(string stockCode, int warehouseId) {
             try {
-                return await _sheetRepository.GetPlumber(Id);
+                return _sheetRepository.GetInventoryLeft(stockCode, warehouseId);
+            } catch(Exception ex) {
+                throw new ApplicationException(ex.Message);
+            }
+        }
+
+        public void GetMaterialByCode(string stockCode) {
+            throw new NotImplementedException();
+        }
+
+        public Material GetMaterialByStockCode(string stockCode) {
+            try {
+                return _sheetRepository.GetMaterialByStockCode(stockCode);
             } catch (Exception ex) {
                 throw new ApplicationException(ex.Message);
             }
         }
 
-        public async Task<Plumber> GetPlumber(string UserId) {
+        public Plumber GetPlumber(int Id) {
             try {
-                return await _sheetRepository.GetPlumber(UserId);
+                return _sheetRepository.GetPlumber(Id);
             } catch (Exception ex) {
                 throw new ApplicationException(ex.Message);
             }
         }
 
-        public async Task<IEnumerable<User>> GetPlumberUsers() {
+        public Plumber GetPlumber(string UserId) {
             try {
-                return await _sheetRepository.GetPlumberUsers();
+                return _sheetRepository.GetPlumber(UserId);
             } catch (Exception ex) {
                 throw new ApplicationException(ex.Message);
             }
         }
 
-        public async Task<Site> GetSite(int Id) {
+        public List<Plumber> GetPlumbers() {
             try {
-                return await _sheetRepository.GetSite(Id);
-            } catch (Exception ex) {
-                throw new ApplicationException(ex.Message);
-            }
-        }
-
-        public async Task<TimeSheet> GetTimeSheet(string Code) {
-            try {
-                return await _sheetRepository.GetTimeSheet(Code);
-            } catch (Exception ex) {
-                throw new ApplicationException(ex.Message);
-            }
-        }
-        
-        public async Task<IEnumerable<TimeSheetCommentItem>> ListCommentItems(int TimeSheetId) {
-            try {
-                return await _sheetRepository.ListCommentItems(TimeSheetId);
-            } catch (Exception ex) {
-                throw new ApplicationException(ex.Message);
-            }
-        }
-
-        public async Task<IEnumerable<TimeSheetMaterialItem>> ListMaterialItems(int TimeSheetId) {
-            try {
-                return await _sheetRepository.ListMaterialItems(TimeSheetId);
-            } catch (Exception ex) {
-                throw new ApplicationException(ex.Message);
-            }
-        }
-        public async Task<IEnumerable<Material>> ListMaterials(Plumber plumber) {
-            try {
-                return await _sheetRepository.ListMaterials(plumber);
+                return _sheetRepository.GetPlumbers();
             }catch(Exception ex) {
                 throw new ApplicationException(ex.Message);
             }
         }
 
-        public async Task<IEnumerable<Plumber>> ListPlumbers() {
+        public IEnumerable<User> GetPlumberUsers() {
             try {
-                return await _sheetRepository.ListPlumbers();
+                return _sheetRepository.GetPlumberUsers();
             } catch (Exception ex) {
                 throw new ApplicationException(ex.Message);
             }
         }
 
-        public async Task<IEnumerable<Site>> ListSites() {
+        public Site GetSite(int Id) {
             try {
-                return await _sheetRepository.ListSites();                    
+                return _sheetRepository.GetSite(Id);
             } catch (Exception ex) {
                 throw new ApplicationException(ex.Message);
             }
         }
 
-      
+        public Site GetSiteByName(string siteName) {
+            try {
+                return _sheetRepository.GetSite(siteName);
+            } catch (Exception ex) {
+                throw new ApplicationException(ex.Message);
+            }
+        }
+
+        public TimeSheet GetTimeSheet(int timeSheetId) {
+            try {
+                return _sheetRepository.GetTimeSheet(timeSheetId);
+            }catch(Exception ex) {
+                throw new ApplicationException(ex.Message);
+            }
+        }
+
+        public TimeSheet GetTimeSheet(string Code) {
+            try {
+                return _sheetRepository.GetTimeSheet(Code);
+            } catch (Exception ex) {
+                throw new ApplicationException(ex.Message);
+            }
+        }
+        
+        public IEnumerable<TimeSheetCommentItem> ListCommentItems(int TimeSheetId) {
+            try {
+                return _sheetRepository.ListCommentItems(TimeSheetId);
+            } catch (Exception ex) {
+                throw new ApplicationException(ex.Message);
+            }
+        }
+
+        public IEnumerable<TimeSheetMaterialItem> ListMaterialItems(int TimeSheetId) {
+            try {
+                return _sheetRepository.ListMaterialItems(TimeSheetId);
+            } catch (Exception ex) {
+                throw new ApplicationException(ex.Message);
+            }
+        }
+        public IEnumerable<Material> ListMaterials(Plumber plumber) {
+            try {
+                return _sheetRepository.ListMaterials(plumber);
+            }catch(Exception ex) {
+                throw new ApplicationException(ex.Message);
+            }
+        }
+
+        public IEnumerable<Plumber> ListPlumbers() {
+            try {
+                return _sheetRepository.ListPlumbers();
+            } catch (Exception ex) {
+                throw new ApplicationException(ex.Message);
+            }
+        }
+
+        public IEnumerable<Site> ListSites() {
+            try {
+                return _sheetRepository.ListSites();                    
+            } catch (Exception ex) {
+                throw new ApplicationException(ex.Message);
+            }
+        }
+
+        public int TimeSheetCount(int plumberId) {
+            try {
+                return _sheetRepository.TimeSheetCount(plumberId);
+            } catch (Exception ex) {
+                throw new ApplicationException(ex.Message);
+            }
+        }
+        
+
+
         #endregion
 
     }

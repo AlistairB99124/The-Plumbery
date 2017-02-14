@@ -273,7 +273,11 @@ namespace Plumbery.UI.MVC.Utilities {
             paragraph.Format.SpaceBefore = 3;
 
             paragraph = this.descriptionFrame.AddParagraph();
-            paragraph.AddText(_timeSheet.Description);
+            if (_timeSheet.Description == null) {
+                paragraph.AddText("N/A");
+            } else {
+                paragraph.AddText(_timeSheet.Description);
+            }
             paragraph.Format.Font.Bold = false;
             paragraph.Format.Font.Name = "Times New Roman";
             paragraph.Format.Font.Size = 12;
@@ -356,7 +360,7 @@ namespace Plumbery.UI.MVC.Utilities {
             paragraph = this.quoteFrame.AddParagraph();
             paragraph.AddText("Additional Work: S.I. Number ");
             paragraph.AddSpace(35);
-            paragraph.AddText("Signiture (Site Manager)");
+            paragraph.AddText("Signature (Site Manager)");
             paragraph.Format.Font.Bold = true;
             paragraph.Format.Font.Name = "Times New Roman";
             paragraph.Format.Font.Size = 12;
@@ -377,7 +381,7 @@ namespace Plumbery.UI.MVC.Utilities {
             paragraph.Format.SpaceBefore = 6;
 
             paragraph = section.AddParagraph();
-            paragraph.Format.SpaceBefore = "12cm";
+            paragraph.Format.SpaceBefore = "10cm";
 
             // Add the print date field
             paragraph = section.AddParagraph();

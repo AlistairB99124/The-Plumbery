@@ -46,7 +46,7 @@
                         <ul class="treeview-menu">
                             <li class="@Html.IsSelected(actions:"Create",controllers:"TimeSheet")">@Html.ActionLink("Create", "Create", "TimeSheet")</li>
 
-                            <li class="@Html.IsSelected(actions:"Index",controllers:"TimeSheet")">@Html.ActionLink("Histroy", "Index", "TimeSheet")</li>
+                            <li class="@Html.IsSelected(actions:"Index",controllers:"TimeSheet")">@Html.ActionLink("History", "Index", "TimeSheet")</li>
                         </ul>
                     </li>
                     <li class="treeview">
@@ -58,7 +58,6 @@
                         </a>
                         <ul class="treeview-menu">
                             <li class="@Html.IsSelected(actions:"Index",controllers:"Inventory")">@Html.ActionLink("List All", "Index", "Inventory")</li>
-                            <li class="@Html.IsSelected(actions:"LowStock",controllers:"Inventory")">@Html.ActionLink("Low Stock", "LowStock", "Inventory")</li>
                             <li class="@Html.IsSelected(actions:"DepletedStock",controllers:"Inventory")">@Html.ActionLink("Depleted Stock", "DepletedStock", "Inventory")</li>
                         </ul>
                     </li>

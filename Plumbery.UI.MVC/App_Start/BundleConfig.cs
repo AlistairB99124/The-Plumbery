@@ -22,7 +22,6 @@ namespace Plumbery.UI.MVC {
 
             bundles.Add(new ScriptBundle("~/Bundles/js")
                 .Include("~/Content/js/plugins/bootstrap/bootstrap.min.js")
-                .Include("~/Content/js/plugins/fastclick/fastclick.min.js")
                 .Include("~/Content/js/plugins/slimscroll/jquery.slimscroll.min.js")
                 .Include("~/Content/js/plugins/moment/moment.min.js")
                 .Include("~/Content/js/plugins/datepicker/bootstrap-datepicker.js")

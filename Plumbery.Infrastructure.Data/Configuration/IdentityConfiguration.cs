@@ -124,7 +124,7 @@ namespace Plumbery.Infrastructure.Data.Configuration {
 
             // Configure validation logic for passwords
             manager.PasswordValidator = new PasswordValidator {
-                RequiredLength = 6,
+                RequiredLength = 2,
                 RequireNonLetterOrDigit = false,
                 RequireDigit = false,
                 RequireLowercase = false,

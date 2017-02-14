@@ -11,8 +11,7 @@ using System.Web.Mvc;
 namespace Plumbery.UI.MVC.Controllers
 {
     [Authorize]
-    public class SupervisorController : Controller
-    {
+    public class SupervisorController : Controller {
         private ISupervisorService _supervisorService;
 
         public SupervisorController(ISupervisorService supervisorService) {
@@ -63,7 +62,7 @@ namespace Plumbery.UI.MVC.Controllers
             if (currentSupervisor == null) {
                 return RedirectToAction("Login", "Account", null);
             }
-            if (Id == null) {
+            if (Id == 0) {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Supervisor Supervisor = _supervisorService.GetSupervisor(Id);

@@ -61,7 +61,7 @@ namespace Plumbery.UI.MVC.Controllers {
                 return RedirectToAction("Login", "Account", null);
             }
             if (ModelState.IsValid) {
-                if (model.WarehouseId != null||model.WarehouseId!=0) {
+                if (model.WarehouseId!=0) {
                     Plumber plumber = new Plumber {
                         UserId = model.UserId,
                         WarehouseId = model.WarehouseId

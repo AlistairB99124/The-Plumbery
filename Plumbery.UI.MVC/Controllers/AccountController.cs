@@ -411,7 +411,7 @@ namespace Plumbery.UI.MVC.Controllers {
                 if (info == null) {
                     return View("ExternalLoginFailure");
                 }
-                var user = new User { UserName = model.UserName,Email=model.Email, FirstName=model.FirstName, LastName=model.LastName, DateRegistered = DateTime.Now };
+                var user = new User { UserName = model.UserName,Email=model.Email, FirstName=model.FirstName, LastName=model.LastName, DateRegistered = DateTime.Now, EmailConfirmed=true };
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded) {
                     result = await UserManager.AddLoginAsync(user.Id, info.Login);
@@ -419,8 +419,6 @@ namespace Plumbery.UI.MVC.Controllers {
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                         string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                        var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                        await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
                         
                         return RedirectToLocal(returnUrl);
                     }
@@ -440,6 +438,11 @@ namespace Plumbery.UI.MVC.Controllers {
         [ValidateAntiForgeryToken]
         public ActionResult LogOff() {
             _userService.Logoff(AuthenticationManager);
+            TempData["GlobalUser"] = null;
+            TempData["GlobalPlumber"] = null;
+            TempData["GlobalSupervisor"] = null;
+            TempData["DepletedInventory"] = null;
+            TempData["UnassignedUsers"] = null;
             return RedirectToAction("Index", "Home");
         }
 
